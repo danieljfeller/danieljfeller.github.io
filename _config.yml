@@ -1,13 +1,13 @@
 # Site settings
-title: Daniel Feller
+title: Daniel Feller, PhD
 description: Healthcare Data Scientist | Federated Learning | Solutions Engineer
-url: "https://yourusername.github.io"
+url: "https://danieljfeller.github.io/"
 baseurl: ""
 
 # About/contact
-email: your.email@example.com
+email: danieljfeller@gmail.com
 github_username: yourusername
-linkedin_username: yourprofile
+linkedin_username: danieljfeller
 
 # Build settings
 markdown: kramdown

@@ -6,10 +6,25 @@ permalink: /projects/
 
 <h2>Projects & Code</h2>
 
+  <div class="project-card">
+    <h3>Computer Vision </h3>
+    <p>As part of a European Union Horizon 2020 grant, I led a team who built a deep learning model for automated classification of CT scan contrast phases. This allowed our collaborators at Oxford to curate the data necessary for digital contrast.</p>
+    <p><strong>Performance:</strong> 95%+ accuracy</p>
+    <div class="project-tags">
+      <span class="tag">Python</span>
+      <span class="tag">Deep Learning</span>
+      <span class="tag">Medical Imaging</span>
+      <span class="tag">PyTorch</span>
+    </div>
+    <div class="project-links">
+      <a href="https://github.com/yourusername/contrast-classifier">GitHub</a>
+    </div>
+  </div>
+
 <div class="projects-grid">
   <div class="project-card">
-    <h3>Eli Lily Tunelab</h3>
-    <p>Led the initial development of Tunelab, an AI/ML platform launched by Eli Lily that provides biotech companies access to drug discovery models trained on Lilly's proprietary data. The platform uses federated learning technology hosted by Rhino to enable smaller biotechs to leverage Lilly's AI capabilities without directly exposing either party's proprietary molecular data. In exchange for access to models trained on data from hundreds of thousands of unique molecules, biotech partners contribute their own training data to continuously improve the platform for the broader ecosystem.Retry </p>
+    <h3>Lily's Tunelab</h3>
+    <p>I worked on Tunelab, an AI/ML platform launched by Eli Lily that provides biotech companies access to drug discovery models trained on Lilly's proprietary data. The platform uses Rhino's federated computing platform to allow small biotech firms to leverage Lilly's AI capabilities without protecting each party's sensitive data. This application represents the largest active deployment of federated computing across enterprises ever. </p>
     <p><strong>Impact:</strong> Enabled 15+ pharmaceutical partnerships while maintaining HIPAA compliance.</p>
     <div class="project-tags">
       <span class="tag">Python</span>
@@ -18,7 +33,7 @@ permalink: /projects/
       <span class="tag">Docker</span>
     </div>
     <div class="project-links">
-      <span style="color: var(--text-secondary); font-style: italic;">Proprietary - Rhino Health</span>
+      <span style="color: var(--text-secondary); font-style: italic;">Proprietary - Rhino Federated Computing</span>
     </div>
   </div>
 
@@ -33,7 +48,7 @@ permalink: /projects/
       <span class="tag">ETL</span>
     </div>
     <div class="project-links">
-      <a href="https://github.com/yourusername/data-harmonization">GitHub</a>
+      <span style="color: var(--text-secondary); font-style: italic;">Proprietary - Rhino Federated Computing</span>
     </div>
   </div>
 
@@ -46,28 +61,12 @@ permalink: /projects/
       <span class="tag">RAG</span>
     </div>
     <div class="project-links">
-      <a href="https://github.com/yourusername/pgd-analytics">GitHub</a>
-    </div>
-  </div>
-
-
-  <div class="project-card">
-    <h3>Patient Data Visual Analytics</h3>
-    <p>Interactive visualization system for pattern recognition in patient-generated health data. Features automated anomaly detection and temporal pattern discovery.</p>
-    <p><strong>Published:</strong> JAMIA</p>
-    <div class="project-tags">
-      <span class="tag">Python</span>
-      <span class="tag">D3.js</span>
-      <span class="tag">Flask</span>
-      <span class="tag">ML</span>
-    </div>
-    <div class="project-links">
-      <a href="https://github.com/yourusername/pgd-analytics">GitHub</a>
+      <span style="color: var(--text-secondary); font-style: italic;">Proprietary - Rightway Healthcare</span>
     </div>
   </div>
 
   <div class="project-card">
-    <h3>Patient Data Visual Analytics</h3>
+    <h3>Visual Analytics for Chronic Disease Care</h3>
     <p>Interactive visualization system for pattern recognition in patient-generated health data. Features automated anomaly detection and temporal pattern discovery.</p>
     <p><strong>Published:</strong> JAMIA</p>
     <div class="project-tags">
@@ -96,7 +95,22 @@ permalink: /projects/
   </div>
 
   <div class="project-card">
-    <h3>SDOH Extraction System</h3>
+    <h3>Visual Analytics for Patient-Generated Data</h3>
+    <p>Interactive visualization system for pattern recognition in patient-generated health data. Features automated anomaly detection and temporal pattern discovery.</p>
+    <p><strong>Published:</strong> JAMIA</p>
+    <div class="project-tags">
+      <span class="tag">Python</span>
+      <span class="tag">D3.js</span>
+      <span class="tag">Flask</span>
+      <span class="tag">ML</span>
+    </div>
+    <div class="project-links">
+      <a href="https://github.com/yourusername/pgd-analytics">GitHub</a>
+    </div>
+  </div>
+
+  <div class="project-card">
+    <h3>NLP System for Social Determinants of Health</h3>
     <p>Semi-supervised learning system for extracting social and behavioral determinants from clinical notes. Created gold-standard annotated corpus for training.</p>
     <p><strong>Published:</strong> AMIA 2018</p>
     <div class="project-tags">
@@ -106,21 +120,6 @@ permalink: /projects/
     </div>
     <div class="project-links">
       <a href="https://github.com/yourusername/sdoh-extraction">GitHub</a>
-    </div>
-  </div>
-
-  <div class="project-card">
-    <h3>Contrast Phase Classification</h3>
-    <p>Deep learning model for automated classification of CT scan contrast phases. Improves radiology workflow efficiency and image quality control.</p>
-    <p><strong>Performance:</strong> 95%+ accuracy</p>
-    <div class="project-tags">
-      <span class="tag">Python</span>
-      <span class="tag">Deep Learning</span>
-      <span class="tag">Medical Imaging</span>
-      <span class="tag">TensorFlow</span>
-    </div>
-    <div class="project-links">
-      <a href="https://github.com/yourusername/contrast-classifier">GitHub</a>
     </div>
   </div>
 
