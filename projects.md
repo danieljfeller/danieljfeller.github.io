@@ -8,8 +8,8 @@ permalink: /projects/
 
 <div class="projects-grid">
   <div class="project-card">
-    <h3>Federated Learning Platform</h3>
-    <p>Led development of federated computing platform enabling multi-site healthcare collaborations. Supports genomic data analysis, clinical trial prescreening, and ML model training across institutions without data movement.</p>
+    <h3>Eli Lily Tunelab</h3>
+    <p>Led the initial development of Tunelab, an AI/ML platform launched by Eli Lily that provides biotech companies access to drug discovery models trained on Lilly's proprietary data. The platform uses federated learning technology hosted by Rhino to enable smaller biotechs to leverage Lilly's AI capabilities without directly exposing either party's proprietary molecular data. In exchange for access to models trained on data from hundreds of thousands of unique molecules, biotech partners contribute their own training data to continuously improve the platform for the broader ecosystem.Retry </p>
     <p><strong>Impact:</strong> Enabled 15+ pharmaceutical partnerships while maintaining HIPAA compliance.</p>
     <div class="project-tags">
       <span class="tag">Python</span>
@@ -23,8 +23,9 @@ permalink: /projects/
   </div>
 
   <div class="project-card">
-    <h3>Healthcare Data Harmonization Toolkit</h3>
-    <p>Built tools for harmonizing clinical data across multiple standards (OMOP, FHIR, custom schemas). Includes validation frameworks, concept mapping utilities, and data quality checks.</p>
+    <h3>Data Harmonization Engine (RhinoDHE)</h3>
+    <p>Led the development of the RhinoDHE, which uses GenAI to streamline data harmonization with human in the loop validation while ensuring data stays behind the data custodians' firewalls.
+  </p>
     <div class="project-tags">
       <span class="tag">Python</span>
       <span class="tag">OMOP</span>
@@ -33,6 +34,35 @@ permalink: /projects/
     </div>
     <div class="project-links">
       <a href="https://github.com/yourusername/data-harmonization">GitHub</a>
+    </div>
+  </div>
+
+  <div class="project-card">
+    <h3>RAG (Retrieval Augmented Generation) System for Healthcare Benefits</h3>
+    <p>Created a chatbot for Rightway's care coordination staff to submit queries about the insurance coverage of a specific procedure or medication. Required parsing of Explanation of Benefits documents from a handful of distinct health insurers. </p>
+    <div class="project-tags">
+      <span class="tag">Python</span>
+      <span class="tag">OpenAI API</span>
+      <span class="tag">RAG</span>
+    </div>
+    <div class="project-links">
+      <a href="https://github.com/yourusername/pgd-analytics">GitHub</a>
+    </div>
+  </div>
+
+
+  <div class="project-card">
+    <h3>Patient Data Visual Analytics</h3>
+    <p>Interactive visualization system for pattern recognition in patient-generated health data. Features automated anomaly detection and temporal pattern discovery.</p>
+    <p><strong>Published:</strong> JAMIA</p>
+    <div class="project-tags">
+      <span class="tag">Python</span>
+      <span class="tag">D3.js</span>
+      <span class="tag">Flask</span>
+      <span class="tag">ML</span>
+    </div>
+    <div class="project-links">
+      <a href="https://github.com/yourusername/pgd-analytics">GitHub</a>
     </div>
   </div>
 
