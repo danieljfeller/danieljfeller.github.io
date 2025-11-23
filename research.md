@@ -15,11 +15,11 @@ permalink: /research/
 </div>
 
 <div class="publication-item">
-  <p>Feller, Daniel J., et al. "Longitudinal analysis of social and behavioral determinants of health in the EHR: exploring the impact of patient trajectories and documentation practices." AMIA Annual Symposium Proceedings. Vol. 2019. American Medical Informatics Association, 2020. 
+  <p>Feller, Daniel J., et al. "Longitudinal analysis of social and behavioral determinants of health in the EHR: exploring the impact of patient trajectories and documentation practices." AMIA Annual Symposium Proceedings. Vol. 2019. American Medical Informatics Association, 2020.</p>
 </div>
 
 <div class="publication-item">
-  <p>Feller, Daniel J., et al. "An investigation of the information technology needs associated with delivering chronic disease care to large clinical populations." International Journal of Medical Informatics (2020): 104099. 
+  <p>Feller, Daniel J., et al. "An investigation of the information technology needs associated with delivering chronic disease care to large clinical populations." International Journal of Medical Informatics (2020): 104099.</p>
 </div>
 
 <div class="publication-item">
@@ -79,5 +79,5 @@ permalink: /research/
 </div>
 
 <div class="publication-item">
-  <p>Sakai, R.E., et al. "Vision in multiple sclerosis: the story, structure-function correlations, and models for neuroprotection." Journal of Neuro-ophthalmology 31.4 (2011): 362-373.
+  <p>Sakai, R.E., et al. "Vision in multiple sclerosis: the story, structure-function correlations, and models for neuroprotection." Journal of Neuro-ophthalmology 31.4 (2011): 362-373.</p>
 </div>
