@@ -233,6 +233,22 @@ h3 {
   color: var(--accent-color);
 }
 
+.book-cta {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.65rem 1.5rem;
+  background: var(--accent-color);
+  color: var(--bg-color);
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.book-cta:hover {
+  background: var(--accent-hover);
+  color: var(--bg-color);
+}
+
 /* Contact Section */
 .contact-info {
   display: flex;

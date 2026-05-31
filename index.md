@@ -14,7 +14,7 @@ title: About
   
   <p>I design federated computing infrastructure in healthcare and other regulated industries to collaborate without moving sensitive data. Currently at Rhino Health, I've led the design of federated computing projects with major biopharma companies and built real-world data networks spanning.</p>
 
-  <p>My background combines deep technical expertise with real-world implementation experience. I've published 30+ peer-reviewed papers on clinical NLP, HIV research, and health informatics, and I'm currently writing a book on healthcare data standards based on years of hands-on experience with OMOP and FHIR.</p>
+  <p>My background combines deep technical expertise with real-world implementation experience. I've published 30+ peer-reviewed papers on clinical NLP, HIV research, and health informatics, and I'm the author of <a href="/book/">Decoding Health Data</a>, a practical guide to healthcare data systems for data scientists and researchers.</p>
 
   <p>Previously, I led a data science team at Rightway Healthcare and completed my PhD at Columbia University researching machine learning and human-computer interaction in clinical settings. I have served as an advisor to several companies including Sword Health. </p>
 
