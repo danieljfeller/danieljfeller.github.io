@@ -7,27 +7,27 @@ permalink: /book/
 <h2>Decoding Health Data</h2>
 
 <div class="book-section">
-  <h3>A Practical Guide to Healthcare Data Systems</h3>
+  <h3>The raw data types, models, and ontologies behind health AI</h3>
 
-  <p>Healthcare data doesn't just reflect what happens to patients — it reflects the workflows, billing requirements, and institutional pressures that shape what gets recorded and how. This book bridges the gap between theoretical understanding and the practical reality of working with healthcare data.</p>
+  <p>What's actually in a <code>VCF</code>? Why does the same diagnosis have a different code in ICD-10-CM, SNOMED CT, and an OMOP <code>concept_id</code>? How do you join an X12 837 claim to a FHIR <code>Observation</code> to a BAM file? This book is about the bytes — the formats, schemas, vocabularies, and identifiers you parse, map, and model when you build on health data.</p>
 
-  <p>Spanning administrative claims, electronic health records, medical imaging, clinical trials, molecular sequencing, and patient-generated health data, <em>Decoding Health Data</em> is written for data scientists, researchers, healthcare IT professionals, and academics who need to understand not just the data formats, but the data-generating processes behind them.</p>
+  <p>Written for programmers, bioinformaticians, and data scientists. Light on theory, heavy on the concrete encodings: field layouts, controlled vocabularies, reference standards, and the edge cases that break your pipeline.</p>
+
+  <a href="https://docs.google.com/document/d/102JwC1cz2CvnRvApnWZ4AUrmqxcEDisi2-U6mPLXeYc/edit?usp=sharing" target="_blank" class="book-cta book-cta-lg">Read Decoding Health Data &rarr;</a>
 
   <h3>What's Inside</h3>
   <ul class="book-topics">
-    <li>Administrative claims: medical and pharmacy claims data, coding reliability, and analytic gotchas</li>
-    <li>Electronic health records: structured and unstructured data, lab results, device data, and clinical workflows</li>
-    <li>Medical imaging: DICOM, PACS infrastructure, and the gap between pixel data and clinical meaning</li>
-    <li>Clinical trials: CDISC standards, data collection realities, and regulatory constraints</li>
-    <li>Molecular & genomic data: sequencing pipelines, reference standards, and multi-omics integration</li>
-    <li>Patient-generated health data: wearables, CGMs, implantable devices, and EHR integration challenges</li>
-    <li>Healthcare vocabularies: ICD, CPT, LOINC, SNOMED, RxNorm, and when to use which</li>
+    <li><strong>Data models:</strong> OMOP CDM tables and <code>concept_id</code> mapping, FHIR resources and references, HL7 v2 segments, i2b2 star schema, CDISC SDTM/ADaM.</li>
+    <li><strong>Ontologies &amp; code systems:</strong> ICD-10-CM/PCS, CPT/HCPCS, SNOMED CT, LOINC, RxNorm, NDC, ATC, UMLS CUIs — crosswalks, hierarchies, and why mappings are lossy.</li>
+    <li><strong>Genomics:</strong> FASTQ/BAM/CRAM/VCF, GRCh37 vs GRCh38, variant calling, HGVS nomenclature, SNVs/indels/CNVs/SVs, annotation with VEP/SnpEff, ClinVar and gnomAD allele frequencies.</li>
+    <li><strong>Claims:</strong> X12 837/835, NCPDP scripts, DRGs, revenue codes — what the coding actually encodes versus what happened clinically.</li>
+    <li><strong>Imaging &amp; signals:</strong> DICOM tags and pixel arrays, PACS, waveform formats (EDF), and turning raw acquisitions into arrays you can train on.</li>
+    <li><strong>EHR data:</strong> structured vs free-text, LOINC-coded labs and units, flowsheets, medication records, and identifier resolution across systems.</li>
+    <li><strong>Multi-omics &amp; PGHD:</strong> linking sequence, expression, and phenotype (HPO, MONDO); wearables and CGM streams.</li>
   </ul>
 
-  <h3>Read It</h3>
-  <p>The book is available as a living document — you'll always get the most current version.</p>
-  <a href="https://docs.google.com/document/d/102JwC1cz2CvnRvApnWZ4AUrmqxcEDisi2-U6mPLXeYc/edit?usp=sharing" target="_blank" class="book-cta">Read Decoding Health Data →</a>
+  <h3>Format</h3>
+  <p>A living document, continuously updated. Each data type gets the same treatment: what it is, what's actually in it, the standard(s), the reality, and a quick reference.</p>
 
-  <h3 style="margin-top: 2rem;">Audience</h3>
-  <p>Written for technical readers who may lack deep healthcare domain expertise — data scientists, software engineers, bioinformaticians, and health IT practitioners. The goal is accessibility without sacrificing accuracy: plain language grounded in specific, concrete examples.</p>
+  <a href="https://docs.google.com/document/d/102JwC1cz2CvnRvApnWZ4AUrmqxcEDisi2-U6mPLXeYc/edit?usp=sharing" target="_blank" class="book-cta book-cta-lg">Start reading &rarr;</a>
 </div>

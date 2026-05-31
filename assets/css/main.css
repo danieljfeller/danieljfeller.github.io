@@ -417,6 +417,33 @@ h3 {
   box-shadow: var(--shadow-md);
 }
 
+/* Large, prominent CTA */
+.book-cta-lg {
+  display: block;
+  width: 100%;
+  margin: 1.75rem 0 2.5rem;
+  padding: 1.25rem 2rem;
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: var(--shadow-md);
+}
+
+.book-cta-lg:hover {
+  transform: translateY(-3px);
+}
+
+/* Inline code in book copy */
+.book-section code {
+  font-family: 'SFMono-Regular', 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.88em;
+  background: var(--accent-soft);
+  color: #5c4a14;
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+}
+
 /* ---------------- Contact ---------------- */
 .contact-info {
   display: flex;
