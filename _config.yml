@@ -15,20 +15,6 @@ plugins:
   - jekyll-feed
   - jekyll-seo-tag
 
-# Collections
-collections:
-  projects:
-    output: true
-    permalink: /projects/:path/
-
-# Defaults
-defaults:
-  - scope:
-      path: ""
-      type: "projects"
-    values:
-      layout: "project"
-
 # Exclude from build
 exclude:
   - Gemfile
