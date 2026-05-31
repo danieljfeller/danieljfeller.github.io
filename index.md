@@ -4,7 +4,7 @@ title: About
 ---
 
 <div class="hero">
-  <img src="{{ '/images/headshot.png' | relative_url }}" alt="Daniel Feller" class="hero-photo">
+  <img src="{{ '/images/hero.jpeg' | relative_url }}" alt="Daniel Feller" class="hero-photo">
   <div class="hero-text">
     <h1>Daniel Feller, PhD</h1>
     <h2>Healthcare Data Science &amp; Federated Computing</h2>

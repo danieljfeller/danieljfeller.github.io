@@ -172,9 +172,11 @@ h3::before {
 }
 
 .hero-photo {
-  width: 180px;
-  height: auto;
-  object-fit: contain;
+  width: 240px;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
   flex-shrink: 0;
 }
 
