@@ -1,10 +1,14 @@
 ---
 layout: default
-title: About
+title: Contact
+permalink: /contact/
 ---
 
 <div class="hero">
-  <p class="tagline">Senior Solutions Engineer at Rhino Health | PhD in Biomedical Informatics</p>
+  <div class="hero-text">
+    <h1>Get in Touch</h1>
+    <p class="tagline">Senior Solutions Engineer at Rhino Health | PhD in Biomedical Informatics</p>
+  </div>
 </div>
 
 <section class="about-content">
