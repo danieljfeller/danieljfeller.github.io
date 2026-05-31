@@ -1,12 +1,21 @@
-/* Gradfolio Dark Theme */
+/* ============================================================
+   Daniel Feller — Regal Light Theme
+   Ivory + deep navy, brass accents. Playfair Display + Inter.
+   ============================================================ */
+
 :root {
-  --bg-color: #0d1117;
-  --bg-secondary: #161b22;
-  --text-color: #c9d1d9;
-  --text-secondary: #8b949e;
-  --accent-color: #58a6ff;
-  --accent-hover: #79c0ff;
-  --border-color: #30363d;
+  --bg-color: #f7f4ec;          /* warm ivory */
+  --bg-secondary: #fffdf7;      /* card / surface */
+  --text-color: #1a2238;        /* deep navy */
+  --text-secondary: #4a5169;    /* muted slate-navy */
+  --accent-color: #b08d2e;      /* brass */
+  --accent-hover: #8c6f22;      /* darker brass */
+  --accent-soft: #e9dcb6;       /* pale brass wash */
+  --border-color: #e4ddca;      /* warm tan */
+  --shadow-sm: 0 1px 3px rgba(26, 34, 56, 0.06);
+  --shadow-md: 0 10px 30px rgba(26, 34, 56, 0.10);
+  --serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 * {
@@ -16,31 +25,46 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  font-family: var(--sans);
   background-color: var(--bg-color);
   color: var(--text-color);
-  line-height: 1.6;
-  font-size: 16px;
+  line-height: 1.7;
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 a {
-  color: var(--accent-color);
+  color: var(--accent-hover);
   text-decoration: none;
   transition: color 0.2s;
 }
 
 a:hover {
-  color: var(--accent-hover);
+  color: var(--accent-color);
 }
 
-/* Header */
+/* Headings */
+h1, h2, h3, h4 {
+  font-family: var(--serif);
+  color: var(--text-color);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+/* ---------------- Header ---------------- */
 header {
-  padding: 2rem 0;
+  padding: 1.75rem 0;
   border-bottom: 1px solid var(--border-color);
+  background: rgba(247, 244, 236, 0.85);
+  backdrop-filter: saturate(140%) blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .header-content {
-  max-width: 900px;
+  max-width: 920px;
   margin: 0 auto;
   padding: 0 2rem;
   display: flex;
@@ -49,9 +73,15 @@ header {
 }
 
 .site-title {
+  font-family: var(--serif);
   font-size: 1.5rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-color);
+  letter-spacing: 0.01em;
+}
+
+.site-title:hover {
+  color: var(--accent-hover);
 }
 
 nav ul {
@@ -63,52 +93,63 @@ nav ul {
 nav a {
   color: var(--text-secondary);
   font-weight: 500;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding-bottom: 0.35rem;
+  border-bottom: 1.5px solid transparent;
 }
 
 nav a:hover,
 nav a.active {
-  color: var(--accent-color);
+  color: var(--text-color);
+  border-bottom-color: var(--accent-color);
 }
 
-/* Main Content */
+/* ---------------- Main ---------------- */
 main {
-  max-width: 900px;
+  max-width: 920px;
   margin: 0 auto;
-  padding: 4rem 2rem;
-  min-height: calc(100vh - 200px);
+  padding: 4.5rem 2rem;
+  min-height: calc(100vh - 220px);
 }
 
-/* Hero Section */
+/* ---------------- Hero ---------------- */
 .hero {
   margin-bottom: 4rem;
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 2.5rem;
 }
 
 .hero-photo {
-  width: 140px;
-  height: 140px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid var(--border-color);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 0 0 6px var(--bg-secondary), 0 0 0 7px var(--accent-soft), var(--shadow-md);
   flex-shrink: 0;
 }
 
 .hero h1 {
-  font-size: 2.5rem;
+  font-size: 3rem;
+  font-weight: 700;
   margin-bottom: 0.5rem;
-  line-height: 1.2;
+  letter-spacing: -0.01em;
 }
 
 .hero h2 {
   font-size: 1.4rem;
-  margin-bottom: 0.75rem;
-  color: var(--accent-color);
+  font-weight: 600;
+  font-style: italic;
+  color: var(--accent-hover);
+  margin-bottom: 0.85rem;
 }
 
 .hero .tagline {
-  font-size: 1.1rem;
+  font-family: var(--sans);
+  font-size: 1.05rem;
   color: var(--text-secondary);
   margin-bottom: 0;
 }
@@ -120,50 +161,73 @@ main {
   max-width: 700px;
 }
 
-/* Section Headings */
+/* ---------------- Section Headings ---------------- */
 h2 {
-  font-size: 2rem;
-  margin-bottom: 2rem;
-  color: var(--text-color);
+  font-size: 2.1rem;
+  margin-bottom: 1.75rem;
+  position: relative;
+  padding-bottom: 0.6rem;
+}
+
+h2:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 56px;
+  height: 2px;
+  background: var(--accent-color);
 }
 
 h3 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+  font-size: 1.55rem;
+  margin: 2.5rem 0 1.25rem;
   color: var(--text-color);
 }
 
-/* About Section */
+/* ---------------- About ---------------- */
 .about-content p {
   margin-bottom: 1.5rem;
   color: var(--text-secondary);
   line-height: 1.8;
+  font-size: 1.05rem;
 }
 
-/* Projects Grid */
+.about-content p a {
+  font-weight: 500;
+  border-bottom: 1px solid var(--accent-soft);
+}
+
+.about-content p a:hover {
+  border-bottom-color: var(--accent-color);
+}
+
+/* ---------------- Projects / Cards ---------------- */
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
+  gap: 1.75rem;
   margin-top: 2rem;
 }
 
 .project-card {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 1.5rem;
-  transition: transform 0.2s, border-color 0.2s;
+  border-radius: 10px;
+  padding: 1.75rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
 .project-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-5px);
   border-color: var(--accent-color);
+  box-shadow: var(--shadow-md);
 }
 
 .project-card h3 {
-  margin-bottom: 0.75rem;
-  font-size: 1.25rem;
+  margin: 0 0 0.75rem;
+  font-size: 1.3rem;
 }
 
 .project-card p {
@@ -179,66 +243,86 @@ h3 {
 }
 
 .tag {
-  background: var(--bg-color);
+  background: transparent;
   border: 1px solid var(--border-color);
-  padding: 0.25rem 0.75rem;
-  border-radius: 12px;
-  font-size: 0.85rem;
+  padding: 0.25rem 0.8rem;
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 500;
   color: var(--text-secondary);
+  transition: all 0.2s;
+}
+
+.tag:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-hover);
 }
 
 .project-links {
-  margin-top: 1rem;
+  margin-top: 1.25rem;
   display: flex;
   gap: 1rem;
+  font-weight: 500;
 }
 
-/* Publications */
+/* ---------------- Publications ---------------- */
 .publication-item {
-  margin-bottom: 2rem;
-  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding: 1.4rem 1.6rem;
   background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
   border-left: 3px solid var(--accent-color);
-  border-radius: 4px;
+  border-radius: 6px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s;
+}
+
+.publication-item:hover {
+  box-shadow: var(--shadow-md);
 }
 
 .publication-item p {
   color: var(--text-secondary);
-  line-height: 1.8;
+  line-height: 1.75;
+  margin: 0;
 }
 
 .pdf-link {
-  color: var(--accent-color);
+  color: var(--accent-hover);
   font-weight: 600;
-  margin-left: 0.5rem;
+  margin-left: 0.4rem;
 }
 
-/* Experience */
+/* ---------------- Experience ---------------- */
 .experience-item {
   margin-bottom: 1.75rem;
-  padding: 1.25rem 1.5rem;
+  padding: 1.5rem 1.75rem;
   background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
   border-left: 3px solid var(--accent-color);
-  border-radius: 4px;
+  border-radius: 6px;
+  box-shadow: var(--shadow-sm);
 }
 
 .experience-item h4 {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   color: var(--text-color);
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.2rem;
 }
 
 .exp-meta {
-  font-size: 0.85rem;
+  font-family: var(--sans);
+  font-size: 0.82rem;
   font-weight: 400;
   color: var(--text-secondary);
+  letter-spacing: 0.04em;
   margin-left: 0.5rem;
 }
 
 .exp-role {
   font-style: italic;
-  color: var(--text-secondary);
-  margin-bottom: 0.75rem;
+  color: var(--accent-hover);
+  margin-bottom: 0.85rem;
 }
 
 .experience-item ul {
@@ -248,14 +332,14 @@ h3 {
 
 .experience-item li {
   position: relative;
-  padding-left: 1.25rem;
-  margin-bottom: 0.5rem;
+  padding-left: 1.4rem;
+  margin-bottom: 0.55rem;
   color: var(--text-secondary);
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 .experience-item li:before {
-  content: "▹";
+  content: "\2014";  /* em dash */
   position: absolute;
   left: 0;
   color: var(--accent-color);
@@ -263,21 +347,27 @@ h3 {
 
 .exp-earlier {
   color: var(--text-secondary);
-  font-size: 0.95rem;
+  font-size: 0.97rem;
   margin-bottom: 1.5rem;
 }
 
-/* Book Section */
+/* ---------------- Book ---------------- */
 .book-section {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 2rem;
+  border-radius: 10px;
+  padding: 2.5rem;
   margin-top: 2rem;
+  box-shadow: var(--shadow-sm);
 }
 
 .book-section h3 {
-  color: var(--accent-color);
+  color: var(--accent-hover);
+  margin-top: 2rem;
+}
+
+.book-section h3:first-of-type {
+  margin-top: 0;
 }
 
 .book-section p {
@@ -293,35 +383,41 @@ h3 {
 
 .book-topics li {
   padding: 0.5rem 0;
-  padding-left: 1.5rem;
+  padding-left: 1.75rem;
   color: var(--text-secondary);
   position: relative;
 }
 
 .book-topics li:before {
-  content: "→";
+  content: "\2726";  /* four-pointed star */
   position: absolute;
   left: 0;
   color: var(--accent-color);
+  font-size: 0.8rem;
+  top: 0.7rem;
 }
 
 .book-cta {
   display: inline-block;
   margin-top: 1rem;
-  padding: 0.65rem 1.5rem;
+  padding: 0.75rem 1.75rem;
   background: var(--accent-color);
-  color: var(--bg-color);
+  color: #fffdf7;
   border-radius: 6px;
   font-weight: 600;
-  transition: background 0.2s;
+  letter-spacing: 0.02em;
+  box-shadow: var(--shadow-sm);
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 
 .book-cta:hover {
   background: var(--accent-hover);
-  color: var(--bg-color);
+  color: #fffdf7;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
-/* Contact Section */
+/* ---------------- Contact ---------------- */
 .contact-info {
   display: flex;
   flex-direction: column;
@@ -343,59 +439,75 @@ h3 {
 }
 
 .social-links a {
-  font-size: 1.1rem;
-  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  padding: 0.55rem 1.2rem;
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
-  border-radius: 4px;
+  border-radius: 6px;
+  font-weight: 500;
   transition: all 0.2s;
 }
 
 .social-links a:hover {
   border-color: var(--accent-color);
-  background: var(--bg-color);
+  box-shadow: var(--shadow-sm);
 }
 
-/* Footer */
+/* ---------------- Footer ---------------- */
 footer {
   border-top: 1px solid var(--border-color);
-  padding: 2rem 0;
+  padding: 2.5rem 0;
   text-align: center;
   color: var(--text-secondary);
+  font-size: 0.9rem;
 }
 
 .footer-content {
-  max-width: 900px;
+  max-width: 920px;
   margin: 0 auto;
   padding: 0 2rem;
 }
 
-/* Responsive */
+/* ---------------- Responsive ---------------- */
 @media (max-width: 768px) {
+  body {
+    font-size: 16px;
+  }
+
   .header-content {
     flex-direction: column;
     gap: 1rem;
   }
 
   nav ul {
-    gap: 1rem;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  header {
+    position: static;
   }
 
   .hero {
     flex-direction: column;
     text-align: center;
-    gap: 1.25rem;
+    gap: 1.5rem;
   }
 
   .hero h1 {
-    font-size: 2rem;
+    font-size: 2.25rem;
+  }
+
+  main {
+    padding: 2.5rem 1.25rem;
+  }
+
+  .book-section {
+    padding: 1.75rem;
   }
 
   .projects-grid {
     grid-template-columns: 1fr;
-  }
-
-  main {
-    padding: 2rem 1rem;
   }
 }
