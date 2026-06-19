@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AACR BrCa → GDM ETL Plan</title>
+<style>
+:root {
+  --navy-500: #092238;
+  --blue-500: #0b2f50;
+  --navy-300: #6b7a88;
+  --blue:     #1a77cc;
+  --teal:     #00d1b9;
+  --pink:     #f3afff;
+  --white:    #ffffff;
+
+  --bg:       var(--navy-500);
+  --surface:  var(--blue-500);
+  --surface2: #0d3a60;
+  --border:   #1c3f5e;
+  --text:     var(--white);
+  --muted:    var(--navy-300);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.page { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
+
+/* ── Header ── */
+.header {
+  background: linear-gradient(135deg, var(--blue-500) 0%, #0a3462 60%, var(--navy-500) 100%);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 32px;
+  margin-bottom: 36px;
+  position: relative;
+  overflow: hidden;
+}
+.header::after {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 260px; height: 260px;
+  background: radial-gradient(circle, rgba(0,209,185,.18) 0%, transparent 65%);
+  pointer-events: none;
+}
+.header h1 { font-size: 26px; font-weight: 700; color: var(--white); margin-bottom: 6px; position: relative; }
+.header h1 .arr { color: var(--teal); }
+.header .subtitle { color: var(--muted); font-size: 13px; position: relative; }
+.tag {
+  display: inline-block;
+  background: rgba(0,209,185,.15);
+  border: 1px solid rgba(0,209,185,.4);
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 11px; font-weight: 600;
+  color: var(--teal);
+  margin-left: 8px;
+}
+
+/* ── Section headings ── */
+h2 {
+  font-size: 16px; font-weight: 700;
+  color: var(--teal);
+  margin: 36px 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 8px;
+}
+h2::before {
+  content: '';
+  display: block;
+  width: 4px; height: 17px;
+  background: var(--teal);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+h3 { font-size: 13px; font-weight: 600; color: var(--pink); margin: 18px 0 8px; }
+
+/* ── Stats cards ── */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px,1fr)); gap: 14px; margin-bottom: 28px; }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--teal);
+  border-radius: 10px;
+  padding: 16px;
+}
+.card .label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 6px; }
+.card .value { font-size: 22px; font-weight: 700; }
+.card .sub   { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+/* ── Lineage chart ── */
+.lineage-wrap { position: relative; margin-bottom: 10px; }
+.lineage-cols { display: flex; gap: 0; position: relative; z-index: 2; }
+.lineage-col  { display: flex; flex-direction: column; gap: 5px; }
+.lineage-col.sources { width: 40%; }
+.lineage-col.targets { width: 40%; margin-left: auto; }
+.lineage-col .col-label {
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--muted); font-weight: 600; margin-bottom: 3px;
+}
+.lineage-col .sub-label {
+  font-size: 9px; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--teal); font-weight: 600; padding: 5px 10px 2px;
+  border-top: 1px solid rgba(0,209,185,.15); margin-top: 3px;
+  opacity: 0.8;
+}
+.lnode {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-size: 11px;
+  font-family: "SF Mono","Fira Code",monospace;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex; align-items: center; gap: 6px;
+  transition: border-color .15s, box-shadow .15s;
+  cursor: default;
+}
+.lnode:hover { border-color: var(--teal); box-shadow: 0 0 0 2px rgba(0,209,185,.12); }
+.lnode .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.lnode.core .dot    { background: var(--blue); }
+.lnode.ext  .dot    { background: var(--teal); }
+.lnode.genomic .dot { background: var(--pink); }
+.lnode.tgt-core     { border-left: 3px solid var(--blue); }
+.lnode.tgt-ext      { border-left: 3px solid var(--teal); }
+.lineage-svg-layer  {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none; z-index: 1;
+  overflow: visible;
+}
+.lineage-legend {
+  display: flex; gap: 20px; flex-wrap: wrap;
+  margin-top: 10px; margin-bottom: 4px;
+}
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); }
+.legend-dot  { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.legend-line { width: 22px; height: 2px; border-radius: 1px; flex-shrink: 0; }
+
+/* ── Pipeline overview ── */
+.pipeline { display: flex; align-items: stretch; overflow-x: auto; margin: 14px 0 28px; gap: 0; }
+.pipe-box {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 14px 18px; min-width: 175px; flex: 1;
+}
+.pipe-box .title { font-size: 10px; text-transform: uppercase; letter-spacing: .1em; color: var(--teal); font-weight: 600; margin-bottom: 8px; }
+.pipe-box ul { list-style: none; font-size: 12px; }
+.pipe-box ul li { padding: 1px 0; }
+.pipe-arrow { display: flex; align-items: center; padding: 0 8px; color: var(--teal); font-size: 18px; }
+
+/* ── Field mapping tables ── */
+.table-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 14px; overflow: hidden; }
+.table-panel-header {
+  background: linear-gradient(90deg, rgba(26,119,204,.14) 0%, transparent 80%);
+  border-bottom: 1px solid var(--border);
+  padding: 11px 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+.table-panel-header .name { font-weight: 700; font-size: 13px; font-family: "SF Mono",monospace; color: var(--teal); }
+.table-panel-header .desc { font-size: 12px; color: var(--muted); }
+.table-panel-header .badge {
+  margin-left: auto; font-size: 10px; white-space: nowrap;
+  background: rgba(26,119,204,.15); border: 1px solid rgba(26,119,204,.3);
+  border-radius: 4px; padding: 2px 8px; color: var(--blue);
+}
+.field-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.field-table th {
+  background: rgba(9,34,56,.85); color: var(--muted);
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  padding: 6px 12px; text-align: left; border-bottom: 1px solid var(--border);
+}
+.field-table td { padding: 7px 12px; border-bottom: 1px solid rgba(28,63,94,.5); vertical-align: top; }
+.field-table tr:last-child td { border-bottom: none; }
+.field-table tr:hover td { background: rgba(0,209,185,.04); }
+.mono { font-family: "SF Mono","Fira Code",monospace; color: var(--pink); font-size: 11px; }
+.req  { color: var(--teal); font-size: 10px; font-weight: 700; }
+.opt  { color: var(--muted); font-size: 10px; }
+.transform {
+  background: rgba(26,119,204,.14); border: 1px solid rgba(26,119,204,.22);
+  border-radius: 4px; padding: 2px 6px;
+  font-family: "SF Mono",monospace; font-size: 11px; color: #7ec8f7;
+}
+.derived {
+  background: rgba(0,209,185,.1); border: 1px solid rgba(0,209,185,.22);
+  border-radius: 4px; padding: 2px 6px;
+  font-family: "SF Mono",monospace; font-size: 11px; color: var(--teal);
+}
+.note-bar {
+  padding: 9px 12px;
+  background: rgba(9,34,56,.7);
+  font-size: 11px; color: var(--muted);
+  border-top: 1px solid var(--border);
+}
+.note-bar strong { color: var(--pink); }
+
+/* ── Source inventory (bottom) ── */
+.inv-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.inv-table tr.folder-group td {
+  background: rgba(0,209,185,.07); color: var(--teal);
+  font-family: "SF Mono","Fira Code",monospace; font-size: 11px; font-weight: 600;
+  letter-spacing: .04em; padding: 6px 12px;
+  border-top: 1px solid rgba(0,209,185,.2); border-bottom: none;
+}
+.inv-table th {
+  background: var(--surface); color: var(--muted);
+  font-size: 10px; text-transform: uppercase; letter-spacing: .08em;
+  padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--border);
+}
+.inv-table td { padding: 8px 12px; border-bottom: 1px solid rgba(28,63,94,.5); vertical-align: top; }
+.inv-table tr:last-child td { border-bottom: none; }
+.inv-table tr:hover td { background: rgba(0,209,185,.04); }
+.pill { display: inline-block; padding: 2px 7px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+.pill.core    { background: rgba(26,119,204,.2);  color: var(--blue); }
+.pill.ext     { background: rgba(0,209,185,.12);  color: var(--teal); }
+.pill.genomic { background: rgba(243,175,255,.12); color: var(--pink); }
+.pill.skip    { background: rgba(107,122,136,.18); color: var(--muted); }
+
+/* ── Vocab maps ── */
+.vocab-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.vocab-box  { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.vocab-box table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.vocab-box caption {
+  font-weight: 600; font-size: 11px; color: var(--teal);
+  padding: 7px 10px; text-align: left;
+  background: rgba(0,209,185,.08); border-bottom: 1px solid var(--border);
+}
+.vocab-box th { background: rgba(9,34,56,.8); color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .08em; padding: 6px 10px; text-align: left; }
+.vocab-box td { padding: 5px 10px; border-top: 1px solid rgba(28,63,94,.5); }
+.vocab-box td:first-child { font-family: "SF Mono",monospace; color: var(--pink); }
+
+/* ── Challenges ── */
+.challenge-list { list-style: none; }
+.challenge-list li {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 6px; padding: 12px 16px; margin-bottom: 10px;
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.challenge-list .icon { font-size: 17px; flex-shrink: 0; margin-top: 2px; }
+.challenge-list .body strong { display: block; margin-bottom: 3px; font-size: 13px; }
+.challenge-list .body p { font-size: 12px; color: var(--muted); }
+.challenge-list code {
+  font-family: "SF Mono",monospace; font-size: 11px;
+  color: var(--pink); background: rgba(243,175,255,.1);
+  padding: 1px 4px; border-radius: 3px;
+}
+
+/* ── Implementation steps ── */
+.steps { list-style: none; counter-reset: step; }
+.steps li {
+  counter-increment: step;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 6px; padding: 14px 16px 14px 56px;
+  margin-bottom: 10px; position: relative;
+}
+.steps li::before {
+  content: counter(step);
+  position: absolute; left: 16px; top: 14px;
+  width: 28px; height: 28px;
+  background: var(--blue); color: white; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 13px; line-height: 28px; text-align: center;
+}
+.steps li strong { display: block; font-size: 13px; margin-bottom: 4px; }
+.steps li p { font-size: 12px; color: var(--muted); }
+.steps li code {
+  font-family: "SF Mono",monospace; font-size: 11px;
+  color: var(--pink); background: rgba(243,175,255,.1);
+  padding: 1px 4px; border-radius: 3px;
+}
+
+/* ── Execution order ── */
+.exec-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(190px,1fr)); gap: 12px; }
+.exec-node {
+  background: var(--surface); border: 1px solid var(--border);
+  border-top: 3px solid var(--blue); border-radius: 8px; padding: 12px;
+}
+.exec-node .order { font-size: 22px; font-weight: 800; color: rgba(26,119,204,.35); line-height: 1; margin-bottom: 6px; }
+.exec-node .fname { font-family: "SF Mono",monospace; font-size: 11px; color: var(--teal); margin-bottom: 4px; }
+.exec-node .source { font-size: 11px; color: var(--muted); }
+.exec-node .depends { font-size: 10px; color: var(--pink); margin-top: 6px; }
+
+/* ── Resource links ── */
+.resource-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+.resource-card {
+  display: flex; align-items: center; gap: 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 16px 20px;
+  text-decoration: none; color: var(--text);
+  transition: border-color .15s, box-shadow .15s;
+}
+.resource-card:hover {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 2px rgba(0,209,185,.1);
+}
+.resource-icon { font-size: 22px; flex-shrink: 0; width: 32px; text-align: center; }
+.resource-body { flex: 1; min-width: 0; }
+.resource-title { font-weight: 700; font-size: 14px; margin-bottom: 2px; }
+.resource-desc  { font-size: 12px; color: var(--muted); }
+.resource-url   { font-size: 11px; color: var(--teal); margin-top: 3px; font-family: "SF Mono","Fira Code",monospace; }
+.resource-arrow { font-size: 18px; color: var(--muted); flex-shrink: 0; }
+.resource-card:hover .resource-arrow { color: var(--teal); }
+
+.footer-note {
+  margin-top: 40px; padding: 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; font-size: 12px; color: var(--muted);
+}
+.footer-note strong { color: var(--text); }
+
+@media (max-width: 700px) {
+  .vocab-cols { grid-template-columns: 1fr; }
+  .grid { grid-template-columns: 1fr 1fr; }
+  .pipeline { flex-direction: column; }
+  .lineage-col.sources, .lineage-col.targets { width: 100%; }
+  .lineage-svg-layer { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ═══════════════════════════════ HEADER ═══════════════════════════════ -->
+<div class="header">
+  <h1>BPC BrCa <span class="arr">→</span> GDM Data Model v1.0.1</h1>
+</div>
+
+<!-- ═══════════════════════════ LINEAGE CHART ════════════════════════════ -->
+<h2>Data Lineage</h2>
+<div class="lineage-wrap" id="lineage-container">
+  <div class="lineage-cols">
+
+    <!-- SOURCES -->
+    <div class="lineage-col sources">
+      <div class="col-label">Source Files</div>
+      <div class="sub-label">cBioPortal_files/</div>
+      <div class="lnode core"    id="src-clin-pt">   <div class="dot"></div>data_clinical_patient.txt</div>
+      <div class="lnode core"    id="src-clin-samp"> <div class="dot"></div>data_clinical_sample.txt</div>
+      <div class="lnode genomic" id="src-mut">       <div class="dot"></div>data_mutations_extended.txt</div>
+      <div class="sub-label">clinical_data/</div>
+      <div class="lnode core"    id="src-pt-level">  <div class="dot"></div>patient_level_dataset.csv</div>
+      <div class="lnode ext"     id="src-ca-idx">    <div class="dot"></div>cancer_level_dataset_index.csv</div>
+      <div class="lnode ext"     id="src-ca-nonidx"> <div class="dot"></div>cancer_level_dataset_non_index.csv</div>
+      <div class="lnode ext"     id="src-cpt">       <div class="dot"></div>cancer_panel_test_level_dataset.csv</div>
+      <div class="lnode ext"     id="src-regimen">   <div class="dot"></div>regimen_cancer_level_dataset.csv</div>
+      <div class="lnode ext"     id="src-imaging">   <div class="dot"></div>imaging_level_dataset.csv</div>
+      <div class="lnode ext"     id="src-medonc">    <div class="dot"></div>med_onc_note_level_dataset.csv</div>
+      <div class="lnode ext"     id="src-path">      <div class="dot"></div>pathology_report_level_dataset.csv</div>
+      <div class="lnode ext"     id="src-tm">        <div class="dot"></div>tm_level_dataset.csv</div>
+    </div>
+
+    <!-- TARGETS -->
+    <div class="lineage-col targets">
+      <div class="col-label">GDM Output Tables</div>
+      <div class="lnode tgt-core" id="tgt-clin-pt">   <div class="dot" style="background:var(--blue)"></div>clinical_patient</div>
+      <div class="lnode tgt-core" id="tgt-clin-samp">  <div class="dot" style="background:var(--blue)"></div>clinical_sample</div>
+      <div class="lnode tgt-core" id="tgt-mut">        <div class="dot" style="background:var(--blue)"></div>mutations</div>
+      <div class="lnode tgt-ext"  id="tgt-pt-info">    <div class="dot" style="background:var(--teal)"></div>cancer_patient_information</div>
+      <div class="lnode tgt-ext"  id="tgt-ca-dx">      <div class="dot" style="background:var(--teal)"></div>cancer_diagnosis</div>
+      <div class="lnode tgt-ext"  id="tgt-visit">      <div class="dot" style="background:var(--teal)"></div>clinical_visits</div>
+      <div class="lnode tgt-ext"  id="tgt-drug">       <div class="dot" style="background:var(--teal)"></div>drug_exposure</div>
+      <div class="lnode tgt-ext"  id="tgt-imaging">    <div class="dot" style="background:var(--teal)"></div>imaging</div>
+      <div class="lnode tgt-ext"  id="tgt-surg">       <div class="dot" style="background:var(--teal)"></div>surgical_procedures</div>
+      <div class="lnode tgt-ext"  id="tgt-lab">        <div class="dot" style="background:var(--teal)"></div>laboratory_testing</div>
+      <div class="lnode tgt-ext"  id="tgt-tumor-samp"> <div class="dot" style="background:var(--teal)"></div>tumor_sample_information</div>
+    </div>
+
+  </div>
+  <svg class="lineage-svg-layer" id="lineage-svg"></svg>
+</div>
+
+<div class="lineage-legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>Core GENIE source</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--teal)"></div>Extended GDM source</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--pink)"></div>Genomic source</div>
+  <div class="legend-item"><div class="legend-line" style="background:var(--blue)"></div>→ Core GENIE table</div>
+  <div class="legend-item"><div class="legend-line" style="background:var(--teal)"></div>→ Extended GDM table</div>
+</div>
+
+<!-- ═══════════════════════════ RESOURCES ════════════════════════════════ -->
+<h2>Resources</h2>
+<div class="resource-list">
+  <a class="resource-card" href="https://www.aacr.org/professionals/research/aacr-project-genie/bpc/early-onset-brca/" target="_blank" rel="noopener">
+    <div class="resource-icon">📋</div>
+    <div class="resource-body">
+      <div class="resource-title">Dataset Information</div>
+      <div class="resource-desc">AACR Project GENIE BPC · Early-Onset Breast Cancer</div>
+      <div class="resource-url">aacr.org</div>
+    </div>
+    <div class="resource-arrow">↗</div>
+  </a>
+  <a class="resource-card" href="https://www.synapse.org/DownloadCart:0" target="_blank" rel="noopener">
+    <div class="resource-icon">⬇</div>
+    <div class="resource-body">
+      <div class="resource-title">Download Source Data</div>
+      <div class="resource-desc">AACR GENIE BPC BrCa v1.0-public · Synapse repository</div>
+      <div class="resource-url">synapse.org · DownloadCart — Downloaded June 18, 2026 · 5:44 PM EST</div>
+    </div>
+    <div class="resource-arrow">↗</div>
+  </a>
+  <a class="resource-card" href="https://github.com/AACR-Project-GENIE/GENIE-data-model/tree/main/GDM_v1.0.1" target="_blank" rel="noopener">
+    <div class="resource-icon">📐</div>
+    <div class="resource-body">
+      <div class="resource-title">Target Data Model</div>
+      <div class="resource-desc">GENIE Data Model v1.0.1 · Full schema specification</div>
+      <div class="resource-url">github.com · AACR-Project-GENIE/GENIE-data-model</div>
+    </div>
+    <div class="resource-arrow">↗</div>
+  </a>
+</div>
+
+<!-- ═══════════════════════ FIELD-LEVEL MAPPINGS ═══════════════════════ -->
+<h2>Field-Level ETL Mappings</h2>
+<p style="color:var(--muted);font-size:12px;margin-bottom:18px;">Req = Required field. <span class="transform">MAP()</span> = controlled vocabulary lookup. <span class="derived">derived</span> = computed from multiple fields.</p>
+
+<!-- clinical_patient -->
+<div class="table-panel">
+  <div class="table-panel-header">
+    <div><div class="name">clinical_patient</div><div class="desc">Core GENIE · one row per patient · primary key for entire model</div></div>
+    <div class="badge">data_clinical_patient.txt + patient_level_dataset.csv</div>
+  </div>
+  <table class="field-table">
+    <thead><tr><th>GDM Field</th><th>Req</th><th>Source Field(s)</th><th>Transform</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">PATIENT_ID</td><td class="req">YES</td><td class="mono">#Patient Identifier</td><td>Pass through — already GENIE-DFCI-###### format</td></tr>
+      <tr><td class="mono">SEX</td><td class="req">YES</td><td class="mono">Sex</td><td>Pass through — "Male"/"Female"/"Unknown"</td></tr>
+      <tr><td class="mono">PRIMARY_RACE</td><td class="req">YES</td><td class="mono">Primary Race</td><td>Pass through — already GDM-compatible values</td></tr>
+      <tr><td class="mono">ETHNICITY</td><td class="req">YES</td><td class="mono">Ethnicity Category</td><td>Pass through</td></tr>
+      <tr><td class="mono">BIRTH_YEAR</td><td class="req">YES</td><td class="mono">Year of Birth</td><td>Pass through integer</td></tr>
+      <tr><td class="mono">CENTER</td><td class="req">YES</td><td class="mono">Center</td><td>Pass through (e.g. "DFCI")</td></tr>
+      <tr><td class="mono">YEAR_CONTACT</td><td class="req">YES</td><td class="mono">patient_level_dataset: birth_year + first_index_ca_days</td><td><span class="derived">derived</span>: int(birth_year + first_index_ca_days / 365.25)</td></tr>
+      <tr><td class="mono">INT_CONTACT</td><td class="req">YES</td><td class="mono">patient_level_dataset: first_index_ca_days</td><td><span class="derived">derived</span>: floor(first_index_ca_days / 30.44) → months</td></tr>
+      <tr><td class="mono">DEAD</td><td class="req">YES</td><td class="mono">patient_level_dataset: hybrid_death_int</td><td><span class="derived">derived</span>: 1 if non-null/non-empty, else 0</td></tr>
+      <tr><td class="mono">YEAR_DEATH</td><td class="opt">no</td><td class="mono">hybrid_death_int, birth_year</td><td><span class="derived">derived</span>: str(int(birth_year + hybrid_death_int/365.25)) when DEAD=1, else "Unknown"</td></tr>
+      <tr><td class="mono">INT_DOD</td><td class="opt">no</td><td class="mono">hybrid_death_int</td><td><span class="derived">derived</span>: str(int(hybrid_death_int/30.44)) when DEAD=1, else "Unknown"</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- clinical_sample -->
+<div class="table-panel">
+  <div class="table-panel-header">
+    <div><div class="name">clinical_sample</div><div class="desc">Core GENIE · one row per sequenced tumor sample</div></div>
+    <div class="badge">data_clinical_sample.txt + clinical_patient output</div>
+  </div>
+  <table class="field-table">
+    <thead><tr><th>GDM Field</th><th>Req</th><th>Source Field(s)</th><th>Transform</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">SAMPLE_ID</td><td class="req">YES</td><td class="mono">#Sample Identifier</td><td>Pass through</td></tr>
+      <tr><td class="mono">PATIENT_ID</td><td class="req">YES</td><td class="mono">Patient Identifier</td><td>Pass through (FK to clinical_patient)</td></tr>
+      <tr><td class="mono">AGE_AT_SEQ_REPORT</td><td class="req">YES</td><td class="mono">Age at sequencing</td><td>Pass through integer (years)</td></tr>
+      <tr><td class="mono">ONCOTREE_CODE</td><td class="req">YES</td><td class="mono">Oncotree Code</td><td>Pass through (e.g. "BRCA", "ILC", "DCIS")</td></tr>
+      <tr><td class="mono">CANCER_TYPE</td><td class="req">YES</td><td class="mono">ONCOTREE_CODE</td><td><span class="transform">OncoTree lookup</span>: BRCA/ILC/DCIS → "Breast Invasive Carcinoma" / "Breast"</td></tr>
+      <tr><td class="mono">CANCER_TYPE_DETAILED</td><td class="req">YES</td><td class="mono">ONCOTREE_CODE</td><td><span class="transform">OncoTree lookup</span>: full label (e.g. "Invasive Lobular Breast Carcinoma")</td></tr>
+      <tr><td class="mono">SAMPLE_TYPE</td><td class="req">YES</td><td class="mono">Sample Type</td><td>Pass through — "Primary"/"Metastasis"/"Recurrence"/"Unspecified"</td></tr>
+      <tr><td class="mono">SEQ_ASSAY_ID</td><td class="req">YES</td><td class="mono">Sequence Assay ID</td><td>Pass through (e.g. "DFCI-ONCOPANEL-3")</td></tr>
+      <tr><td class="mono">YEAR_CONTACT / INT_CONTACT / CENTER</td><td class="req">YES</td><td class="mono">clinical_patient output</td><td>Left join on PATIENT_ID</td></tr>
+      <tr><td class="mono">STAGE</td><td class="opt">no</td><td class="mono">cancer_level_dataset_index: best_ajcc_stage_cd</td><td><span class="transform">MAP</span>: "Stage I"→"I", "Stage IV"→"IV" (join on record_id)</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- mutations -->
+<div class="table-panel">
+  <div class="table-panel-header">
+    <div><div class="name">mutations</div><div class="desc">Core GENIE · somatic variants · MAF format · minimal transform</div></div>
+    <div class="badge">data_mutations_extended.txt</div>
+  </div>
+  <table class="field-table">
+    <thead><tr><th>GDM Field</th><th>Req</th><th>Source Field(s)</th><th>Transform</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">SAMPLE_ID</td><td class="req">YES</td><td class="mono">Tumor_Sample_Barcode</td><td>Rename column</td></tr>
+      <tr><td class="mono">PATIENT_ID</td><td class="req">YES</td><td class="mono">Tumor_Sample_Barcode</td><td><span class="derived">derived</span>: join on data_clinical_sample; fallback regex-extract GENIE-DFCI-###### prefix</td></tr>
+      <tr><td class="mono">Hugo_Symbol</td><td class="req">YES</td><td class="mono">Hugo_Symbol</td><td>Pass through</td></tr>
+      <tr><td class="mono">Chromosome</td><td class="req">YES</td><td class="mono">Chromosome</td><td>Pass through — already no "chr" prefix</td></tr>
+      <tr><td class="mono">Start_Position</td><td class="req">YES</td><td class="mono">Start_Position</td><td>Pass through integer</td></tr>
+      <tr><td class="mono">Reference_Allele / Tumor_Seq_Allele2</td><td class="req">YES</td><td class="mono">same names</td><td>Pass through</td></tr>
+      <tr><td class="mono">Variant_Classification</td><td class="req">YES</td><td class="mono">Variant_Classification</td><td>Pass through — already MAF standard</td></tr>
+      <tr><td class="mono">t_alt_count / t_depth</td><td class="req">YES</td><td class="mono">same names</td><td>Pass through integer</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- cancer_patient_information -->
+<div class="table-panel">
+  <div class="table-panel-header">
+    <div><div class="name">cancer_patient_information</div><div class="desc">Extended GDM root table · one row per patient · NAACCR-coded demographics</div></div>
+    <div class="badge">patient_level_dataset.csv</div>
+  </div>
+  <table class="field-table">
+    <thead><tr><th>GDM Field</th><th>Req</th><th>Source Field(s)</th><th>Transform</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">patient_id_curated</td><td class="req">YES</td><td class="mono">record_id</td><td>Pass through (GENIE-DFCI-###### format)</td></tr>
+      <tr><td class="mono">birth_year_curated</td><td class="req">YES</td><td class="mono">birth_year</td><td>Pass through integer</td></tr>
+      <tr><td class="mono">sex_curated</td><td class="req">YES</td><td class="mono">naaccr_sex_code</td><td><span class="transform">MAP</span>: "Male"→"1", "Female"→"2", "Unknown"→"9"</td></tr>
+      <tr><td class="mono">primary_race_curated</td><td class="req">YES</td><td class="mono">naaccr_race_code_primary</td><td><span class="transform">MAP</span>: "White"→"1", "Black or African American"→"2", "Asian"→subtype lookup, "Other"→"98", "Unknown"→"99"</td></tr>
+      <tr><td class="mono">ethnicity_curated</td><td class="req">YES</td><td class="mono">naaccr_ethnicity_code</td><td><span class="transform">MAP</span>: "Non-Spanish/non-Hispanic"→"0", "Spanish/Hispanic"→"6", "Unknown"→"9"</td></tr>
+      <tr><td class="mono">dead_curated</td><td class="req">YES</td><td class="mono">hybrid_death_int</td><td><span class="derived">derived</span>: 1.0 if non-null/non-empty, else 0.0</td></tr>
+      <tr><td class="mono">death_year_curated</td><td class="opt">no</td><td class="mono">hybrid_death_int, birth_year</td><td><span class="derived">derived</span>: str(int(birth_year + hybrid_death_int/365.25)) when dead=1, else "Unknown"</td></tr>
+      <tr><td class="mono">death_date_int</td><td class="opt">no</td><td class="mono">hybrid_death_int</td><td>Pass through float (already days-from-birth)</td></tr>
+      <tr><td class="mono">death_source_curated</td><td class="opt">no</td><td class="mono">hybrid_death_source</td><td><span class="transform">MAP</span>: "NDI"→"4", "EHR"→"2", "Curated"→"1", ""→null</td></tr>
+      <tr><td class="mono">lastalive_date_int</td><td class="req">YES</td><td class="mono">last_alive_int</td><td>Pass through float (days-from-birth)</td></tr>
+      <tr><td class="mono">follow_up_date_clin_int</td><td class="req">YES</td><td class="mono">last_anyvisit_int, last_oncvisit_int</td><td><span class="derived">derived</span>: coalesce(last_anyvisit_int, last_oncvisit_int)</td></tr>
+      <tr><td class="mono">hospice_yn</td><td class="opt">no</td><td class="mono">enroll_hospice_int</td><td><span class="derived">derived</span>: "1" if non-null, else "3" (No)</td></tr>
+      <tr><td class="mono">hospice_admit_int</td><td class="opt">no</td><td class="mono">enroll_hospice_int</td><td>Pass through float when non-null</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- cancer_diagnosis -->
+<div class="table-panel">
+  <div class="table-panel-header">
+    <div><div class="name">cancer_diagnosis</div><div class="desc">Extended GDM · one row per cancer · union of index + non-index datasets</div></div>
+    <div class="badge">cancer_level_dataset_index.csv ∪ cancer_level_dataset_non_index.csv</div>
+  </div>
+  <table class="field-table">
+    <thead><tr><th>GDM Field</th><th>Req</th><th>Source Field(s)</th><th>Transform</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">patient_id_curated</td><td class="req">YES</td><td class="mono">record_id</td><td>Pass through</td></tr>
+      <tr><td class="mono">dx_date_int</td><td class="req">YES</td><td class="mono">dob_ca_dx_days</td><td>Pass through float (days-from-birth)</td></tr>
+      <tr><td class="mono">dx_age_yr</td><td class="req">YES</td><td class="mono">age_dx</td><td>Pass through float</td></tr>
+      <tr><td class="mono">dx_institution</td><td class="opt">no</td><td class="mono">ca_dx_how</td><td><span class="transform">MAP</span>: contains "internal"→"1", "external"→"2"</td></tr>
+      <tr><td class="mono">dx_primary_site</td><td class="req">YES</td><td class="mono">ca_d_site</td><td><span class="transform">ICD-O-3 C-code lookup</span>: "Breast"→"C50.9" with subsite refinement from laterality/histology</td></tr>
+      <tr><td class="mono">dx_morphology</td><td class="req">YES</td><td class="mono">naaccr_histology_cd</td><td>Pass through ICD-O-3 5-digit code</td></tr>
+      <tr><td class="mono">dx_laterality</td><td class="opt">no</td><td class="mono">naaccr_laterality_cd</td><td>Pass through NAACCR code (0–9)</td></tr>
+      <tr><td class="mono">dx_grade</td><td class="opt">no</td><td class="mono">ca_grade</td><td><span class="transform">MAP</span>: "1"→"I", "2"→"II", "3"→"III", "4"→"IV"</td></tr>
+      <tr><td class="mono">dx_clin_t</td><td class="opt">no</td><td class="mono">naaccr_clin_t_cd</td><td><span class="transform">Strip "C" prefix + lowercase sub</span>: "C1C"→"T1c", "CX"→"TX", "CTIS"→"Tis"</td></tr>
+      <tr><td class="mono">dx_clin_n</td><td class="opt">no</td><td class="mono">naaccr_clin_n_cd</td><td><span class="transform">Strip "C" prefix</span>: "C0"→"N0", "C1"→"N1", "CX"→"NX"</td></tr>
+      <tr><td class="mono">dx_clin_m</td><td class="opt">no</td><td class="mono">naaccr_clin_m_cd</td><td>Strip "C" prefix</td></tr>
+      <tr><td class="mono">dx_clin_group_stage</td><td class="opt">no</td><td class="mono">naaccr_clin_stage_cd</td><td><span class="transform">MAP NAACCR→Roman</span>: "10"→"I", "20A"→"IIA", "30"→"III", "40"→"IV", etc.</td></tr>
+      <tr><td class="mono">dx_path_t</td><td class="opt">no</td><td class="mono">naaccr_path_t_cd</td><td><span class="transform">Strip "P" prefix + lowercase sub</span>: "P1C"→"T1c", "P4D"→"T4d", "PTIS"→"Tis"</td></tr>
+      <tr><td class="mono">dx_path_n / dx_path_m</td><td class="opt">no</td><td class="mono">naaccr_path_n_cd / naaccr_path_m_cd</td><td>Strip "P" prefix</td></tr>
+      <tr><td class="mono">dx_path_group_stage</td><td class="opt">no</td><td class="mono">naaccr_path_stage_cd</td><td>Same NAACCR→Roman mapping</td></tr>
+      <tr><td class="mono">ajcc_edition</td><td class="opt">no</td><td class="mono">naaccr_tnm_edition_num</td><td><span class="transform">MAP</span>: "7"→"7th", "8"→"8th", "6"→"6th"</td></tr>
+      <tr><td class="mono">dx_mets_bone/brain/liver/lung/lymph</td><td class="opt">no</td><td class="mono">dist_mets_bone, dist_mets_brain_cns, dist_mets_liver, dist_mets_pulmonary, dist_mets_lymph_nodes</td><td>Pass through 0/1; set 88 if ca_dmets_yn="No", 99 if null</td></tr>
+      <tr><td class="mono">dx_mets_other</td><td class="opt">no</td><td class="mono">dist_mets_abdomen, adrenal, skin, pleura, peritoneum, thorax</td><td><span class="derived">derived</span>: 1 if any =1, else 0; 88/99 as above</td></tr>
+      <tr><td class="mono">breast_er_summary</td><td class="opt">no</td><td class="mono">ca_bca_er</td><td><span class="transform">MAP</span>: "Positive/elevated"→"1", "Negative"→"0", null→"9"</td></tr>
+      <tr><td class="mono">breast_pr_summary</td><td class="opt">no</td><td class="mono">ca_bca_pr</td><td>Same as ER</td></tr>
+      <tr><td class="mono">breast_her2_summary</td><td class="opt">no</td><td class="mono">ca_bca_her_summ</td><td><span class="transform">MAP</span>: "Positive/elevated/amplified"→"1", "Negative"→"0", "Borderline"→"2", null→"9"</td></tr>
+      <tr><td class="mono">breast_ot_inv_score_details</td><td class="opt">no</td><td class="mono">ca_bca_oncotypedx</td><td>Pass through numeric (0–100)</td></tr>
+      <tr><td class="mono">breast_multigene_method / _results</td><td class="opt">no</td><td class="mono">ca_bca_mgene / ca_bca_mgeneresult</td><td><span class="transform">MAP</span> text to GDM codes 1–9</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- drug_exposure -->
+<div class="table-panel">
+  <div class="table-panel-header">
+    <div><div class="name">drug_exposure</div><div class="desc">Extended GDM · WIDE → LONG pivot · each regimen row → up to 5 drug rows</div></div>
+    <div class="badge">regimen_cancer_level_dataset.csv → ~20K output rows</div>
+  </div>
+  <table class="field-table">
+    <thead><tr><th>GDM Field</th><th>Req</th><th>Source Field(s)</th><th>Transform</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">patient_id_curated</td><td class="req">YES</td><td class="mono">record_id</td><td>Pass through</td></tr>
+      <tr><td class="mono">trt_order_institution</td><td class="opt">no</td><td class="mono">drugs_inst</td><td><span class="transform">MAP</span>: contains "internal"→"1", "external"→"2"</td></tr>
+      <tr><td class="mono">trt_trial_yn</td><td class="opt">no</td><td class="mono">drugs_ct_yn</td><td><span class="transform">MAP</span>: "Yes"→1, "No"→0</td></tr>
+      <tr><td class="mono">trt_ongoing_yn</td><td class="opt">no</td><td class="mono">drugs_dc_ynu</td><td><span class="derived">derived</span>: 0 if "Yes" (discontinued), 1 if "No" (ongoing)</td></tr>
+      <tr><td class="mono">trt_start_date_int</td><td class="req">YES</td><td class="mono">drugs_startdt_int_N (N=1..5)</td><td>Pass through float per drug slot (days-from-birth). Skip null slots.</td></tr>
+      <tr><td class="mono">trt_end_date_int</td><td class="opt">no</td><td class="mono">dx_drug_end_int_N</td><td><span class="derived">derived</span>: dx_drug_end_int_N is days-from-dx → add dob_ca_dx_days from cancer table (join on record_id + ca_seq)</td></tr>
+      <tr><td class="mono">trt_drug</td><td class="req">YES</td><td class="mono">drugs_drug_N (N=1..5)</td><td><span class="transform">CLEAN</span>: strip parenthetical synonyms via regex <code>re.sub(r'\(.*?\)', '', s).strip()</code>; then NCI Thesaurus canonical name lookup</td></tr>
+      <tr><td class="mono">trt_discontinuation</td><td class="opt">no</td><td class="mono">drugs_dc_ynu</td><td><span class="transform">MAP</span>: "Yes"→"3" (permanent), "No"→"1", "Unknown"→null</td></tr>
+      <tr><td class="mono">trt_drug_route / trt_dose</td><td class="opt">no</td><td>Not in source</td><td>Leave null</td></tr>
+    </tbody>
+  </table>
+  <div class="note-bar"><strong>Pivot logic:</strong> For each source row, iterate N=1..5; emit one output row where drugs_drug_N is non-empty. The <code>ca_seq</code> column links back to the cancer diagnosis.</div>
+</div>
+
+<!-- imaging -->
+<div class="table-panel">
+  <div class="table-panel-header">
+    <div><div class="name">imaging</div><div class="desc">Extended GDM · one row per imaging study · largest table (~26K rows)</div></div>
+    <div class="badge">imaging_level_dataset.csv</div>
+  </div>
+  <table class="field-table">
+    <thead><tr><th>GDM Field</th><th>Req</th><th>Source Field(s)</th><th>Transform</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">patient_id_curated</td><td class="req">YES</td><td class="mono">record_id</td><td>Pass through</td></tr>
+      <tr><td class="mono">imaging_date_int</td><td class="req">YES</td><td class="mono">image_scan_int</td><td>Pass through float (days-from-birth)</td></tr>
+      <tr><td class="mono">imaging_report_date_int</td><td class="opt">no</td><td class="mono">image_ref_scan_int</td><td>Pass through float when non-null</td></tr>
+      <tr><td class="mono">imaging_institution</td><td class="req">YES</td><td class="mono">image_inst_perf</td><td><span class="transform">MAP</span>: contains "internal"→"1", "external"→"2"</td></tr>
+      <tr><td class="mono">imaging_modality</td><td class="req">YES</td><td class="mono">image_scan_type</td><td><span class="transform">MAP</span>: "CT"→"2", "MRI"→"4", "PET or PET-CT"→"3", "Mammogram..."→"8", "Bone Scan"→"7", "Other Nuclear..."→"1"</td></tr>
+      <tr><td class="mono">imaging_body_location</td><td class="opt">no</td><td class="mono">image_scansite___1..8</td><td><span class="derived">derived</span>: collect indices N where value="1" or "Checked"; join as comma-separated GDM codes 1–8</td></tr>
+      <tr><td class="mono">imaging_ca_yn</td><td class="req">YES</td><td class="mono">image_ca</td><td><span class="transform">MAP</span>: "Yes"→1, "No"→0</td></tr>
+      <tr><td class="mono">imaging_ca_status_overall</td><td class="req">YES</td><td class="mono">image_overall</td><td><span class="transform">MAP</span>: "Stable/No change"→"1", "Progressing/Worsening..."→"4", "Improving/Responding"→"7", "Mixed"→"3", "Not stated..."→"9", ""→"9"</td></tr>
+      <tr><td class="mono">imaging_mets_yn</td><td class="opt">no</td><td class="mono">image_casite1..15</td><td><span class="derived">derived</span>: 1 if any site indicates distant disease, else 0</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- clinical_visits -->
+<div class="table-panel">
+  <div class="table-panel-header">
+    <div><div class="name">clinical_visits</div><div class="desc">Extended GDM · one row per medical oncology visit (~28K rows)</div></div>
+    <div class="badge">med_onc_note_level_dataset.csv</div>
+  </div>
+  <table class="field-table">
+    <thead><tr><th>GDM Field</th><th>Req</th><th>Source Field(s)</th><th>Transform</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">patient_id_curated</td><td class="req">YES</td><td class="mono">record_id</td><td>Pass through</td></tr>
+      <tr><td class="mono">visit_date_int</td><td class="req">YES</td><td class="mono">md_onc_visit_int</td><td>Pass through float (days-from-birth)</td></tr>
+      <tr><td class="mono">visit_institution</td><td class="req">YES</td><td class="mono">md_inst</td><td><span class="transform">MAP</span>: contains "internal"→"1", "external"→"2"</td></tr>
+      <tr><td class="mono">visit_ca_yn</td><td class="req">YES</td><td class="mono">md_type_ca_cur / md_ca</td><td><span class="derived">derived</span>: 1 if cancer discussed, else 0</td></tr>
+      <tr><td class="mono">visit_ca_status_overall</td><td class="req">YES</td><td class="mono">md_ca_status</td><td><span class="transform">MAP</span>: "Progressing"→"1", "Responding"→"2", "Mixed"→"3", "Stable"→"4", "No Evidence of Disease"→"5", unknown→"9"</td></tr>
+      <tr><td class="mono">visit_provider</td><td class="opt">no</td><td>—</td><td>Default "2" (Medical Oncologist) — all notes from med_onc dataset</td></tr>
+      <tr><td class="mono">visit_type / visit_ecog</td><td class="opt">no</td><td>—</td><td>Leave null — not captured in source</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- surgical_procedures -->
+<div class="table-panel">
+  <div class="table-panel-header">
+    <div><div class="name">surgical_procedures</div><div class="desc">Extended GDM · one row per pathology report · includes per-specimen breast biomarkers</div></div>
+    <div class="badge">pathology_report_level_dataset.csv (~360 columns)</div>
+  </div>
+  <table class="field-table">
+    <thead><tr><th>GDM Field</th><th>Req</th><th>Source Field(s)</th><th>Transform</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">patient_id_curated</td><td class="req">YES</td><td class="mono">record_id</td><td>Pass through</td></tr>
+      <tr><td class="mono">proc_date_int</td><td class="req">YES</td><td class="mono">path_proc_int</td><td>Pass through float (days-from-birth)</td></tr>
+      <tr><td class="mono">proc_institution</td><td class="req">YES</td><td class="mono">path_proc_inst</td><td><span class="transform">MAP</span>: contains "internal"→"1", "external"→"2"</td></tr>
+      <tr><td class="mono">path_type</td><td class="req">YES</td><td class="mono">path_proc_type</td><td><span class="transform">MAP</span>: "Surgical pathology"→"1", "Cytopathology"→"2", "Hematopathology"→"3", other→"9"</td></tr>
+      <tr><td class="mono">proc_specimen_num</td><td class="opt">no</td><td class="mono">path_num_spec</td><td>Pass through integer</td></tr>
+      <tr><td class="mono">breast_er_summary</td><td class="opt">no</td><td class="mono">path_er_1 (first specimen)</td><td><span class="transform">MAP</span>: "Positive"→"1", "Negative"→"0", null→"9"</td></tr>
+      <tr><td class="mono">breast_pr_summary</td><td class="opt">no</td><td class="mono">path_pr_1</td><td>Same as ER</td></tr>
+      <tr><td class="mono">breast_her2_summary</td><td class="opt">no</td><td class="mono">path_herihc_1</td><td><span class="transform">MAP</span>: "Positive"→"1", "Negative"→"0", "Equivocal"→"2", null→"9"</td></tr>
+    </tbody>
+  </table>
+  <div class="note-bar"><strong>Note:</strong> Source has per-specimen biomarkers for specimens 1–5 (path_er_1..5, path_her2ihc_1..5). GDM captures first-specimen values only. MMR fields (mmr_result_1..3) are also present but have no GDM target column.</div>
+</div>
+
+<!-- laboratory_testing -->
+<div class="table-panel">
+  <div class="table-panel-header">
+    <div><div class="name">laboratory_testing</div><div class="desc">Extended GDM · serum tumor markers (CA15-3, CA27-29) per patient</div></div>
+    <div class="badge">tm_level_dataset.csv</div>
+  </div>
+  <table class="field-table">
+    <thead><tr><th>GDM Field</th><th>Req</th><th>Source Field(s)</th><th>Transform</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">patient_id_curated</td><td class="req">YES</td><td class="mono">record_id</td><td>Pass through</td></tr>
+      <tr><td class="mono">lab_test</td><td class="opt">no</td><td class="mono">tm_type</td><td><span class="transform">MAP</span>: "CA15-3"→"CA15-3", "CA2729"→"CA27-29". Filter — drop AFP, CEA, CA125, etc.</td></tr>
+      <tr><td class="mono">lab_result</td><td class="opt">no</td><td class="mono">tm_num_result</td><td>Pass through float as string</td></tr>
+      <tr><td class="mono">lab_result_unit</td><td class="opt">no</td><td class="mono">tm_result_units</td><td>Pass through (typically "U/mL")</td></tr>
+      <tr><td class="mono">lab_collection_date_int</td><td class="opt">no</td><td class="mono">tm_spec_collect_int</td><td>Pass through float (days-from-birth)</td></tr>
+      <tr><td class="mono">lab_lower_range / lab_upper_range</td><td class="opt">no</td><td class="mono">tm_normal_range_lower / upper</td><td>Pass through float</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- tumor_sample_information -->
+<div class="table-panel">
+  <div class="table-panel-header">
+    <div><div class="name">tumor_sample_information</div><div class="desc">Extended GDM · one row per NGS panel test event</div></div>
+    <div class="badge">cancer_panel_test_level_dataset.csv + data_clinical_sample.txt</div>
+  </div>
+  <table class="field-table">
+    <thead><tr><th>GDM Field</th><th>Req</th><th>Source Field(s)</th><th>Transform</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">patient_id_curated</td><td class="req">YES</td><td class="mono">record_id</td><td>Pass through</td></tr>
+      <tr><td class="mono">sample_genie_yn</td><td class="req">YES</td><td class="mono">cpt_genie_sample_id</td><td><span class="derived">derived</span>: 1.0 if non-null, else 0.0</td></tr>
+      <tr><td class="mono">sample_coll_date_int / sample_seq_report_date_int</td><td class="opt">req</td><td class="mono">dob_cpt_report_days</td><td>Pass through float (days-from-birth)</td></tr>
+      <tr><td class="mono">sample_seq_report_year</td><td class="req">YES</td><td class="mono">cpt_seq_date</td><td>Pass through 4-digit year</td></tr>
+      <tr><td class="mono">sample_class_curated</td><td class="req">YES</td><td class="mono">sample_type (via join on cpt_genie_sample_id)</td><td><span class="transform">MAP</span>: solid tumor types→"1" (Tumor), cfDNA/liquid biopsy→"2"</td></tr>
+      <tr><td class="mono">sample_type_detailed_curated</td><td class="req">YES</td><td class="mono">sample_type</td><td><span class="transform">MAP</span>: "Primary"→"1", "Metastasis"→"3", "Recurrence"→"5", "Unspecified"→"99"</td></tr>
+      <tr><td class="mono">sample_cancer_type_detailed_curated</td><td class="req">YES</td><td class="mono">cpt_oncotree_code</td><td>Pass through OncoTree code (e.g. "BRCA", "ILC", "DCIS")</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══════════════════════ VOCABULARY MAPS ════════════════════════ -->
+<h2>Key Vocabulary Mappings</h2>
+<div class="vocab-cols">
+  <div class="vocab-box">
+    <table>
+      <caption>Imaging Modality (image_scan_type → GDM code)</caption>
+      <thead><tr><th>Source Value</th><th>GDM Code</th></tr></thead>
+      <tbody>
+        <tr><td>CT</td><td>2</td></tr>
+        <tr><td>MRI</td><td>4</td></tr>
+        <tr><td>PET or PET-CT</td><td>3</td></tr>
+        <tr><td>Mammogram - Use for Breast Cancer only</td><td>8</td></tr>
+        <tr><td>Bone Scan</td><td>7</td></tr>
+        <tr><td>Other Nuclear Medicine Scan</td><td>1</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="vocab-box">
+    <table>
+      <caption>Imaging Overall Status (image_overall → GDM code)</caption>
+      <thead><tr><th>Source Value</th><th>GDM Code</th></tr></thead>
+      <tbody>
+        <tr><td>Stable/No change</td><td>1</td></tr>
+        <tr><td>Progressing/Worsening/Enlarging</td><td>4 (overall)</td></tr>
+        <tr><td>Improving/Responding</td><td>7 (overall response)</td></tr>
+        <tr><td>Mixed</td><td>3</td></tr>
+        <tr><td>Not stated/Indeterminate</td><td>9</td></tr>
+        <tr><td>(empty)</td><td>9</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="vocab-box">
+    <table>
+      <caption>Receptor Status (ca_bca_er/pr/her → GDM)</caption>
+      <thead><tr><th>Source Value</th><th>GDM Code</th></tr></thead>
+      <tbody>
+        <tr><td>Positive/elevated</td><td>1</td></tr>
+        <tr><td>Positive/elevated/amplified (HER2)</td><td>1</td></tr>
+        <tr><td>Negative</td><td>0</td></tr>
+        <tr><td>Borderline (ER/PR)</td><td>0</td></tr>
+        <tr><td>Borderline (HER2)</td><td>2</td></tr>
+        <tr><td>(null / not assessed)</td><td>9</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="vocab-box">
+    <table>
+      <caption>NAACCR T/N/M Prefix Stripping</caption>
+      <thead><tr><th>Source (NAACCR)</th><th>GDM AJCC</th></tr></thead>
+      <tbody>
+        <tr><td>P1C</td><td>T1c</td></tr>
+        <tr><td>P4D</td><td>T4d</td></tr>
+        <tr><td>PTIS</td><td>Tis</td></tr>
+        <tr><td>C1C</td><td>T1c</td></tr>
+        <tr><td>CX / PX</td><td>TX / NX</td></tr>
+        <tr><td>C0 / P0</td><td>N0 / M0</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════ EXECUTION ORDER ═══════════════════════ -->
+<h2>Recommended Execution Order</h2>
+<div class="exec-grid">
+  <div class="exec-node"><div class="order">01</div><div class="fname">clinical_patient</div><div class="source">data_clinical_patient.txt + patient_level_dataset.csv</div><div class="depends">No dependencies</div></div>
+  <div class="exec-node"><div class="order">02</div><div class="fname">cancer_patient_information</div><div class="source">patient_level_dataset.csv</div><div class="depends">No dependencies</div></div>
+  <div class="exec-node"><div class="order">03</div><div class="fname">clinical_sample</div><div class="source">data_clinical_sample.txt</div><div class="depends">Needs clinical_patient for YEAR_CONTACT, CENTER</div></div>
+  <div class="exec-node"><div class="order">04</div><div class="fname">cancer_diagnosis</div><div class="source">cancer_level_dataset_index.csv ∪ _non_index.csv</div><div class="depends">FK: cancer_patient_information</div></div>
+  <div class="exec-node"><div class="order">05</div><div class="fname">mutations</div><div class="source">data_mutations_extended.txt</div><div class="depends">Needs clinical_sample for PATIENT_ID join</div></div>
+  <div class="exec-node"><div class="order">06</div><div class="fname">drug_exposure</div><div class="source">regimen_cancer_level_dataset.csv</div><div class="depends">Needs cancer_diagnosis for end-date conversion</div></div>
+  <div class="exec-node"><div class="order">07</div><div class="fname">imaging</div><div class="source">imaging_level_dataset.csv</div><div class="depends">FK: cancer_patient_information</div></div>
+  <div class="exec-node"><div class="order">08</div><div class="fname">clinical_visits</div><div class="source">med_onc_note_level_dataset.csv</div><div class="depends">FK: cancer_patient_information</div></div>
+  <div class="exec-node"><div class="order">09</div><div class="fname">surgical_procedures</div><div class="source">pathology_report_level_dataset.csv</div><div class="depends">FK: cancer_patient_information</div></div>
+  <div class="exec-node"><div class="order">10</div><div class="fname">laboratory_testing</div><div class="source">tm_level_dataset.csv</div><div class="depends">FK: cancer_patient_information</div></div>
+  <div class="exec-node"><div class="order">11</div><div class="fname">tumor_sample_information</div><div class="source">cancer_panel_test_level_dataset.csv + data_clinical_sample.txt</div><div class="depends">Needs clinical_sample for sample_class join</div></div>
+</div>
+
+<!-- ═══════════════════════ SOURCE INVENTORY (bottom) ═══════════════════════ -->
+<h2>Source File Inventory</h2>
+<div style="overflow-x:auto">
+<table class="inv-table">
+  <thead><tr><th>File</th><th>Rows</th><th>GDM Target(s)</th><th>Type</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr class="folder-group"><td colspan="5">cBioPortal_files/</td></tr>
+    <tr><td class="mono">data_clinical_patient.txt</td><td>1,134</td><td>clinical_patient</td><td><span class="pill core">core</span></td><td>GENIE standard 5-header-line format. Carries CENTER and race/sex/ethnicity already formatted for GDM.</td></tr>
+    <tr><td class="mono">data_clinical_sample.txt</td><td>1,227</td><td>clinical_sample, tumor_sample_information, surgical_procedures</td><td><span class="pill core">core</span></td><td>Genomic sample metadata. Also carries PD-L1 testing flag per sample.</td></tr>
+    <tr><td class="mono">data_mutations_extended.txt</td><td>7,051</td><td>mutations</td><td><span class="pill genomic">genomic</span></td><td>MAF format. Most fields map directly. PATIENT_ID derived from Tumor_Sample_Barcode.</td></tr>
+    <tr><td class="mono">genomic_information.txt</td><td>64,511</td><td>—</td><td><span class="pill skip">skip</span></td><td>Gene-panel coverage metadata. No GDM target; use for validation only.</td></tr>
+    <tr><td class="mono">data_CNA.txt</td><td>1,003</td><td>—</td><td><span class="pill skip">skip</span></td><td>Copy number alterations. No GDM v1.0.1 target table; preserve as-is.</td></tr>
+    <tr><td class="mono">data_sv.txt</td><td>427</td><td>—</td><td><span class="pill skip">skip</span></td><td>Structural variants. No GDM target; preserve as-is.</td></tr>
+    <tr><td class="mono">tmb.tsv</td><td>1,222</td><td>—</td><td><span class="pill skip">skip</span></td><td>Tumor mutational burden per sample. No GDM target; preserve as-is.</td></tr>
+    <tr><td class="mono">data_clinical_supp_survival*.txt</td><td>~2,150</td><td>—</td><td><span class="pill skip">skip</span></td><td>GENIE consortium survival supplements. Not required for GDM; use for post-ETL validation.</td></tr>
+    <tr class="folder-group"><td colspan="5">clinical_data/</td></tr>
+    <tr><td class="mono">patient_level_dataset.csv</td><td>1,130</td><td>cancer_patient_information</td><td><span class="pill ext">extended</span></td><td>Root patient demographics, vital status, summary counts. Primary source for cancer_patient_information.</td></tr>
+    <tr><td class="mono">cancer_level_dataset_index.csv</td><td>1,141</td><td>cancer_diagnosis</td><td><span class="pill ext">extended</span></td><td>Index (primary) cancer diagnoses. Breast-specific receptor fields, distant mets, survival endpoints.</td></tr>
+    <tr><td class="mono">cancer_level_dataset_non_index.csv</td><td>191</td><td>cancer_diagnosis</td><td><span class="pill ext">extended</span></td><td>Non-index (secondary) cancers. Fewer breast-specific fields. Union with index dataset.</td></tr>
+    <tr><td class="mono">cancer_panel_test_level_dataset.csv</td><td>1,234</td><td>tumor_sample_information</td><td><span class="pill ext">extended</span></td><td>NGS test events. Links BPC record_id to GENIE sample IDs (cpt_genie_sample_id).</td></tr>
+    <tr><td class="mono">regimen_cancer_level_dataset.csv</td><td>6,905</td><td>drug_exposure</td><td><span class="pill ext">extended</span></td><td>Wide format (up to 5 drugs/regimen). Wide-to-long pivot → ~20K drug rows.</td></tr>
+    <tr><td class="mono">imaging_level_dataset.csv</td><td>26,773</td><td>imaging</td><td><span class="pill ext">extended</span></td><td>Largest clinical file. One row per study. Multi-select body location checkboxes (image_scansite___1..8).</td></tr>
+    <tr><td class="mono">med_onc_note_level_dataset.csv</td><td>28,338</td><td>clinical_visits</td><td><span class="pill ext">extended</span></td><td>Medical oncologist visit notes. Cancer status per visit.</td></tr>
+    <tr><td class="mono">pathology_report_level_dataset.csv</td><td>7,224</td><td>surgical_procedures</td><td><span class="pill ext">extended</span></td><td>~360 columns including per-specimen ER/PR/HER2 for up to 5 specimens.</td></tr>
+    <tr><td class="mono">tm_level_dataset.csv</td><td>9,743</td><td>laboratory_testing</td><td><span class="pill ext">extended</span></td><td>Tumor markers. Filter to CA15-3 and CA2729 types only. Drop AFP, CEA, CA125, etc.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="footer-note">
+  <strong>Scope notes:</strong> <code>rna_seq</code> and <code>wsi_manifest</code> have no source data in AACR BrCa v1.0-public and will not be generated. <code>data_CNA.txt</code>, <code>data_sv.txt</code>, and <code>tmb.tsv</code> have no GDM v1.0.1 target table and should be passed through unchanged. The entire dataset is single-institution (DFCI), so all CENTER values will be "DFCI" and all patient_id_curated values follow the GENIE-DFCI-###### format.
+</div>
+
+
+<!-- ════════════════════════ TABLE RELATIONSHIPS ════════════════════════ -->
+<h2>Table Relationships</h2>
+<style>
+.er-node{position:absolute;cursor:pointer;transition:opacity .18s,box-shadow .18s;}
+.er-node:hover{z-index:10;}
+.er-head{padding:6px 10px 5px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:4px;}
+.er-name{font-family:"SF Mono","Fira Code",monospace;font-size:10.5px;font-weight:700;line-height:1.25;}
+.er-cnt{font-size:8.5px;color:var(--muted);white-space:nowrap;flex-shrink:0;border:1px solid var(--border);border-radius:8px;padding:1px 5px;background:rgba(255,255,255,.04);}
+.er-body{padding:4px 10px 7px;font-size:9px;line-height:1.65;color:var(--muted);}
+.er-lane{position:absolute;font-size:8.5px;text-transform:uppercase;letter-spacing:.12em;font-weight:700;top:30px;}
+.er-core   {border:1px solid var(--border);border-top:3px solid var(--blue);background:var(--surface);border-radius:8px;overflow:hidden;}
+.er-genomic{border:1px solid var(--border);border-top:3px solid var(--pink);background:var(--surface);border-radius:8px;overflow:hidden;}
+.er-hub    {border:1.5px solid rgba(0,209,185,.4);border-top:3px solid var(--teal);background:var(--surface);border-radius:10px;overflow:hidden;}
+.er-ext    {border:1px solid var(--border);border-top:3px solid var(--teal);background:var(--surface);border-radius:8px;overflow:hidden;}
+.er-other  {border:1px solid var(--border);border-top:3px solid var(--muted);background:var(--surface);border-radius:8px;overflow:hidden;}
+.er-alone  {border:1px dashed var(--border);border-top:3px solid var(--muted);background:var(--surface);border-radius:8px;overflow:hidden;}
+.er-hub-hd {background:rgba(0,209,185,.07);border-bottom:1px solid rgba(0,209,185,.15)!important;}
+</style>
+
+<div style="margin-bottom:10px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:10px;color:var(--muted);">
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:14px;height:3px;background:var(--blue);display:inline-block;border-radius:1px;"></span>Core GENIE</span>
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:14px;height:3px;background:var(--teal);display:inline-block;border-radius:1px;"></span>Extended GDM</span>
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:14px;height:3px;background:var(--pink);display:inline-block;border-radius:1px;"></span>Genomic</span>
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:14px;height:0;border-top:2px dashed var(--muted);display:inline-block;"></span>Other&nbsp;/&nbsp;Standalone</span>
+  <span style="margin-left:auto;font-size:10px;color:var(--muted);">Hover a table to trace connections · arrows point FK&nbsp;→&nbsp;PK</span>
+</div>
+
+<div style="overflow-x:auto;">
+<div id="er-canvas" style="position:relative;width:1082px;height:592px;">
+
+  <svg id="er-svg" style="position:absolute;top:0;left:0;width:1082px;height:592px;overflow:visible;pointer-events:none;">
+    <defs>
+      <marker id="erm-core"    viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,1 L7,4 L0,7 Z" fill="#1a77cc"/></marker>
+      <marker id="erm-genomic" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,1 L7,4 L0,7 Z" fill="#f3afff"/></marker>
+      <marker id="erm-bridge"  viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,1 L7,4 L0,7 Z" fill="#5db8ff"/></marker>
+      <marker id="erm-ext"     viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,1 L7,4 L0,7 Z" fill="#00d1b9"/></marker>
+      <marker id="erm-other"   viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,1 L7,4 L0,7 Z" fill="#6b7a88"/></marker>
+      <marker id="erm-cross"   viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,1 L7,4 L0,7 Z" fill="#c070e8"/></marker>
+    </defs>
+  </svg>
+
+  <div style="position:absolute;left:12px;top:22px;width:206px;height:550px;background:rgba(26,119,204,.05);border:1px solid rgba(26,119,204,.11);border-radius:10px;"></div>
+  <div class="er-lane" style="left:22px;color:rgba(91,184,255,.55);">Core GENIE</div>
+  <div style="position:absolute;left:648px;top:22px;width:220px;height:478px;background:rgba(0,209,185,.04);border:1px solid rgba(0,209,185,.10);border-radius:10px;"></div>
+  <div class="er-lane" style="left:658px;color:rgba(0,209,185,.55);">Extended Events</div>
+  <div style="position:absolute;left:882px;top:22px;width:186px;height:478px;background:rgba(107,122,136,.04);border:1px solid rgba(107,122,136,.11);border-radius:10px;"></div>
+  <div class="er-lane" style="left:892px;color:rgba(107,122,136,.55);">Other Clinical</div>
+
+  <div id="er-clinical_patient" class="er-node er-core" data-erid="clinical_patient" style="left:20px;top:82px;width:190px;">
+    <div class="er-head"><span class="er-name" style="color:#5db8ff;">clinical_patient</span><span class="er-cnt">11 f</span></div>
+    <div class="er-body"><span style="color:var(--pink);">PK PATIENT_ID</span><br>SEX · RACE · ETHNICITY · CENTER</div>
+  </div>
+
+  <div id="er-clinical_sample" class="er-node er-core" data-erid="clinical_sample" style="left:20px;top:268px;width:190px;">
+    <div class="er-head"><span class="er-name" style="color:#5db8ff;">clinical_sample</span><span class="er-cnt">10 f</span></div>
+    <div class="er-body"><span style="color:var(--pink);">PK SAMPLE_ID</span><br><span style="color:#5db8ff;">FK PATIENT_ID</span><br>ONCOTREE · CANCER_TYPE · SEQ_ASSAY</div>
+  </div>
+
+  <div id="er-mutations" class="er-node er-genomic" data-erid="mutations" style="left:20px;top:455px;width:190px;">
+    <div class="er-head"><span class="er-name" style="color:var(--pink);">mutations</span><span class="er-cnt">MAF</span></div>
+    <div class="er-body"><span style="color:#5db8ff;">FK SAMPLE_ID · PATIENT_ID</span><br>Hugo_Symbol · Chromosome · Position</div>
+  </div>
+
+  <div id="er-cancer_patient_information" class="er-node er-hub" data-erid="cancer_patient_information" style="left:305px;top:218px;width:248px;">
+    <div class="er-head er-hub-hd"><span class="er-name" style="color:var(--teal);">cancer_patient_information</span><span class="er-cnt" style="border-color:rgba(0,209,185,.25);">64 f</span></div>
+    <div class="er-body"><span style="color:var(--pink);">PK patient_id_curated</span><br><span style="color:#5db8ff;">→ clinical_patient.PATIENT_ID</span><br>Root hub · all extended tables reference this PK</div>
+  </div>
+
+  <div id="er-patient_curation_eligibility" class="er-node er-alone" data-erid="patient_curation_eligibility" style="left:305px;top:490px;width:248px;">
+    <div class="er-head"><span class="er-name" style="color:var(--muted);font-size:10px;">patient_curation_eligibility</span><span class="er-cnt">7 f</span></div>
+    <div class="er-body"><span style="color:var(--pink);">PK redcap_record_id</span><br>Standalone — no FK to other GDM tables</div>
+  </div>
+
+  <div id="er-cancer_diagnosis" class="er-node er-ext" data-erid="cancer_diagnosis" style="left:660px;top:38px;width:200px;">
+    <div class="er-head"><span class="er-name" style="color:var(--teal);">cancer_diagnosis</span><span class="er-cnt">92 f</span></div>
+    <div class="er-body"><span style="color:#5db8ff;">FK patient_id_curated</span><br>dx_date_int · staging · morphology</div>
+  </div>
+
+  <div id="er-drug_exposure" class="er-node er-ext" data-erid="drug_exposure" style="left:660px;top:120px;width:200px;">
+    <div class="er-head"><span class="er-name" style="color:var(--teal);">drug_exposure</span><span class="er-cnt">37 f</span></div>
+    <div class="er-body"><span style="color:#5db8ff;">FK patient_id_curated</span><br>trt_drug · trt_start_date_int</div>
+  </div>
+
+  <div id="er-imaging" class="er-node er-ext" data-erid="imaging" style="left:660px;top:198px;width:200px;">
+    <div class="er-head"><span class="er-name" style="color:var(--teal);">imaging</span><span class="er-cnt">72 f</span></div>
+    <div class="er-body"><span style="color:#5db8ff;">FK patient_id_curated</span><br>imaging_date_int · EOD · mets</div>
+  </div>
+
+  <div id="er-clinical_visits" class="er-node er-ext" data-erid="clinical_visits" style="left:660px;top:276px;width:200px;">
+    <div class="er-head"><span class="er-name" style="color:var(--teal);">clinical_visits</span><span class="er-cnt">42 f</span></div>
+    <div class="er-body"><span style="color:#5db8ff;">FK patient_id_curated</span><br>visit_date_int · ca_status · ECOG</div>
+  </div>
+
+  <div id="er-surgical_procedures" class="er-node er-ext" data-erid="surgical_procedures" style="left:660px;top:354px;width:200px;">
+    <div class="er-head"><span class="er-name" style="color:var(--teal);">surgical_procedures</span><span class="er-cnt">202 f</span></div>
+    <div class="er-body"><span style="color:#5db8ff;">FK patient_id_curated</span><br>proc_date_int · path_report · ER/PR/HER2</div>
+  </div>
+
+  <div id="er-tumor_sample_information" class="er-node er-ext" data-erid="tumor_sample_information" style="left:660px;top:432px;width:200px;">
+    <div class="er-head"><span class="er-name" style="color:var(--teal);font-size:10px;">tumor_sample_information</span><span class="er-cnt">42 f</span></div>
+    <div class="er-body"><span style="color:#5db8ff;">FK patient_id_curated</span><br><span style="color:#c070e8;">FK SAMPLE_ID → clinical_sample</span></div>
+  </div>
+
+  <div id="er-family_history" class="er-node er-other" data-erid="family_history" style="left:892px;top:38px;width:168px;">
+    <div class="er-head"><span class="er-name" style="color:var(--muted);">family_history</span><span class="er-cnt">2 f</span></div>
+    <div class="er-body"><span style="color:#5db8ff;">FK patient_id_curated</span><br>fhx_other_cancer_yn/type</div>
+  </div>
+
+  <div id="er-radiation_treatment" class="er-node er-other" data-erid="radiation_treatment" style="left:892px;top:114px;width:168px;">
+    <div class="er-head"><span class="er-name" style="color:var(--muted);">radiation_treatment</span><span class="er-cnt">29 f</span></div>
+    <div class="er-body"><span style="color:#5db8ff;">FK patient_id_curated</span><br>rad_start/end_date_int · type</div>
+  </div>
+
+  <div id="er-hospitalizations" class="er-node er-other" data-erid="hospitalizations" style="left:892px;top:190px;width:168px;">
+    <div class="er-head"><span class="er-name" style="color:var(--muted);">hospitalizations</span><span class="er-cnt">21 f</span></div>
+    <div class="er-body"><span style="color:#5db8ff;">FK patient_id_curated</span><br>hosp_start/end · ICU · reason</div>
+  </div>
+
+  <div id="er-comorbidities" class="er-node er-other" data-erid="comorbidities" style="left:892px;top:266px;width:168px;">
+    <div class="er-head"><span class="er-name" style="color:var(--muted);">comorbidities</span><span class="er-cnt">27 f</span></div>
+    <div class="er-body"><span style="color:#5db8ff;">FK patient_id_curated</span><br>Charlson Comorbidity Index fields</div>
+  </div>
+
+  <div id="er-clinical_trial_history" class="er-node er-other" data-erid="clinical_trial_history" style="left:892px;top:342px;width:168px;">
+    <div class="er-head"><span class="er-name" style="color:var(--muted);font-size:10px;">clinical_trial_history</span><span class="er-cnt">16 f</span></div>
+    <div class="er-body"><span style="color:#5db8ff;">FK patient_id_curated</span><br>trial_date_int · NCT_ID · phase</div>
+  </div>
+
+  <div id="er-laboratory_testing" class="er-node er-other" data-erid="laboratory_testing" style="left:892px;top:416px;width:168px;">
+    <div class="er-head"><span class="er-name" style="color:var(--muted);">laboratory_testing</span><span class="er-cnt">10 f</span></div>
+    <div class="er-body"><span style="color:#5db8ff;">FK patient_id_curated</span><br>lab_test · lab_result · LOINC</div>
+  </div>
+
+</div><!-- /er-canvas -->
+</div><!-- /scroll -->
+
+<div style="margin-top:8px;font-size:10px;color:var(--muted);display:flex;gap:12px;flex-wrap:wrap;">
+  <span>17 tables total</span><span>·</span><span>3 Core GENIE</span><span>·</span><span>8 Extended GDM</span><span>·</span><span>6 Other Clinical</span><span>·</span><span>1 Standalone</span>
+</div>
+
+<script id="er-script">
+(function(){
+var EDGES=[
+  {id:'e1',from:'clinical_sample',to:'clinical_patient',key:'PATIENT_ID',type:'core'},
+  {id:'e2',from:'mutations',to:'clinical_sample',key:'SAMPLE_ID',type:'genomic'},
+  {id:'e3',from:'cancer_patient_information',to:'clinical_patient',key:'PATIENT_ID (format)',type:'bridge'},
+  {id:'e4',from:'cancer_diagnosis',to:'cancer_patient_information',key:'patient_id_curated',type:'ext'},
+  {id:'e5',from:'drug_exposure',to:'cancer_patient_information',key:'patient_id_curated',type:'ext'},
+  {id:'e6',from:'imaging',to:'cancer_patient_information',key:'patient_id_curated',type:'ext'},
+  {id:'e7',from:'clinical_visits',to:'cancer_patient_information',key:'patient_id_curated',type:'ext'},
+  {id:'e8',from:'surgical_procedures',to:'cancer_patient_information',key:'patient_id_curated',type:'ext'},
+  {id:'e9',from:'tumor_sample_information',to:'cancer_patient_information',key:'patient_id_curated',type:'ext'},
+  {id:'e10',from:'tumor_sample_information',to:'clinical_sample',key:'SAMPLE_ID',type:'cross'},
+  {id:'e11',from:'family_history',to:'cancer_patient_information',key:'patient_id_curated',type:'other'},
+  {id:'e12',from:'radiation_treatment',to:'cancer_patient_information',key:'patient_id_curated',type:'other'},
+  {id:'e13',from:'hospitalizations',to:'cancer_patient_information',key:'patient_id_curated',type:'other'},
+  {id:'e14',from:'comorbidities',to:'cancer_patient_information',key:'patient_id_curated',type:'other'},
+  {id:'e15',from:'clinical_trial_history',to:'cancer_patient_information',key:'patient_id_curated',type:'other'},
+  {id:'e16',from:'laboratory_testing',to:'cancer_patient_information',key:'patient_id_curated',type:'other'}
+];
+var COLORS={core:'#1a77cc',genomic:'#f3afff',bridge:'#5db8ff',ext:'#00d1b9',other:'#6b7a88',cross:'#c070e8'};
+var EXT_ORDER=['cancer_diagnosis','drug_exposure','imaging','clinical_visits','surgical_procedures','tumor_sample_information'];
+function getR(id){var canvas=document.getElementById('er-canvas');if(!canvas)return null;var cr=canvas.getBoundingClientRect();var el=document.getElementById('er-'+id);if(!el)return null;var r=el.getBoundingClientRect();return{x:r.left-cr.left,y:r.top-cr.top,w:r.width,h:r.height};}
+function P(r,s){if(!r)return{x:0,y:0};if(s==='L')return{x:r.x,y:r.y+r.h/2};if(s==='R')return{x:r.x+r.w,y:r.y+r.h/2};if(s==='T')return{x:r.x+r.w/2,y:r.y};return{x:r.x+r.w/2,y:r.y+r.h};}
+function pathD(edge){
+  var fr=getR(edge.from),tr=getR(edge.to);if(!fr||!tr)return null;
+  var cpi=getR('cancer_patient_information');
+  if(edge.type==='core'||edge.type==='genomic'){var s=P(fr,'T'),t=P(tr,'B'),xL=Math.min(fr.x,tr.x)-12;return'M '+s.x+' '+s.y+' L '+xL+' '+s.y+' L '+xL+' '+t.y+' L '+t.x+' '+t.y;}
+  if(edge.type==='bridge'){var s=P(fr,'L'),t=P(tr,'R'),mx=(s.x+t.x)/2;return'M '+s.x+' '+s.y+' C '+mx+' '+s.y+' '+mx+' '+t.y+' '+t.x+' '+t.y;}
+  if(edge.type==='ext'){var s=P(fr,'L'),idx=EXT_ORDER.indexOf(edge.from),frac=(idx+0.5)/EXT_ORDER.length,tY=cpi.y+cpi.h*(0.08+frac*0.84),tX=cpi.x+cpi.w;return'M '+s.x+' '+s.y+' C '+(s.x-55)+' '+s.y+' '+(tX+55)+' '+tY+' '+tX+' '+tY;}
+  if(edge.type==='other'){var s=P(fr,'L'),tX=cpi.x+cpi.w*0.68,tY=cpi.y;return'M '+s.x+' '+s.y+' C '+(s.x-18)+' '+s.y+' 948 -32 782 -32 C 618 -32 588 -14 '+tX+' '+tY;}
+  if(edge.type==='cross'){var s=P(fr,'B'),t=P(tr,'R'),bypassY=(cpi?cpi.y+cpi.h:330)+70;return'M '+s.x+' '+s.y+' C '+s.x+' '+bypassY+' '+(t.x+30)+' '+bypassY+' '+t.x+' '+t.y;}
+  return null;
+}
+function draw(){
+  var svg=document.getElementById('er-svg');if(!svg)return;
+  svg.querySelectorAll('path.erp').forEach(function(p){p.remove();});
+  EDGES.forEach(function(edge){
+    var d=pathD(edge);if(!d)return;
+    var p=document.createElementNS('http://www.w3.org/2000/svg','path');
+    p.setAttribute('id','erp-'+edge.id);p.setAttribute('class','erp');
+    p.dataset.from=edge.from;p.dataset.to=edge.to;p.dataset.type=edge.type;p.dataset.key=edge.key;
+    p.setAttribute('d',d);p.setAttribute('fill','none');p.setAttribute('stroke',COLORS[edge.type]);
+    p.setAttribute('stroke-width',edge.type==='other'?'1':'1.5');
+    p.setAttribute('stroke-opacity',edge.type==='other'?'0.28':edge.type==='cross'?'0.45':'0.62');
+    if(edge.type==='bridge'||edge.type==='other')p.setAttribute('stroke-dasharray','5,3');
+    if(edge.type==='cross')p.setAttribute('stroke-dasharray','4,2');
+    p.setAttribute('marker-end','url(#erm-'+edge.type+')');
+    svg.appendChild(p);
+  });
+}
+function resetAll(){
+  document.querySelectorAll('path.erp').forEach(function(p){
+    var t=p.dataset.type;
+    p.setAttribute('stroke-opacity',t==='other'?'0.28':t==='cross'?'0.45':'0.62');
+    p.setAttribute('stroke-width',t==='other'?'1':'1.5');
+    if(t==='bridge'||t==='other')p.setAttribute('stroke-dasharray','5,3');
+    else if(t==='cross')p.setAttribute('stroke-dasharray','4,2');
+    else p.removeAttribute('stroke-dasharray');
+  });
+  document.querySelectorAll('.er-node').forEach(function(n){n.style.opacity='1';n.style.boxShadow='none';});
+}
+function setupHover(){
+  document.querySelectorAll('.er-node').forEach(function(node){
+    node.addEventListener('mouseenter',function(){
+      var id=node.dataset.erid,connected=new Set([id]);
+      document.querySelectorAll('path.erp').forEach(function(p){
+        if(p.dataset.from===id||p.dataset.to===id){connected.add(p.dataset.from);connected.add(p.dataset.to);p.setAttribute('stroke-opacity','1');p.setAttribute('stroke-width','2.5');p.removeAttribute('stroke-dasharray');}
+        else{p.setAttribute('stroke-opacity','0.04');p.setAttribute('stroke-width','1');}
+      });
+      document.querySelectorAll('.er-node').forEach(function(n){
+        if(connected.has(n.dataset.erid)){n.style.opacity='1';n.style.boxShadow=n.dataset.erid===id?'0 0 0 2px rgba(0,209,185,.65),0 4px 18px rgba(0,209,185,.18)':'0 0 0 1.5px rgba(255,255,255,.22)';}
+        else{n.style.opacity='0.12';n.style.boxShadow='none';}
+      });
+    });
+    node.addEventListener('mouseleave',resetAll);
+  });
+  var svg=document.getElementById('er-svg');if(!svg)return;
+  svg.style.pointerEvents='all';
+  var tip=document.createElement('div');
+  tip.style.cssText='display:none;position:fixed;background:#0b2f50;border:1px solid #1c3f5e;border-radius:5px;padding:4px 9px;font-size:9.5px;color:#aabbc8;pointer-events:none;z-index:9999;font-family:monospace;';
+  document.body.appendChild(tip);
+  svg.addEventListener('mousemove',function(e){var t=e.target.closest('path.erp');if(t){tip.textContent=t.dataset.from+' → '+t.dataset.to+' · '+t.dataset.key;tip.style.display='block';tip.style.left=(e.clientX+12)+'px';tip.style.top=(e.clientY-8)+'px';}else{tip.style.display='none';}});
+  svg.addEventListener('mouseleave',function(){tip.style.display='none';});
+}
+setTimeout(function(){draw();setupHover();},150);
+})();
+</script>
+
+</div><!-- .page -->
+
+<script>
+const CONNS = [
+  // [srcId, tgtId, type]
+  ['src-clin-pt',   'tgt-clin-pt',    'core'],
+  ['src-pt-level',  'tgt-clin-pt',    'core'],
+  ['src-pt-level',  'tgt-pt-info',    'ext'],
+  ['src-ca-idx',    'tgt-ca-dx',      'ext'],
+  ['src-ca-nonidx', 'tgt-ca-dx',      'ext'],
+  ['src-clin-samp', 'tgt-clin-samp',  'core'],
+  ['src-clin-samp', 'tgt-surg',        'ext'],
+  ['src-clin-samp', 'tgt-tumor-samp', 'ext'],
+  ['src-cpt',       'tgt-tumor-samp', 'ext'],
+  ['src-regimen',   'tgt-drug',       'ext'],
+  ['src-imaging',   'tgt-imaging',    'ext'],
+  ['src-medonc',    'tgt-visit',      'ext'],
+  ['src-path',      'tgt-surg',       'ext'],
+  ['src-tm',        'tgt-lab',        'ext'],
+  ['src-mut',       'tgt-mut',        'core'],
+];
+
+function drawLineage() {
+  const svg = document.getElementById('lineage-svg');
+  const container = document.getElementById('lineage-container');
+  if (!svg || !container) return;
+  const cr = container.getBoundingClientRect();
+  if (cr.width === 0) return;
+  svg.setAttribute('viewBox', `0 0 ${cr.width} ${cr.height}`);
+  svg.setAttribute('width', cr.width);
+  svg.setAttribute('height', cr.height);
+  svg.innerHTML = '';
+
+  // group connections by target to stagger them slightly
+  const seen = {};
+  CONNS.forEach(([srcId, tgtId, type]) => {
+    const srcEl = document.getElementById(srcId);
+    const tgtEl = document.getElementById(tgtId);
+    if (!srcEl || !tgtEl) return;
+    const sr = srcEl.getBoundingClientRect();
+    const tr = tgtEl.getBoundingClientRect();
+    const x1 = sr.right  - cr.left;
+    const y1 = sr.top    + sr.height / 2 - cr.top;
+    const x2 = tr.left   - cr.left;
+    const y2 = tr.top    + tr.height / 2 - cr.top;
+    const dx = (x2 - x1) * 0.55;
+    const color = type === 'core' ? '#1a77cc' : '#00d1b9';
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', `M ${x1} ${y1} C ${x1+dx} ${y1} ${x2-dx} ${y2} ${x2} ${y2}`);
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke', color);
+    path.setAttribute('stroke-width', '1.5');
+    path.setAttribute('opacity', '0.4');
+    svg.appendChild(path);
+  });
+}
+
+// Run after fonts + layout settle
+if (document.readyState === 'complete') { setTimeout(drawLineage, 80); }
+else { window.addEventListener('load', () => setTimeout(drawLineage, 80)); }
+window.addEventListener('resize', drawLineage);
+</script>
+</body>
+</html>
