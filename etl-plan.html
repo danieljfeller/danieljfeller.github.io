@@ -365,9 +365,10 @@ h3 { font-size: 13px; font-weight: 600; color: var(--pink); margin: 18px 0 8px; 
     <div class="lineage-col staging">
       <div class="col-label">Staging <span class="tag" style="background:rgba(232,148,58,.12);border-color:rgba(232,148,58,.4);color:#e8943a;margin-left:0;">GC</span></div>
       <div class="sub-label" style="color:#e8943a;border-top-color:rgba(232,148,58,.15);">Pre-DHE transforms</div>
-      <div class="lnode stg" id="stg-clin-pt">  <div class="dot" style="background:#e8943a;"></div>clinical_patient_staging.csv</div>
-      <div class="lnode stg" id="stg-cancer">   <div class="dot" style="background:#e8943a;"></div>cancer_level_dataset.csv</div>
-      <div class="lnode stg" id="stg-lab">      <div class="dot" style="background:#e8943a;"></div>tm_staging.csv</div>
+      <div class="lnode stg" id="stg-clin-pt">     <div class="dot" style="background:#e8943a;"></div>staging_clinical_patient</div>
+      <div class="lnode stg" id="stg-biomarkers">  <div class="dot" style="background:#e8943a;"></div>staging_biomarkers</div>
+      <div class="lnode stg" id="stg-tumor-samp">  <div class="dot" style="background:#e8943a;"></div>staging_tumor_sample_information</div>
+      <div class="lnode stg" id="stg-cancer">      <div class="dot" style="background:#e8943a;"></div>staging_cancer_diagnosis</div>
     </div>
 
     <!-- TARGETS -->
@@ -1038,22 +1039,23 @@ setTimeout(function(){draw();setupHover();},150);
 <script>
 const CONNS = [
   // Source → Staging (GC Code Object pre-processing)
-  ['src-clin-pt',   'stg-clin-pt',  'stg-join'],
-  ['src-pt-level',  'stg-clin-pt',  'stg-join'],
-  ['src-ca-idx',    'stg-cancer',   'stg-union'],
-  ['src-ca-nonidx', 'stg-cancer',   'stg-union'],
-  ['src-clin-samp', 'stg-lab',      'stg-join'],
-  ['src-tm',        'stg-lab',      'stg-join'],
+  ['src-clin-pt',   'stg-clin-pt',    'stg-join'],
+  ['src-pt-level',  'stg-clin-pt',    'stg-join'],
+  ['src-clin-samp', 'stg-biomarkers', 'stg-join'],
+  ['src-tm',        'stg-biomarkers',  'stg-join'],
+  ['src-cpt',       'stg-tumor-samp', 'stg-join'],
+  ['src-clin-samp', 'stg-tumor-samp', 'stg-join'],
+  ['src-ca-idx',    'stg-cancer',     'stg-union'],
+  ['src-ca-nonidx', 'stg-cancer',     'stg-union'],
   // Staging → Target (DHE 1:1 syntactic mapping)
-  ['stg-clin-pt',   'tgt-clin-pt',    'core'],
-  ['stg-clin-pt',   'tgt-pt-info',    'ext'],
-  ['stg-cancer',    'tgt-ca-dx',      'ext'],
-  ['stg-lab',       'tgt-lab',        'ext'],
+  ['stg-clin-pt',    'tgt-clin-pt',    'core'],
+  ['stg-clin-pt',    'tgt-pt-info',    'ext'],
+  ['stg-biomarkers', 'tgt-lab',        'ext'],
+  ['stg-tumor-samp', 'tgt-tumor-samp', 'ext'],
+  ['stg-cancer',     'tgt-ca-dx',      'ext'],
   // Direct pass-throughs (no GC pre-processing needed)
   ['src-clin-samp', 'tgt-clin-samp',  'core'],
   ['src-clin-samp', 'tgt-surg',       'ext'],
-  ['src-clin-samp', 'tgt-tumor-samp', 'ext'],
-  ['src-cpt',       'tgt-tumor-samp', 'ext'],
   ['src-regimen',   'tgt-drug',       'ext'],
   ['src-imaging',   'tgt-imaging',    'ext'],
   ['src-medonc',    'tgt-visit',      'ext'],
