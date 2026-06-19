@@ -97,11 +97,11 @@ h3 { font-size: 13px; font-weight: 600; color: var(--pink); margin: 18px 0 8px; 
 
 /* ── Lineage chart ── */
 .lineage-wrap { position: relative; margin-bottom: 10px; }
-.lineage-cols { display: flex; gap: 0; position: relative; z-index: 2; }
+.lineage-cols { display: flex; justify-content: space-between; gap: 0; position: relative; z-index: 2; }
 .lineage-col  { display: flex; flex-direction: column; gap: 5px; }
-.lineage-col.sources { width: 27%; }
-.lineage-col.staging { width: 22%; margin: 0 12px; }
-.lineage-col.targets { width: 27%; margin-left: auto; }
+.lineage-col.sources { width: 30%; }
+.lineage-col.staging { width: 26%; }
+.lineage-col.targets { width: 30%; }
 .lnode.stg .dot { background: #e8943a; }
 .lnode.tgt-stg  { border-left: 3px solid #e8943a; }
 .lineage-col .col-label {
