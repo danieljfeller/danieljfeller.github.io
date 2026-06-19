@@ -281,16 +281,41 @@ h3 { font-size: 13px; font-weight: 600; color: var(--pink); margin: 18px 0 8px; 
   padding: 1px 4px; border-radius: 3px;
 }
 
-/* ── Execution order ── */
-.exec-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(190px,1fr)); gap: 12px; }
-.exec-node {
-  background: var(--surface); border: 1px solid var(--border);
-  border-top: 3px solid var(--blue); border-radius: 8px; padding: 12px;
+/* ── Execution order pipeline ── */
+.exec-pipeline { display: flex; align-items: flex-start; gap: 0; overflow-x: auto; padding-bottom: 12px; }
+.exec-phase { flex-shrink: 0; }
+.exec-phase-hd {
+  font-size: 9.5px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--muted); font-weight: 700; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 6px;
 }
-.exec-node .order { font-size: 22px; font-weight: 800; color: rgba(26,119,204,.35); line-height: 1; margin-bottom: 6px; }
-.exec-node .fname { font-family: "SF Mono",monospace; font-size: 11px; color: var(--teal); margin-bottom: 4px; }
-.exec-node .source { font-size: 11px; color: var(--muted); }
-.exec-node .depends { font-size: 10px; color: var(--pink); margin-top: 6px; }
+.exec-parallel-badge {
+  background: rgba(0,209,185,.08); border: 1px solid rgba(0,209,185,.2);
+  color: var(--teal); border-radius: 8px; padding: 1px 7px;
+  font-size: 9px; text-transform: none; letter-spacing: 0; font-weight: 600;
+}
+.exec-phase-cards { display: flex; flex-direction: column; gap: 5px; }
+.exec-arrow {
+  flex-shrink: 0; display: flex; align-items: flex-start; justify-content: center;
+  padding: 0 10px; padding-top: 28px; color: rgba(0,209,185,.5); font-size: 18px;
+}
+.exec-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 6px; padding: 7px 10px; width: 175px;
+}
+.exec-card-stg  { border-left: 3px solid #e8943a; }
+.exec-card-core { border-left: 3px solid var(--blue); }
+.exec-card-hub  { border-left: 3px solid var(--teal); border-left-width: 3px; }
+.exec-card-ext  { border-left: 3px solid var(--teal); }
+.exec-card-gen  { border-left: 3px solid var(--pink); }
+.exec-step { font-size: 9px; font-weight: 700; color: var(--muted); margin-bottom: 2px; letter-spacing: .05em; }
+.exec-fname { font-family: "SF Mono","Fira Code",monospace; font-size: 10.5px; margin-bottom: 3px; }
+.exec-card-stg  .exec-fname { color: #e8943a; }
+.exec-card-core .exec-fname { color: #5db8ff; }
+.exec-card-hub  .exec-fname { color: var(--teal); }
+.exec-card-ext  .exec-fname { color: var(--teal); }
+.exec-card-gen  .exec-fname { color: var(--pink); }
+.exec-dep { font-size: 10px; color: var(--muted); line-height: 1.4; }
 
 /* ── Resource links ── */
 .resource-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
@@ -766,18 +791,58 @@ h3 { font-size: 13px; font-weight: 600; color: var(--pink); margin: 18px 0 8px; 
 
 <!-- ═══════════════════════ EXECUTION ORDER ═══════════════════════ -->
 <h2>Recommended Execution Order</h2>
-<div class="exec-grid">
-  <div class="exec-node"><div class="order">01</div><div class="fname">clinical_patient</div><div class="source">data_clinical_patient.txt + patient_level_dataset.csv</div><div class="depends">No dependencies</div></div>
-  <div class="exec-node"><div class="order">02</div><div class="fname">cancer_patient_information</div><div class="source">patient_level_dataset.csv</div><div class="depends">No dependencies</div></div>
-  <div class="exec-node"><div class="order">03</div><div class="fname">clinical_sample</div><div class="source">data_clinical_sample.txt</div><div class="depends">Needs clinical_patient for YEAR_CONTACT, CENTER</div></div>
-  <div class="exec-node"><div class="order">04</div><div class="fname">cancer_diagnosis</div><div class="source">cancer_level_dataset_index.csv ∪ _non_index.csv</div><div class="depends">FK: cancer_patient_information</div></div>
-  <div class="exec-node"><div class="order">05</div><div class="fname">mutations</div><div class="source">data_mutations_extended.txt</div><div class="depends">Needs clinical_sample for PATIENT_ID join</div></div>
-  <div class="exec-node"><div class="order">06</div><div class="fname">drug_exposure</div><div class="source">regimen_cancer_level_dataset.csv</div><div class="depends">Needs cancer_diagnosis for end-date conversion</div></div>
-  <div class="exec-node"><div class="order">07</div><div class="fname">imaging</div><div class="source">imaging_level_dataset.csv</div><div class="depends">FK: cancer_patient_information</div></div>
-  <div class="exec-node"><div class="order">08</div><div class="fname">clinical_visits</div><div class="source">med_onc_note_level_dataset.csv</div><div class="depends">FK: cancer_patient_information</div></div>
-  <div class="exec-node"><div class="order">09</div><div class="fname">surgical_procedures</div><div class="source">pathology_report_level_dataset.csv</div><div class="depends">FK: cancer_patient_information</div></div>
-  <div class="exec-node"><div class="order">10</div><div class="fname">laboratory_testing</div><div class="source">tm_level_dataset.csv</div><div class="depends">FK: cancer_patient_information</div></div>
-  <div class="exec-node"><div class="order">11</div><div class="fname">tumor_sample_information</div><div class="source">cancer_panel_test_level_dataset.csv + data_clinical_sample.txt</div><div class="depends">Needs clinical_sample for sample_class join</div></div>
+<p style="font-size:12px;color:var(--muted);margin-bottom:18px;">Tables within the same phase can run in parallel. Each phase must complete before the next begins.</p>
+<div class="exec-pipeline">
+
+  <!-- Phase 0: GC Pre-processing -->
+  <div class="exec-phase">
+    <div class="exec-phase-hd">Phase 0 — GC Code Object <span class="exec-parallel-badge">4 parallel</span></div>
+    <div class="exec-phase-cards">
+      <div class="exec-card exec-card-stg"><div class="exec-step">GC·A</div><div class="exec-fname">staging_clinical_patient</div><div class="exec-dep">JOIN clin_patient + patient_level</div></div>
+      <div class="exec-card exec-card-stg"><div class="exec-step">GC·B</div><div class="exec-fname">staging_biomarkers</div><div class="exec-dep">JOIN clin_sample + tm_level</div></div>
+      <div class="exec-card exec-card-stg"><div class="exec-step">GC·C</div><div class="exec-fname">staging_tumor_sample_information</div><div class="exec-dep">JOIN clin_sample + cancer_panel_test</div></div>
+      <div class="exec-card exec-card-stg"><div class="exec-step">GC·D</div><div class="exec-fname">staging_cancer_diagnosis</div><div class="exec-dep">UNION index + non_index</div></div>
+    </div>
+  </div>
+
+  <div class="exec-arrow">→</div>
+
+  <!-- Phase 1: Foundation (no FK deps) -->
+  <div class="exec-phase">
+    <div class="exec-phase-hd">Phase 1 — Foundation <span class="exec-parallel-badge">2 parallel</span></div>
+    <div class="exec-phase-cards">
+      <div class="exec-card exec-card-core"><div class="exec-step">01</div><div class="exec-fname">clinical_patient</div><div class="exec-dep">No dependencies</div></div>
+      <div class="exec-card exec-card-hub"><div class="exec-step">02</div><div class="exec-fname">cancer_patient_information</div><div class="exec-dep">No dependencies</div></div>
+    </div>
+  </div>
+
+  <div class="exec-arrow">→</div>
+
+  <!-- Phase 2: Core expansion -->
+  <div class="exec-phase">
+    <div class="exec-phase-hd">Phase 2 — Core expansion <span class="exec-parallel-badge">6 parallel</span></div>
+    <div class="exec-phase-cards">
+      <div class="exec-card exec-card-core"><div class="exec-step">03</div><div class="exec-fname">clinical_sample</div><div class="exec-dep">← clinical_patient</div></div>
+      <div class="exec-card exec-card-ext"><div class="exec-step">04</div><div class="exec-fname">cancer_diagnosis</div><div class="exec-dep">← cancer_patient_information</div></div>
+      <div class="exec-card exec-card-ext"><div class="exec-step">07</div><div class="exec-fname">imaging</div><div class="exec-dep">← cancer_patient_information</div></div>
+      <div class="exec-card exec-card-ext"><div class="exec-step">08</div><div class="exec-fname">clinical_visits</div><div class="exec-dep">← cancer_patient_information</div></div>
+      <div class="exec-card exec-card-ext"><div class="exec-step">09</div><div class="exec-fname">surgical_procedures</div><div class="exec-dep">← cancer_patient_information</div></div>
+      <div class="exec-card exec-card-ext"><div class="exec-step">10</div><div class="exec-fname">laboratory_testing</div><div class="exec-dep">← cancer_patient_information</div></div>
+    </div>
+  </div>
+
+  <div class="exec-arrow">→</div>
+
+  <!-- Phase 3: Dependents -->
+  <div class="exec-phase">
+    <div class="exec-phase-hd">Phase 3 — Dependents <span class="exec-parallel-badge">3 parallel</span></div>
+    <div class="exec-phase-cards">
+      <div class="exec-card exec-card-gen"><div class="exec-step">05</div><div class="exec-fname">mutations</div><div class="exec-dep">← clinical_sample</div></div>
+      <div class="exec-card exec-card-ext"><div class="exec-step">06</div><div class="exec-fname">drug_exposure</div><div class="exec-dep">← cancer_diagnosis</div></div>
+      <div class="exec-card exec-card-ext"><div class="exec-step">11</div><div class="exec-fname">tumor_sample_information</div><div class="exec-dep">← clinical_sample</div></div>
+    </div>
+  </div>
+
 </div>
 
 <!-- ═══════════════════════ SOURCE INVENTORY (bottom) ═══════════════════════ -->
