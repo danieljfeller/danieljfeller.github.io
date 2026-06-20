@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} — {% endif %}Decoding Health Data</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/book.css' | relative_url }}">
+</head>
+<body class="book-body">
+
+  <header>
+    <div class="header-content">
+      <a href="{{ '/' | relative_url }}" class="site-title">{{ site.title }}</a>
+      <nav>
+        <ul>
+          <li><a href="{{ '/' | relative_url }}">About</a></li>
+          <li><a href="{{ '/research/' | relative_url }}">Research</a></li>
+          <li><a href="{{ '/book/' | relative_url }}" class="active">Book</a></li>
+          <li><a href="{{ '/contact/' | relative_url }}">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="book-shell">
+
+    <!-- Sidebar -->
+    <nav class="book-nav" id="book-nav">
+      <div class="book-nav-header">
+        <a href="{{ '/book/' | relative_url }}" class="book-nav-title">Decoding Health Data</a>
+      </div>
+
+      <div class="book-nav-section">
+        <span class="book-nav-part">Getting Started</span>
+        <ul>
+          <li><a href="{{ '/book/' | relative_url }}"{% if page.url == '/book/' %} class="active"{% endif %}>Overview</a></li>
+          <li><a href="{{ '/book/intro/who-should-read/' | relative_url }}"{% if page.url == '/book/intro/who-should-read/' %} class="active"{% endif %}>Who Should Read This Book</a></li>
+          <li><a href="{{ '/book/intro/how-to-read/' | relative_url }}"{% if page.url == '/book/intro/how-to-read/' %} class="active"{% endif %}>How to Read This Book</a></li>
+          <li><a href="{{ '/book/intro/healthcare-delivery/' | relative_url }}"{% if page.url == '/book/intro/healthcare-delivery/' %} class="active"{% endif %}>How Healthcare Is Delivered</a></li>
+          <li><a href="{{ '/book/intro/vocabularies/' | relative_url }}"{% if page.url == '/book/intro/vocabularies/' %} class="active"{% endif %}>Healthcare Vocabularies</a></li>
+        </ul>
+      </div>
+
+      <div class="book-nav-section">
+        <span class="book-nav-part">Part II — Administrative Data</span>
+        <ul>
+          <li><a href="{{ '/book/administrative/medical-claims/' | relative_url }}"{% if page.url == '/book/administrative/medical-claims/' %} class="active"{% endif %}>Medical Claims</a></li>
+          <li><a href="{{ '/book/administrative/pharmacy-claims/' | relative_url }}"{% if page.url == '/book/administrative/pharmacy-claims/' %} class="active"{% endif %}>Pharmacy Claims</a></li>
+        </ul>
+      </div>
+
+      <div class="book-nav-section">
+        <span class="book-nav-part">Part III — Clinical Data</span>
+        <ul>
+          <li><a href="{{ '/book/clinical/ehr/' | relative_url }}"{% if page.url == '/book/clinical/ehr/' %} class="active"{% endif %}>Electronic Health Records</a></li>
+          <li><a href="{{ '/book/clinical/medical-imaging/' | relative_url }}"{% if page.url == '/book/clinical/medical-imaging/' %} class="active"{% endif %}>Medical Imaging</a></li>
+          <li><a href="{{ '/book/clinical/clinical-trials/' | relative_url }}"{% if page.url == '/book/clinical/clinical-trials/' %} class="active"{% endif %}>Clinical Trial Data</a></li>
+          <li><a href="{{ '/book/clinical/molecular-sequencing/' | relative_url }}"{% if page.url == '/book/clinical/molecular-sequencing/' %} class="active"{% endif %}>Molecular Sequencing</a></li>
+        </ul>
+      </div>
+
+      <div class="book-nav-section">
+        <span class="book-nav-part">Part IV — Patient-Generated Data</span>
+        <ul>
+          <li><a href="{{ '/book/patient-generated/vital-signs/' | relative_url }}"{% if page.url == '/book/patient-generated/vital-signs/' %} class="active"{% endif %}>Vital Signs Monitoring</a></li>
+          <li><a href="{{ '/book/patient-generated/adherence/' | relative_url }}"{% if page.url == '/book/patient-generated/adherence/' %} class="active"{% endif %}>Adherence Monitoring</a></li>
+          <li><a href="{{ '/book/patient-generated/activity-lifestyle/' | relative_url }}"{% if page.url == '/book/patient-generated/activity-lifestyle/' %} class="active"{% endif %}>Activity &amp; Lifestyle</a></li>
+          <li><a href="{{ '/book/patient-generated/patient-reported-outcomes/' | relative_url }}"{% if page.url == '/book/patient-generated/patient-reported-outcomes/' %} class="active"{% endif %}>Patient-Reported Outcomes</a></li>
+          <li><a href="{{ '/book/patient-generated/complex-unstructured/' | relative_url }}"{% if page.url == '/book/patient-generated/complex-unstructured/' %} class="active"{% endif %}>Complex &amp; Unstructured Data</a></li>
+          <li><a href="{{ '/book/patient-generated/future/' | relative_url }}"{% if page.url == '/book/patient-generated/future/' %} class="active"{% endif %}>Future of Patient Data</a></li>
+        </ul>
+      </div>
+
+      <div class="book-nav-section">
+        <span class="book-nav-part">Working with Health Data</span>
+        <ul>
+          <li><a href="{{ '/book/working-with-data/de-identification/' | relative_url }}"{% if page.url == '/book/working-with-data/de-identification/' %} class="active"{% endif %}>De-Identification</a></li>
+          <li><a href="{{ '/book/working-with-data/multimodal-streams/' | relative_url }}"{% if page.url == '/book/working-with-data/multimodal-streams/' %} class="active"{% endif %}>Multimodal Data Streams</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Chapter content -->
+    <main class="book-main">
+      <button class="book-nav-toggle" id="nav-toggle" aria-label="Toggle navigation">☰</button>
+      {{ content }}
+      <footer class="book-chapter-footer">
+        <p>© {{ site.time | date: '%Y' }} Daniel Feller. Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>. Free for educational and non-commercial use with attribution. Cite as: Feller, D. <em>Decoding Health Data</em>. <a href="https://danieljfeller.github.io/book/">danieljfeller.github.io/book</a>. For commercial licensing, contact <a href="mailto:danieljfeller@gmail.com">danieljfeller@gmail.com</a>.</p>
+      </footer>
+    </main>
+
+  </div>
+
+  <script>
+    const toggle = document.getElementById('nav-toggle');
+    const nav = document.getElementById('book-nav');
+    toggle.addEventListener('click', () => nav.classList.toggle('open'));
+  </script>
+</body>
+</html>
