@@ -168,15 +168,16 @@ h3::before {
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-  width: 240px;
+  width: 280px;
 }
 
 .hero-figure figcaption {
-  margin-top: 0.6rem;
-  font-size: 0.75rem;
-  line-height: 1.5;
+  margin-top: 0.65rem;
+  font-size: 0.76rem;
+  line-height: 1.55;
   color: var(--text-secondary);
   font-family: var(--sans);
+  font-style: italic;
 }
 
 .hero-figure figcaption a {
@@ -191,14 +192,14 @@ h3::before {
 
 /* ---------------- Hero ---------------- */
 .hero {
-  margin-bottom: 3.5rem;
+  margin-bottom: 4rem;
   display: flex;
-  align-items: center;
-  gap: 2rem;
+  align-items: flex-start;
+  gap: 3rem;
 }
 
 .hero-photo {
-  width: 240px;
+  width: 280px;
   aspect-ratio: 3 / 4;
   object-fit: cover;
   border-radius: 10px;
@@ -206,9 +207,13 @@ h3::before {
   flex-shrink: 0;
 }
 
+.hero-text {
+  padding-top: 0.5rem;
+}
+
 .hero h1 {
-  font-size: 2.6rem;
-  margin-bottom: 0.4rem;
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
 }
 
 .hero h2 {
@@ -242,6 +247,10 @@ h3::before {
 }
 
 /* ---------------- About / prose ---------------- */
+.about-content h2::before {
+  content: "";
+}
+
 .about-content p {
   margin-bottom: 1.4rem;
   color: var(--text-color);
