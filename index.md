@@ -4,16 +4,14 @@ title: About
 ---
 
 <div class="hero">
-  <figure class="hero-figure">
-    <img src="{{ '/images/hero.jpeg' | relative_url }}" alt="Daniel Feller at Le Corbusier House, Zurich" class="hero-photo">
-    <figcaption>At <a href="https://en.wikipedia.org/wiki/Le_Corbusier_House_(Zurich)" target="_blank">Le Corbusier House</a> in Zurich. The house and its furnishings are designed around the <a href="https://en.wikipedia.org/wiki/Modulor" target="_blank">Modulor</a> &mdash; an <a href="https://en.wikipedia.org/wiki/Anthropometry" target="_blank">anthropometric</a> scale of proportions grounded in the human body and the <a href="https://en.wikipedia.org/wiki/Golden_ratio" target="_blank">golden ratio</a>. Visitors are encouraged to place a sticker representing their height and gender.</figcaption>
-  </figure>
+  <img src="{{ '/images/hero.jpeg' | relative_url }}" alt="Daniel Feller at Le Corbusier House, Zurich" class="hero-photo">
   <div class="hero-text">
     <h1>Daniel Feller, PhD</h1>
     <h2>Healthcare Data Science &amp; Federated Computing</h2>
     <p class="tagline">Senior Solutions Engineer at Rhino Federated Computing | PhD in Biomedical Informatics, Columbia University</p>
   </div>
 </div>
+<p class="hero-caption">At <a href="https://en.wikipedia.org/wiki/Le_Corbusier_House_(Zurich)" target="_blank">Le Corbusier House</a> in Zurich. The house and its furnishings are designed around the <a href="https://en.wikipedia.org/wiki/Modulor" target="_blank">Modulor</a> &mdash; an <a href="https://en.wikipedia.org/wiki/Anthropometry" target="_blank">anthropometric</a> scale of proportions grounded in the human body and the <a href="https://en.wikipedia.org/wiki/Golden_ratio" target="_blank">golden ratio</a>. Visitors are encouraged to place a sticker representing their height and gender.</p>
 
 <section class="about-content">
   <h2>About</h2>
