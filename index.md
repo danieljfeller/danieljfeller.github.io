@@ -11,7 +11,7 @@ title: About
     <p class="tagline">Senior Solutions Engineer at Rhino Federated Computing | PhD in Biomedical Informatics, Columbia University</p>
   </div>
 </div>
-<p class="hero-caption">At <a href="https://en.wikipedia.org/wiki/Le_Corbusier_House_(Zurich)" target="_blank">Le Corbusier House</a> in Zurich. The house and its furnishings are designed around the <a href="https://en.wikipedia.org/wiki/Modulor" target="_blank">Modulor</a> &mdash; an <a href="https://en.wikipedia.org/wiki/Anthropometry" target="_blank">anthropometric</a> scale of proportions grounded in the human body and the <a href="https://en.wikipedia.org/wiki/Golden_ratio" target="_blank">golden ratio</a>. Visitors are encouraged to place a sticker representing their height and gender.</p>
+<p class="hero-caption">At <a href="https://en.wikipedia.org/wiki/Le_Corbusier_House_(Zurich)" target="_blank">Le Corbusier House</a> in Zurich. The house and its furnishings are designed around the <a href="https://en.wikipedia.org/wiki/Modulor" target="_blank">Modulor</a> &mdash; an <a href="https://en.wikipedia.org/wiki/Anthropometry" target="_blank">anthropometric</a> scale of proportions grounded in the human body and the <a href="https://en.wikipedia.org/wiki/Golden_ratio" target="_blank">golden ratio</a>. Visitors are encouraged to place a sticker representing their height and gender — red for navel height, blue for top of head.</p>
 
 <section class="about-content">
   <h2>About</h2>

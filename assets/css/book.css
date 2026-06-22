@@ -2,6 +2,26 @@
    Book layout — sidebar + chapter content
    ============================================================ */
 
+/* ---- Skip link (keyboard / screen-reader users) ---- */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 9999;
+  padding: 0.5rem 1rem;
+  background: var(--accent-color);
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 0 0 4px 4px;
+  text-decoration: none;
+  transition: top 0.1s;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
 .book-body {
   background: var(--bg-color);
 }
@@ -46,6 +66,14 @@
   text-decoration: none;
 }
 
+.book-nav-description {
+  margin: 0.5rem 0 0;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  font-family: var(--sans);
+}
+
 .book-nav-section {
   padding: 0.5rem 0 0.75rem;
   border-bottom: 1px solid var(--border-color);
@@ -81,6 +109,14 @@
 .book-nav li a:hover {
   color: var(--accent-color);
   text-decoration: none;
+  background: rgba(9, 105, 218, 0.06);
+}
+
+.book-nav li a:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: -2px;
+  border-radius: 2px;
+  color: var(--accent-color);
   background: rgba(9, 105, 218, 0.06);
 }
 
