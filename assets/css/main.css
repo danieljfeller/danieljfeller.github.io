@@ -92,26 +92,26 @@ header {
   color: var(--text-secondary);
 }
 
-nav ul {
+header nav ul {
   list-style: none;
   display: flex;
   gap: 1.5rem;
 }
 
-nav a {
+header nav a {
   font-family: var(--mono);
   color: var(--text-secondary);
   font-weight: 500;
   font-size: 0.82rem;
 }
 
-nav a:hover,
-nav a.active {
+header nav a:hover,
+header nav a.active {
   color: var(--accent-color);
   text-decoration: none;
 }
 
-nav a.active {
+header nav a.active {
   border-bottom: 2px solid var(--accent-color);
   padding-bottom: 2px;
 }
