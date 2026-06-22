@@ -20,6 +20,10 @@ Accelerometers measure acceleration in units called “g’s”, the same force 
 
 Each data sample contains four values: a timestamp (in seconds since device boot) and three acceleration measurements for x, y, and z axes. The values are expressed in g's (multiples of Earth's gravity): if your phone is lying flat with the screen facing up, the z-axis reads around -1.0 (or 1g downward); if lying screen down, it reads around +1.0; if balanced on its left side, the x-axis reads -1.0. These values recorded represent the sum of all accelerations measured across some time frame; developers typically request updates at 10 Hz (10 samples per second) although most devices can log  data at 100 Hz (100 samples per second).  The timestamp uses an arbitrary reference point (device boot time) rather than wall-clock time, so you can't directly compare timestamps across different devices or sessions. The figure below represents a time series of accelerometer data from a smartphone in a pocket across 25 seconds while an individual was walking at a moderate pace.
 
+<figure>
+  <img src="{{ '/images/book/accelerometer-axes.png' | relative_url }}" alt="Three-panel time series plot showing accelerometer data along x, y, and z axes over 25 seconds while walking, with oscillating patterns reflecting each footstep">
+  <figcaption>Raw accelerometer data from a smartphone in a pocket during moderate-pace walking. The rhythmic oscillations in all three axes reflect the vertical and horizontal forces of each footstep. Step-counting algorithms detect these periodic patterns to infer gait and activity level.</figcaption>
+</figure>
 
 #### How To Access Data From Fitness Trackers
 
@@ -45,4 +49,11 @@ Deep sleep: the accelerometer shows nearly complete stillness while heart rate i
 
 REM sleep: the accelerometer registers almost no body movement, but heart rate and heart rate variability increase to levels similar to being awake, often with irregular spikes.
 
-While deep sleep has a distinctive signature distinguishing light sleep from REM is more challenging. Both stages show minimal body movement on the accelerometer, and their heart rate patterns can look similar, with REM sometimes producing the elevated and irregular heart rates similar to those in restless light sleep or brief awakenings. The figure below shows the amount of noise observed in heart rate and accelerometer readings. The lack of explicit differences in movement and heart rate across the sleep stages are why consumer devices can only achieve 60-70% accuracy for sleep stage classification compared to clinical polysomnography, which directly measures brain waves, tracks eye movements during REM, and uses chin muscle sensors to detect the characteristic muscle paralysis that confirms REM sleep.
+While deep sleep has a distinctive signature distinguishing light sleep from REM is more challenging. Both stages show minimal body movement on the accelerometer, and their heart rate patterns can look similar, with REM sometimes producing the elevated and irregular heart rates similar to those in restless light sleep or brief awakenings. The figure below shows the amount of noise observed in heart rate and accelerometer readings.
+
+<figure>
+  <img src="{{ '/images/book/wearable-sensor-timeseries.png' | relative_url }}" alt="Multi-panel time series spanning Thursday through Wednesday showing heart rate in bpm and three accelerometer angle channels, with shaded regions indicating diary sleep, HR algorithm sleep, and angle algorithm sleep periods">
+  <figcaption>One week of wrist-worn wearable sensor data showing heart rate (top) and three accelerometer angle channels. Shaded bands compare sleep periods detected by a heart rate algorithm (blue) versus an accelerometer angle algorithm (purple) versus self-reported diary sleep (gray). Disagreements between methods illustrate why no single signal reliably identifies sleep stage boundaries.</figcaption>
+</figure>
+
+The lack of explicit differences in movement and heart rate across the sleep stages are why consumer devices can only achieve 60-70% accuracy for sleep stage classification compared to clinical polysomnography, which directly measures brain waves, tracks eye movements during REM, and uses chin muscle sensors to detect the characteristic muscle paralysis that confirms REM sleep.

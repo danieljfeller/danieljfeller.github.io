@@ -4,9 +4,15 @@ title: "Decoding Health Data"
 permalink: /book/
 ---
 
-# Decoding Health Data
-
-A practical guide to the data types, standards, and formats behind modern health AI — written for mid-career tech professionals and data scientists entering healthcare, and for healthcare data professionals who want to broaden their knowledge across data streams.
+<div class="book-cover-hero">
+  <img src="{{ '/images/book/cover.png' | relative_url }}" alt="Decoding Health Data book cover" class="book-cover-img">
+  <div class="book-cover-meta">
+    <h1>Decoding Health Data</h1>
+    <p class="book-subtitle">A Practical Guide From Genomics to EHRs to Insurance Claims</p>
+    <p class="book-author">Daniel Feller, PhD</p>
+    <p class="book-description">A practical guide to the data types, standards, and formats behind modern health AI — written for mid-career tech professionals and data scientists entering healthcare, and for healthcare data professionals who want to broaden their knowledge across data streams.</p>
+  </div>
+</div>
 
 ---
 

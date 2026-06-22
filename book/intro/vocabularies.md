@@ -32,6 +32,11 @@ Full official description: The complete CPT descriptor includes detailed criteri
 
 Hierarchies (Parent-Child Relationships): Most vocabularies organize concepts into taxonomies where more specific concepts roll up to broader categories. These hierarchies enable data aggregation—you can query for all subtypes of a specific condition without enumerating every subtype.For example, the ICD-10-CM code S86.011D represents a strain of the right achilles tendon. The first characters - S86 - represent an injury of muscle, fascia, and tendon of the lower leg. The following characters - .011 - localize that injury to the right achilles tendon. The final character - D - asserts that the diagnosis was observed at a subsequent encounter (i.e. not at the initial diagnosis). See below for a breakdown of this code.
 
+<figure>
+  <img src="{{ '/images/book/icd10-code-structure.png' | relative_url }}" alt="ICD-10-CM code structure diagram for S86.011D showing category, etiology/anatomic site, and extension components">
+  <figcaption>ICD-10-CM code S86.011D broken into its three components: S86 (category — injury of muscle, fascia, and tendon of lower leg), .011 (etiology/anatomic site — strain of right Achilles tendon), and D (extension — subsequent encounter).</figcaption>
+</figure>
+
 
 #### What healthcare vocabularies do you need to know?
 

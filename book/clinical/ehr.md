@@ -180,6 +180,11 @@ Most bedside monitors generate waveform data in proprietary formats specific to 
 
 The massive number of data points from the physiological monitors are not automatically transferred into EHRs but rather are interpreted and then documented by nurses in EHR flowsheets. Flowsheets are tabular data entry interfaces in the EHR where clinicians document time-stamped observations to create structured longitudinal data. The use of flowsheets varies from monitoring vital signs to interviewing patients about drug and alcohol use.  The data entry interface typically resembles a spreadsheet with time running down the rows (hourly, every 4 hours, or custom intervals) and measurement types across the columns (temperature, heart rate, blood pressure systolic/diastolic, respiratory rate, SpO2). Nurses click into cells to enter values, and the EHR enforces data type validation (numeric ranges, required fields, acceptable units) and some systems flag out-of-range values with color coding (e.g. red for critical). Modern flowsheets offer auto-population buttons that pull current values directly from interfaced bedside monitors, reducing transcription errors but also potentially importing errors if nurses don't perform the necessary validation. Different hospitals configure their flowsheets differently; for example, some require documenting patient position and activity level in adjacent columns, others don't capture this context at all. When you query vital signs or even patient-reported responses to a questionnaire  from an EHR database, you're likely extracting whatever made it into flowsheet cells during nurse documentation workflows.
 
+<figure>
+  <img src="{{ '/images/book/ehr-bedside-monitor-flowsheet.png' | relative_url }}" alt="EHR flowsheet screenshot showing a comprehensive nursing flowsheet with vital signs, lab values, and clinical observations organized in a tabular time-series format">
+  <figcaption>A nursing flowsheet in an EHR system. Time runs down the rows and measurement types across the columns, creating a structured longitudinal record of a patient's physiological status. Values are entered manually by nurses or auto-populated from interfaced bedside monitors.</figcaption>
+</figure>
+
 
 ##### Other Diagnostic Testing
 
@@ -188,6 +193,11 @@ The nervous system within the human body is like the wiring in a house, with sep
 Electroencephalogram (EEG) - Standard for seizure diagnosis and monitoring epilepsy. Common in neurology but nowhere near ECG volumes. Routine EEGs take 30-60 minutes; extended monitoring can last days.
 
 EMG/Nerve conduction studies - Common in neurology for diagnosing neuropathy, radiculopathy, carpal tunnel syndrome, and other nerve/muscle disorders. More specialized than ECG/EEG.
+
+<figure>
+  <img src="{{ '/images/book/emg-cmap-waveform.png' | relative_url }}" alt="Compound Muscle Action Potential (CMAP) waveform showing voltage in millivolts over time in milliseconds, with the characteristic biphasic deflection and orange dashed lines indicating amplitude measurement">
+  <figcaption>A Compound Muscle Action Potential (CMAP) waveform from a nerve conduction study. The amplitude (measured peak-to-trough, indicated by the orange arrows) and latency of this waveform help neurologists diagnose neuropathy, radiculopathy, and carpal tunnel syndrome.</figcaption>
+</figure>
 
 Sleep studies (Polysomnography) - Include EEG plus other sensors. Very common for sleep apnea diagnosis but require overnight stays in sleep labs or home testing equipment.
 
@@ -267,6 +277,10 @@ If you’ve spent any time working with healthcare data, you probably intuitivel
 
 OMOP is a common data model for healthcare data generated in healthcare settings. OMOP is an acronym for the Observational Medical Outcomes Partnership, which was a partnership between the FDA, drug companies, and health systems in the early 2010s whose goal was to create infrastructure to study the effectiveness of medical products using observational data. Observational data is data that is collected outside of a controlled research study (and is different from clinical trial data). Since then, OMOP has increased in popularity compared to similar common data models focused on observational health data.
 
+<figure>
+  <img src="{{ '/images/book/omop-search-trends.png' | relative_url }}" alt="Google Trends chart showing search interest over time for OMOP and related healthcare data model terms from 2020 to 2024, with a sharp spike in 2024">
+  <figcaption>Google Trends search interest for OMOP and related common data model terms, 2020–2024. The sharp spike reflects growing industry attention to standardized observational research infrastructure, driven in part by large-scale real-world evidence initiatives.</figcaption>
+</figure>
 
 ##### Understanding OMOP tables
 

@@ -50,6 +50,11 @@ Medical claims are generated each time a healthcare provider delivers services t
 
 Although millions of individual claims are submitted each day, most analysts and data scientists won’t ever see an actual claim. The most common format of medical claims data are commonly referred to as claims extracts. These are all paid claims (which have been processed and settled by insurance providers) and come in large flat files - often CSVs or Excel files. The claims extracts that  insurance carriers generate are guaranteed to look a bit different from one another, mostly in the column names and ordering of the columns will vary. However, the content is largely standardized between them.
 
+<figure>
+  <img src="{{ '/images/book/medical-claims-structure.png' | relative_url }}" alt="Structure of a medical claims data extract showing member and plan info, encounter details, provider information, diagnosis and procedure data, and financials">
+  <figcaption>Structure of a typical medical claims data extract. Each row represents a single encounter and includes five categories of information: member and plan identity, encounter details, provider information, diagnosis and procedure codes, and financial amounts.</figcaption>
+</figure>
+
 No standard for storing medical claims has gained widespread adoption, perhaps because standardizing medical claims is trivial compared to other health data streams like EHR data. While both FHIR and OMOP Data Models (to be discussed at length in Chapter X) include dedicated tables for claims and cost data, these are used only in specific use cases and applications. In practice, claims data remains stored in proprietary relational schemas.
 
 Warning! Don’t Trust The Diagnostic Information In Claims

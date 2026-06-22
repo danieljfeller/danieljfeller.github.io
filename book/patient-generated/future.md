@@ -6,6 +6,11 @@ permalink: /book/patient-generated/future/
 
 Recent advancements in battery and sensor technology have enabled collecting many new streams of health-related data. The reduction in cost and increase in energy density of lithium-ion batteries, driven by optimized chemistry and manufacturing scale, has dropped battery prices by nearly 90% while doubling storage capacity. Innovations in multi-wavelength optics has led to the creation of new types of devices for collecting clinical-grade insights about biophysical activity. Parallel breakthroughs in nanomaterials and flexible electronics, such as graphene meshes and microneedle arrays, have created "skin-like" interfaces that can capture complex biochemical and physiological data without bulky hardware and are the next wave of sensor-technology that the medical domain must plan for.
 
+<figure>
+  <img src="{{ '/images/book/patient-generated-data-types.png' | relative_url }}" alt="Overview diagram of seven categories of patient-generated data: wearable data, self-reported outcomes, home monitoring devices, connected medical devices, social and lifestyle data, environmental data, and social network and media data, each with illustrative examples">
+  <figcaption>The landscape of patient-generated health data. Seven broad categories — wearables, self-reported outcomes, home monitoring devices, connected medical devices, social and lifestyle data, environmental sensors, and social network data — collectively represent a comprehensive picture of a patient's health outside the clinic.</figcaption>
+</figure>
+
 Key technological advances driving this shift include:
 
 Clinical-Grade Photoplethysmography (PPG) & ECG: Modern consumer sensors have moved beyond simple heart rate tracking to FDA-cleared arrhythmia detection (AFib), blood oxygen saturation ($SpO_2$), and respiratory rate variability. Multi-wavelength PPG sensors now allow for deeper tissue penetration, improving accuracy across diverse skin tones and measuring novel metrics like blood pressure proxies.
