@@ -44,6 +44,16 @@ sitemap: false
     font-size: 0.85rem;
     font-style: italic;
   }
+  .apt19 .newspaper {
+    margin: 2rem 0;
+    width: 100%;
+    max-width: 900px;
+  }
+  .apt19 .newspaper img {
+    width: 100%;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+  }
 </style>
 
 <div class="apt19">
@@ -60,6 +70,10 @@ sitemap: false
     <li>Jake Northcutt <span class="aka">aka Tits</span></li>
     <li>Daniel Feller</li>
   </ul>
+
+  <div class="newspaper">
+    <img src="{{ '/images/apt19_newspaper.png' | relative_url }}" alt="The Hannum Herald — Three Diagnosed With MRSA After Seely's Basement Foam Party at Apt. 19">
+  </div>
 
   <p class="footer-note">You found it.</p>
 </div>
