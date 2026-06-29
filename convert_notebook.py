@@ -16,7 +16,7 @@ OUTPUT_PATH = Path("/Users/daniel/Code/danieljfeller.github.io/demo_notebook/ind
 with open(NOTEBOOK_PATH) as f:
     nb = json.load(f)
 
-md = mistune.create_markdown(plugins=["table", "strikethrough"])
+md = mistune.create_markdown(plugins=["table", "strikethrough"], escape=False)
 
 
 def embed_local_images(html_str):
