@@ -166,10 +166,10 @@ all_uids = [str(hospital_1_data.uid), str(hospital_2_data.uid)]
 print_registered_datasets(session, [(hospital_1_data, &quot;US&quot;), (hospital_2_data, &quot;EU&quot;)])</code></pre></div>
   <div class="cell-output"><div class="output-stream"><pre>Datasets Registered By Collaborators:
 
-Site 1 (Location: US)
+Hospital 1 (Location: US)
 Dataset UID: 0d3a9227-e561-46e6-b5c6-956afb964b8d
 
-Site 2 (Location: EU)
+Hospital 2 (Location: EU)
 Dataset UID: dcda22de-7377-47e6-93f8-03893f9bf94d
 
 </pre></div></div>
@@ -181,11 +181,11 @@ Dataset UID: dcda22de-7377-47e6-93f8-03893f9bf94d
 </div>
 <div class="cell cell-code">
   <div class="cell-input"><pre><code class="language-python">summary = fetch_cohort_summary(session, hospital_1_data, hospital_2_data, all_uids)</code></pre></div>
-  <div class="cell-output"><div class="output-stream"><pre>Rhino Server contacting Site 1…
-✓  Site 1 — 1,403 patients | Mean Age: 24.8 yrs | Response Rate: 33.0%
+  <div class="cell-output"><div class="output-stream"><pre>Rhino Server contacting Hospital 1…
+✓  Hospital 1 — 1,403 patients | Mean Age: 24.8 yrs | Response Rate: 33.0%
 
-Rhino Server contacting Site 2…
-✓  Site 2 — 2,184 patients | Mean Age: 30.6 yrs | Response Rate: 12.3%
+Rhino Server contacting Hospital 2…
+✓  Hospital 2 — 2,184 patients | Mean Age: 30.6 yrs | Response Rate: 12.3%
 
 ✓  Cohort summary ready — 3,588 patients across both hospitals | Federated Response Rate: 20.4%
 </pre></div></div>
@@ -200,10 +200,10 @@ Rhino Server contacting Site 2…
   <div class="cell-input"><pre><code class="language-python">age_a, age_b = fetch_age_bands(session, hospital_1_data, hospital_2_data)
 covar_a, covar_b = fetch_covariate_distributions(session, hospital_1_data, hospital_2_data)
 plot_demographics(age_a, age_b, covar_a, covar_b)</code></pre></div>
-  <div class="cell-output"><div class="output-stream"><pre>Rhino Server contacting Site 1 and Site 2 for comorbidity counts…
-✓  Comorbidity distribution ready — 6 bands received from Site 1 and Site 2    
-Rhino Server contacting Site 1 and Site 2 for years since diagnosis…
-✓  Years since diagnosis ready — 7 brackets received from Site 1 and Site 2    
+  <div class="cell-output"><div class="output-stream"><pre>Rhino Server contacting Hospital 1 and Hospital 2 for comorbidity counts…
+✓  Comorbidity distribution ready — 6 bands received from Hospital 1 and Hospital 2    
+Rhino Server contacting Hospital 1 and Hospital 2 for years since diagnosis…
+✓  Years since diagnosis ready — 7 brackets received from Hospital 1 and Hospital 2    
 </pre></div>
 <div class="output-plotly">
   <div id="plotly-300239876"></div>
@@ -365,7 +365,7 @@ test_uids = [str(hospital_1_test.uid), str(hospital_2_test.uid)]
 print(&quot;Train/test split complete ✓&quot;)</code></pre></div>
   <div class="cell-output"><div class="output-stream"><pre>Rhino Server deploying &#x27;Outlier Removal &amp; Test/Train Split&#x27; to both hospitals…
   Running at Project Lead… (1/2)
-  Running at Site 2… (2/2)
+  Running at Hospital 2… (2/2)
 ✓  Data preparation complete — cleaned datasets registered at both hospitals
 </pre></div></div>
 </div>
