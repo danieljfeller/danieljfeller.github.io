@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bitdigit Bookkeeping — QuickBooks Accounting Solutions | Portland, Maine</title>
+<meta name="description" content="Bitdigit LLC provides full-service bookkeeping for small- and medium-sized businesses nationwide since 2008. QuickBooks specialists in financial reporting, payroll, invoicing, and system integrations.">
+<meta property="og:title" content="Bitdigit Bookkeeping | QuickBooks Accounting Solutions">
+<meta property="og:description" content="Streamlining accounting systems for businesses nationwide since 2008.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230e3b2e'/%3E%3Ctext x='50' y='68' font-size='52' text-anchor='middle' fill='%23e8c468' font-family='Georgia' font-weight='bold'%3Eβ%3C/text%3E%3C/svg%3E">
+<style>
+:root {
+  --pine: #0e3b2e;
+  --pine-deep: #092a20;
+  --pine-soft: #1a5442;
+  --gold: #e8c468;
+  --gold-soft: #f3ddA3;
+  --cream: #faf7f0;
+  --cream-dark: #f1ebdd;
+  --ink: #1c2521;
+  --ink-soft: #4d5a53;
+  --line: rgba(14, 59, 46, 0.12);
+  --serif: "Fraunces", Georgia, serif;
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--cream);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+img, svg { display: block; }
+a { color: inherit; }
+
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+/* ---------- Header ---------- */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(250, 247, 240, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: var(--pine);
+  letter-spacing: -0.01em;
+}
+.brand-mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: var(--pine);
+  color: var(--gold);
+  display: grid;
+  place-items: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.nav-links { display: flex; gap: 28px; align-items: center; }
+.nav-links a {
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--pine); }
+.nav-cta {
+  background: var(--pine);
+  color: #fff !important;
+  padding: 9px 18px;
+  border-radius: 999px;
+  transition: background 0.2s, transform 0.2s;
+}
+.nav-cta:hover { background: var(--pine-soft); transform: translateY(-1px); }
+@media (max-width: 720px) {
+  .nav-links a:not(.nav-cta) { display: none; }
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  background: linear-gradient(160deg, var(--pine-deep) 0%, var(--pine) 55%, var(--pine-soft) 100%);
+  color: var(--cream);
+  overflow: hidden;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 47px,
+    rgba(232, 196, 104, 0.06) 47px,
+    rgba(232, 196, 104, 0.06) 48px
+  );
+  pointer-events: none;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  right: -180px;
+  top: -180px;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232, 196, 104, 0.16) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-inner {
+  position: relative;
+  padding: 88px 24px 96px;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid rgba(232, 196, 104, 0.35);
+  border-radius: 999px;
+  padding: 7px 16px;
+  margin-bottom: 28px;
+}
+.eyebrow::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+.hero h1 {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: clamp(2.4rem, 6.5vw, 4.2rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  max-width: 15ch;
+  margin-bottom: 22px;
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--gold);
+}
+.hero p.lede {
+  font-size: clamp(1.02rem, 2.5vw, 1.2rem);
+  color: rgba(250, 247, 240, 0.82);
+  max-width: 52ch;
+  margin-bottom: 36px;
+}
+.hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 52px; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.98rem;
+  padding: 15px 28px;
+  border-radius: 999px;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+}
+.btn svg { width: 17px; height: 17px; flex-shrink: 0; }
+.btn-gold {
+  background: var(--gold);
+  color: var(--pine-deep);
+  box-shadow: 0 6px 24px rgba(232, 196, 104, 0.35);
+}
+.btn-gold:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(232, 196, 104, 0.45); }
+.btn-ghost {
+  border: 1.5px solid rgba(250, 247, 240, 0.35);
+  color: var(--cream);
+}
+.btn-ghost:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+.hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  border-top: 1px solid rgba(250, 247, 240, 0.15);
+  padding-top: 32px;
+}
+.stat { padding-right: 40px; margin-right: 40px; border-right: 1px solid rgba(250, 247, 240, 0.15); }
+.stat:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+.stat b {
+  display: block;
+  font-family: var(--serif);
+  font-size: 1.9rem;
+  font-weight: 600;
+  color: var(--gold);
+  line-height: 1.2;
+}
+.stat span { font-size: 0.85rem; color: rgba(250, 247, 240, 0.65); }
+@media (max-width: 640px) {
+  .hero-inner { padding: 64px 24px 72px; }
+  .hero-stats { gap: 20px 0; }
+  .stat { padding-right: 24px; margin-right: 24px; }
+  .btn { width: 100%; justify-content: center; }
+}
+
+/* ---------- Sections ---------- */
+section { padding: 84px 0; }
+@media (max-width: 640px) { section { padding: 60px 0; } }
+.kicker {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--pine-soft);
+  margin-bottom: 14px;
+}
+h2 {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: clamp(1.7rem, 4.5vw, 2.5rem);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--pine-deep);
+  margin-bottom: 18px;
+  max-width: 24ch;
+}
+.section-intro { color: var(--ink-soft); max-width: 60ch; font-size: 1.03rem; margin-bottom: 48px; }
+
+/* ---------- Services ---------- */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+}
+.card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 28px 26px;
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(14, 59, 46, 0.1);
+  border-color: rgba(232, 196, 104, 0.6);
+}
+.card .icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: linear-gradient(140deg, var(--pine), var(--pine-soft));
+  color: var(--gold);
+  display: grid;
+  place-items: center;
+  margin-bottom: 18px;
+}
+.card .icon svg { width: 22px; height: 22px; }
+.card h3 {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: var(--pine-deep);
+  margin-bottom: 8px;
+}
+.card p { font-size: 0.92rem; color: var(--ink-soft); }
+
+/* ---------- QuickBooks band ---------- */
+.qb-band {
+  background: var(--pine-deep);
+  color: var(--cream);
+  border-radius: 24px;
+  padding: 44px 40px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+  position: relative;
+  overflow: hidden;
+}
+.qb-band::after {
+  content: "";
+  position: absolute;
+  left: -100px;
+  bottom: -140px;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232, 196, 104, 0.14) 0%, transparent 70%);
+}
+.qb-badge {
+  flex-shrink: 0;
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  display: grid;
+  place-items: center;
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+.qb-band h3 {
+  font-family: var(--serif);
+  font-size: 1.45rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.qb-band p { color: rgba(250, 247, 240, 0.75); font-size: 0.98rem; max-width: 58ch; }
+
+/* ---------- Industries ---------- */
+.industries { background: var(--cream-dark); }
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 12px 22px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--pine-deep);
+  transition: border-color 0.2s, transform 0.2s;
+}
+.chip:hover { border-color: var(--gold); transform: translateY(-2px); }
+.chip svg { width: 18px; height: 18px; color: var(--pine-soft); flex-shrink: 0; }
+
+/* ---------- Approach ---------- */
+.approach-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 40px;
+  counter-reset: step;
+}
+.step { position: relative; padding-top: 8px; }
+.step::before {
+  counter-increment: step;
+  content: "0" counter(step);
+  font-family: var(--serif);
+  font-size: 3.2rem;
+  font-weight: 500;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(14, 59, 46, 0.28);
+  line-height: 1;
+  display: block;
+  margin-bottom: 14px;
+}
+.step h3 {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--pine-deep);
+  margin-bottom: 8px;
+}
+.step p { font-size: 0.95rem; color: var(--ink-soft); }
+
+/* ---------- Contact ---------- */
+.contact { background: linear-gradient(160deg, var(--pine-deep) 0%, var(--pine) 70%); color: var(--cream); }
+.contact h2 { color: var(--cream); }
+.contact .kicker { color: var(--gold); }
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+@media (max-width: 760px) { .contact-grid { grid-template-columns: 1fr; } }
+.contact-lede { color: rgba(250, 247, 240, 0.8); font-size: 1.05rem; max-width: 50ch; margin-bottom: 32px; }
+.contact-card {
+  background: rgba(250, 247, 240, 0.06);
+  border: 1px solid rgba(250, 247, 240, 0.14);
+  border-radius: 20px;
+  padding: 32px;
+}
+.contact-card .who {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.contact-card .role { color: var(--gold); font-size: 0.88rem; font-weight: 500; margin-bottom: 24px; }
+.contact-line {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-top: 1px solid rgba(250, 247, 240, 0.12);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.contact-line:hover { color: var(--gold); }
+.contact-line svg { width: 19px; height: 19px; color: var(--gold); flex-shrink: 0; }
+.contact-line small { display: block; font-weight: 400; color: rgba(250, 247, 240, 0.6); font-size: 0.8rem; }
+
+/* ---------- Footer ---------- */
+footer {
+  background: var(--pine-deep);
+  color: rgba(250, 247, 240, 0.55);
+  font-size: 0.85rem;
+  padding: 28px 0;
+  border-top: 1px solid rgba(250, 247, 240, 0.1);
+}
+footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+
+/* ---------- Reveal animation ---------- */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <a class="brand" href="#top">
+      <span class="brand-mark">β</span>
+      Bitdigit
+    </a>
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#industries">Industries</a>
+      <a href="#approach">How We Work</a>
+      <a class="nav-cta" href="#contact">Get in Touch</a>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+
+  <div class="hero">
+    <div class="hero-inner">
+      <span class="eyebrow">Portland, Maine &middot; Serving Clients Nationwide</span>
+      <h1>Bookkeeping that gives you <em>clarity</em>, not spreadsheets.</h1>
+      <p class="lede">Bitdigit LLC has been streamlining accounting systems for small- and medium-sized businesses across the United States since 2008 — so you can make decisions with numbers you trust.</p>
+      <div class="hero-actions">
+        <a class="btn btn-gold" href="mailto:sales@bitdigit.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+          Email Us
+        </a>
+        <a class="btn btn-ghost" href="tel:+12074233340">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          207.423.3340
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><b>2008</b><span>Founded in Maine</span></div>
+        <div class="stat"><b>7+</b><span>Industries served</span></div>
+        <div class="stat"><b>50</b><span>States, served remotely</span></div>
+      </div>
+    </div>
+  </div>
+
+  <section id="services">
+    <div class="wrap">
+      <p class="kicker reveal">What We Do</p>
+      <h2 class="reveal">A full range of bookkeeping services, built around your business.</h2>
+      <p class="section-intro reveal">From basic periodic financial reporting to hands-on daily operations, we build customized bookkeeping solutions for each client — so critical information is always monitored and tracked.</p>
+      <div class="services-grid">
+        <div class="card reveal">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 3 5-6"/></svg></div>
+          <h3>Financial Reporting &amp; Analysis</h3>
+          <p>Accurate, insightful reports that help you optimize operations and plan for the future.</p>
+        </div>
+        <div class="card reveal">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></div>
+          <h3>Invoicing &amp; Receivables</h3>
+          <p>Timely, professional invoicing and accounts receivable management to keep cash flowing.</p>
+        </div>
+        <div class="card reveal">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
+          <h3>Bills &amp; Payables</h3>
+          <p>Organized accounts payable and bill management, so nothing slips through the cracks.</p>
+        </div>
+        <div class="card reveal">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <h3>Payroll Processing</h3>
+          <p>Hands-on payroll that keeps your team paid accurately and on time, every time.</p>
+        </div>
+        <div class="card reveal">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8V21H3V8"/><path d="M1 3h22v5H1z"/><path d="M10 12h4"/></svg></div>
+          <h3>Inventory Tracking</h3>
+          <p>Stay on top of what you have, what it costs, and what it's worth.</p>
+        </div>
+        <div class="card reveal">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+          <h3>System Integrations</h3>
+          <p>Connecting your accounting software with the tools your business already runs on.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top: 0;">
+    <div class="wrap">
+      <div class="qb-band reveal">
+        <div class="qb-badge">QB</div>
+        <div>
+          <h3>Certified QuickBooks Specialists</h3>
+          <p>We know QuickBooks inside and out — setup, cleanup, customization, and integrations. We also work closely with your CPA throughout the year to make tax preparation as smooth and painless as possible.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="industries" id="industries">
+    <div class="wrap">
+      <p class="kicker reveal">Who We Serve</p>
+      <h2 class="reveal">Deep experience across many industries.</h2>
+      <p class="section-intro reveal">We partner with companies of all shapes and sizes — each with a bookkeeping solution tailored to how their business actually works.</p>
+      <div class="chip-row reveal">
+        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>Professional Services</span>
+        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/></svg>Manufacturing</span>
+        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/></svg>Health Care</span>
+        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>Retail</span>
+        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/></svg>Restaurants</span>
+        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>Real Estate &amp; Property Management</span>
+        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a7 7 0 0 1 14 0v1"/></svg>Households &amp; Personal Accounting</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="approach">
+    <div class="wrap">
+      <p class="kicker reveal">How We Work</p>
+      <h2 class="reveal">Customized solutions, not one-size-fits-all.</h2>
+      <p class="section-intro reveal">We empower business decision makers with accurate and insightful financial reports — here's how the partnership works.</p>
+      <div class="approach-grid">
+        <div class="step reveal">
+          <h3>Understand Your Business</h3>
+          <p>We start by reviewing your bookkeeping needs and how your business actually operates — no cookie-cutter checklists.</p>
+        </div>
+        <div class="step reveal">
+          <h3>Build Your System</h3>
+          <p>We design a customized bookkeeping solution so critical information is appropriately monitored and tracked, from day one.</p>
+        </div>
+        <div class="step reveal">
+          <h3>Partner Year-Round</h3>
+          <p>We deliver ongoing reports, handle the day-to-day, and work closely with your CPA to make tax season painless.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <div class="contact-grid">
+        <div>
+          <p class="kicker reveal">Get in Touch</p>
+          <h2 class="reveal">Let's review your business's bookkeeping needs today.</h2>
+          <p class="contact-lede reveal">Whether you need periodic financial reporting or full hands-on bookkeeping, a quick call or email is all it takes to get started.</p>
+        </div>
+        <div class="contact-card reveal">
+          <p class="who">Michael Ayotte</p>
+          <p class="role">Owner &amp; Principal Bookkeeper</p>
+          <a class="contact-line" href="mailto:sales@bitdigit.com">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+            <span>sales@bitdigit.com<small>Email us anytime</small></span>
+          </a>
+          <a class="contact-line" href="tel:+12074233340">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span>207.423.3340<small>Call for a free consultation</small></span>
+          </a>
+          <div class="contact-line" style="cursor: default;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Portland, Maine<small>Serving clients remotely across the U.S.</small></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Bitdigit LLC &copy; 2026</span>
+    <span>Streamlining accounting systems since 2008</span>
+  </div>
+</footer>
+
+<script>
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e) => {
+    if (e.isIntersecting) {
+      e.target.classList.add("in");
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+</script>
+
+</body>
+</html>
