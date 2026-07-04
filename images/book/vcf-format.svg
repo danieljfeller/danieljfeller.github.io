@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380"
+     role="img" text-rendering="geometricPrecision"
+     font-family="'Inter', Arial, Helvetica, sans-serif">
+  <title>VCF (Variant Call Format) file structure</title>
+  <desc>A VCF file shown as header meta-information lines beginning with ## and a
+    body whose columns — CHROM, POS, ID, REF, ALT, QUAL, FILTER, INFO, FORMAT and
+    per-sample genotypes — encode one variant per row, with a legend explaining
+    reference and alternate alleles, variant types, and genotype phasing.</desc>
+
+  <g font-size="11" fill="#59636e">
+    <text x="24" y="66">Header</text>
+    <text x="24" y="214">Body</text>
+  </g>
+
+  <!-- header meta lines (mono) -->
+  <g font-family="ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace"
+     font-size="11" fill="#1f2328">
+    <text x="70" y="60">##fileformat=VCFv4.0</text>
+    <text x="70" y="78">##reference=NCBI36</text>
+    <text x="70" y="96">##INFO=&lt;ID=AA,Number=1,Type=String,Description="Ancestral Allele"&gt;</text>
+    <text x="70" y="114">##FORMAT=&lt;ID=GT,Number=1,Type=String,Description="Genotype"&gt;</text>
+    <text x="70" y="132">##FORMAT=&lt;ID=DP,Number=1,Type=Integer,Description="Read Depth"&gt;</text>
+    <text x="70" y="150">##ALT=&lt;ID=DEL,Description="Deletion"&gt;</text>
+  </g>
+
+  <!-- header callouts -->
+  <g stroke="#d0d7de" stroke-width="0.75" fill="none">
+    <path d="M 250 56 L 640 56"/>
+    <path d="M 470 105 L 640 105"/>
+  </g>
+  <g font-size="11">
+    <text x="648" y="53" font-weight="600" fill="#1f2328">Mandatory header line</text>
+    <text x="648" y="101" font-weight="600" fill="#1f2328">Optional meta-information</text>
+    <text x="648" y="116" fill="#59636e">lines — define the INFO,</text>
+    <text x="648" y="130" fill="#59636e">FORMAT and ALT annotations</text>
+  </g>
+
+  <line x1="40" y1="168" x2="860" y2="168" stroke="#d0d7de" stroke-width="0.75"/>
+
+  <!-- body column headers -->
+  <g font-size="10" font-weight="600" fill="#0969da">
+    <text x="70" y="198">CHROM</text>
+    <text x="118" y="198">POS</text>
+    <text x="152" y="198">ID</text>
+    <text x="188" y="198">REF</text>
+    <text x="228" y="198">ALT</text>
+    <text x="300" y="198">QUAL</text>
+    <text x="338" y="198">FILTER</text>
+    <text x="392" y="198">INFO</text>
+    <text x="540" y="198">FORMAT</text>
+    <text x="626" y="198">SAMPLE1</text>
+    <text x="716" y="198">SAMPLE2</text>
+  </g>
+
+  <!-- body rows (mono) -->
+  <g font-family="ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace"
+     font-size="11" fill="#1f2328">
+    <!-- row 1 -->
+    <text x="70" y="218">1</text><text x="118" y="218">1</text><text x="152" y="218">.</text>
+    <text x="188" y="218">ACG</text><text x="228" y="218">A,AT</text><text x="300" y="218">.</text>
+    <text x="338" y="218">PASS</text><text x="392" y="218">.</text>
+    <text x="540" y="218">GT:DP</text><text x="626" y="218">1/2:13</text><text x="716" y="218">0/0:29</text>
+    <!-- row 2 -->
+    <text x="70" y="236">1</text><text x="118" y="236">2</text><text x="152" y="236">rs1</text>
+    <text x="188" y="236">C</text><text x="228" y="236">T,CT</text><text x="300" y="236">.</text>
+    <text x="338" y="236">PASS</text><text x="392" y="236">H2;AA=T</text>
+    <text x="540" y="236">GT:GQ</text><text x="626" y="236">0|1:100</text><text x="716" y="236">2/2:70</text>
+    <!-- row 3 -->
+    <text x="70" y="254">1</text><text x="118" y="254">5</text><text x="152" y="254">.</text>
+    <text x="188" y="254">A</text><text x="228" y="254">G</text><text x="300" y="254">.</text>
+    <text x="338" y="254">PASS</text><text x="392" y="254">.</text>
+    <text x="540" y="254">GT:GQ</text><text x="626" y="254">1|0:77</text><text x="716" y="254">1/1:95</text>
+    <!-- row 4 -->
+    <text x="70" y="272">1</text><text x="118" y="272">100</text><text x="152" y="272">.</text>
+    <text x="188" y="272">T</text><text x="228" y="272">&lt;DEL&gt;</text><text x="300" y="272">.</text>
+    <text x="338" y="272">PASS</text><text x="392" y="272" fill="#59636e">SVTYPE=DEL;END=300</text>
+    <text x="540" y="272">GT:GQ:DP</text><text x="626" y="272">1/1:12:3</text><text x="716" y="272">0/0:20</text>
+  </g>
+
+  <!-- legend -->
+  <line x1="40" y1="292" x2="860" y2="292" stroke="#d0d7de" stroke-width="0.75"/>
+  <g font-size="11" fill="#59636e">
+    <text x="40" y="316"><tspan font-weight="600" fill="#1f2328">REF / ALT</tspan> — reference allele (genotype index 0) and alternate allele(s) (index 1+).</text>
+    <text x="40" y="336"><tspan font-weight="600" fill="#1f2328">Variant type</tspan> — single base = SNP · added bases (ACG → A,AT) = insertion/indel · &lt;DEL&gt; = large structural variant.</text>
+    <text x="40" y="356"><tspan font-weight="600" fill="#1f2328">Genotype separator</tspan> — <tspan font-family="ui-monospace, monospace">|</tspan> phased (alleles on the same chromosome) · <tspan font-family="ui-monospace, monospace">/</tspan> unphased.</text>
+  </g>
+</svg>

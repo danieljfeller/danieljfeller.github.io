@@ -19,13 +19,13 @@ In its most basic form, molecular sequencing data typically contains sequences o
 Generating this data from biological molecules is performed by a few different technologies. Short read sequencing is the most common clinical DNA sequencing method and scans tiny DNA fragments one letter at a time across millions of samples simultaneously—it's fast, cheap, and accurate but misses large deletions. Long-read sequencing reads entire longer DNA sections at once, catching big structural changes but slower and less accurate. RNA sequencing uses the same core sequencing platforms as DNA but are first converted to complementary DNA (cDNA) before sequencing since the machines are designed to read only DNA. Protein sequencing uses a completely different method based on weighing protein fragments rather than reading genetic letters.
 
 <figure>
-  <img src="{{ '/images/book/short-vs-long-read.png' | relative_url }}" alt="Side-by-side puzzle illustration comparing short read and long read DNA sequencing, showing more fragmented puzzle pieces for short reads versus larger pieces for long reads">
-  <figcaption>Short read vs. long read sequencing illustrated as puzzle assembly. Short reads (left) generate many small overlapping fragments that must be assembled precisely — powerful for accuracy but can miss large structural variants. Long reads (right) capture larger continuous stretches of DNA, making structural changes easier to detect at the cost of per-base accuracy.</figcaption>
+  <img src="{{ '/images/book/short-vs-long-read.svg' | relative_url }}" alt="Two-panel schematic comparing short and long reads tiling a genome region with two identical repeat copies: many short reads that cannot be placed uniquely within a repeat, versus few long reads that span the repeat with unique flanking sequence">
+  <figcaption>Short read vs. long read sequencing across a region containing two identical repeat copies. Short reads (left) tile the region densely and accurately, but a read falling entirely within a repeat cannot be placed uniquely. Long reads (right) span the repeat with unique flanking sequence, anchoring it unambiguously — which is why long reads better resolve large structural variants, at the cost of per-base accuracy. Illustrative schematic.</figcaption>
 </figure>
 
 <figure>
-  <img src="{{ '/images/book/illumina-sequencing-workflow.png' | relative_url }}" alt="Three-panel diagram of Illumina sequencing workflow: A) cluster generation on a flow cell, B) high-throughput sequencing with fluorescent reversible terminators, C) demultiplexing and read mapping from BCL to FASTQ to mapped reads">
-  <figcaption>The Illumina sequencing workflow. (A) DNA fragments are amplified into clusters on a flow cell. (B) Fluorescently labeled nucleotides are incorporated one base at a time and imaged. (C) Raw BCL output is demultiplexed into per-sample FASTQ files, quality-trimmed, and aligned to a reference genome to produce mapped reads.</figcaption>
+  <img src="{{ '/images/book/illumina-sequencing-workflow.svg' | relative_url }}" alt="Three-panel diagram of Illumina sequencing workflow: A) cluster generation on a flow cell, B) high-throughput sequencing with fluorescent reversible terminators, C) demultiplexing and read mapping from BCL to FASTQ to mapped reads">
+  <figcaption>The Illumina sequencing workflow. (a) A DNA fragment binds the flow cell and is amplified by bridge amplification into a dense clonal cluster. (b) Fluorescently labeled nucleotides are incorporated one base at a time and imaged, each base read on its own channel. (c) Raw BCL output is demultiplexed into per-sample FASTQ files, quality-trimmed, and aligned to a reference genome to produce mapped reads. Illustrative schematic.</figcaption>
 </figure>
 
 However, most files containing molecular sequencing data contain additional data elements that provide context around the sequenced amino acids. These include the following:
@@ -53,7 +53,7 @@ While there are lots of different standards for storing molecular sequencing dat
 The basic form of molecular sequencing data with minimal metadata are FASTQ files. FASTQ is the de facto standard for storing unaligned sequencing reads with quality scores. All commercial sequencing platforms (Illumina, PacBio, Oxford Nanopore) generate FASTQ files. An example of the structure of FASTQ file can be seen below:
 
 <figure>
-  <img src="{{ '/images/book/fastq-format.png' | relative_url }}" alt="Annotated FASTQ file showing two read records with identifier, sequence, plus sign separator, and quality score lines labeled">
+  <img src="{{ '/images/book/fastq-format.svg' | relative_url }}" alt="Annotated FASTQ read record showing four labeled lines — identifier, nucleotide sequence, plus-sign separator, and per-base quality string — with a note on Phred quality encoding">
   <figcaption>FASTQ file format. Each sequencing read occupies four lines: (1) an identifier beginning with @ that encodes the instrument, run, and position; (2) the nucleotide sequence; (3) a + separator; and (4) quality scores encoded as ASCII characters, where each character maps to a Phred confidence score for the corresponding base.</figcaption>
 </figure>
 
@@ -65,7 +65,7 @@ Quality scores in FASTQ files are confidence levels for each individual base the
 As mentioned previously, FASTQ files contain unaligned ‘reads’—raw sequences directly from the sequencer with quality scores, but no information about where they map to the genome. Each FASTQ file can be thought of as a puzzle piece, and those puzzle pieces must be assembled into a completed puzzle.
 
 <figure>
-  <img src="{{ '/images/book/sam-bam-format.png' | relative_url }}" alt="Annotated SAM file format showing header section and alignment section with labeled fields including QNAME, FLAG, RNAME, POS, MAPQ, CIGAR, RNEXT, PNEXT, TLEN, SEQ, and QUAL">
+  <img src="{{ '/images/book/sam-bam-format.svg' | relative_url }}" alt="Annotated SAM file format showing header section and alignment section with labeled fields including QNAME, FLAG, RNAME, POS, MAPQ, CIGAR, RNEXT, PNEXT, TLEN, SEQ, and QUAL">
   <figcaption>SAM (Sequence Alignment Map) file format. The header section defines the reference genome and sorting order. Each alignment row encodes the read name, bitwise flag (encoding paired/aligned status), reference chromosome, position, mapping quality, CIGAR string (describing insertions/deletions), and the base sequence with per-base quality scores.</figcaption>
 </figure>
 
@@ -77,7 +77,7 @@ FASTQ files are converted to BAM or CRAM through a two-step process, typically u
 #### CRAM
 
 <figure>
-  <img src="{{ '/images/book/cram-block-layout.png' | relative_url }}" alt="CRAM block layout diagram showing containers with header slices and data blocks for read name, query score, base flags, and other fields, with skipped containers shown in gray">
+  <img src="{{ '/images/book/cram-block-layout.svg' | relative_url }}" alt="CRAM block layout diagram showing containers with header slices and data blocks for read name, query score, base flags, and other fields, with skipped containers shown in gray">
   <figcaption>CRAM file structure. Data is organized into containers, each containing a slice header and a series of data blocks. CRAM achieves compression by storing only differences from a reference genome rather than full sequences. Blocks for fields like original quality scores (OQ:Z) can be omitted entirely to save space.</figcaption>
 </figure>
 
@@ -91,7 +91,7 @@ VCF is the standard format for storing genetic variants identified from aligned 
 A VCF file contains a header section that defines the reference genome, the calling software used, and the meaning of each data field. Each subsequent data row represents a single variant and includes the chromosome, position, reference base(s), alternate base(s), a quality score for the call, filter status (e.g., whether it passed quality thresholds), and an INFO field containing annotations like allele frequency, depth, and variant type.
 
 <figure>
-  <img src="{{ '/images/book/vcf-format.png' | relative_url }}" alt="Annotated VCF file example showing mandatory header lines, optional meta-information lines, and body rows with columns labeled for reference alleles, alternate alleles, quality scores, filter status, and sample genotypes">
+  <img src="{{ '/images/book/vcf-format.svg' | relative_url }}" alt="Annotated VCF file example showing mandatory header lines, optional meta-information lines, and body rows with columns labeled for reference alleles, alternate alleles, quality scores, filter status, and sample genotypes">
   <figcaption>VCF (Variant Call Format) file structure. The ## header lines define the reference genome, format version, and column definitions. Each body row encodes one variant: chromosome (CHROM), position (POS), reference base (REF), alternate base(s) (ALT), quality score (QUAL), filter status (FILTER), and per-sample genotype fields (FORMAT/SAMPLE).</figcaption>
 </figure>
 
@@ -102,6 +102,6 @@ Variant calling pipelines have evolved significantly in recent years toward more
 Regardless of the pipeline used, VCF is the practical endpoint of the sequencing workflow: it distills gigabytes of raw read data into a compact, interoperable representation of what is actually different about a given sample's genome.
 
 <figure>
-  <img src="{{ '/images/book/sequencing-pipeline.png' | relative_url }}" alt="Bioinformatics pipeline flowchart from BCL sequencer output through FASTQ generation and demultiplexing, mapping and aligning, position sorting, duplicate marking, and variant calling to produce VCF/gVCF files containing SNVs, CNVs, SVs, and targeted variants">
+  <img src="{{ '/images/book/sequencing-pipeline.svg' | relative_url }}" alt="Bioinformatics pipeline flowchart from BCL sequencer output through FASTQ generation and demultiplexing, mapping and aligning, position sorting, duplicate marking, and variant calling to produce VCF/gVCF files containing SNVs, indels, CNVs, and structural variants">
   <figcaption>Standard short-read sequencing bioinformatics pipeline. Raw BCL files from the sequencer are demultiplexed into per-sample FASTQ files, aligned to a reference genome (BAM/CRAM), sorted, and deduplicated before variant calling produces the final VCF/gVCF output containing SNVs, copy number variants (CNVs), structural variants (SVs), and targeted caller results.</figcaption>
 </figure>

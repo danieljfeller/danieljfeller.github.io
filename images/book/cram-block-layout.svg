@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300"
+     role="img" text-rendering="geometricPrecision"
+     font-family="'Inter', Arial, Helvetica, sans-serif">
+  <title>CRAM block layout</title>
+  <desc>CRAM data is organized into containers, each holding a slice header and a
+    series of data blocks — one per field such as read names (RN), quality scores
+    (QS), and base flags (BF). Blocks for fields like original quality (OQ:Z) can
+    be skipped entirely to save space. Containers above and below are shown faded
+    to indicate the stream continues.</desc>
+
+  <defs>
+    <marker id="cramArrow" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#1f2328"/>
+    </marker>
+  </defs>
+
+  <!-- pointer to the active container -->
+  <line x1="24" y1="140" x2="52" y2="140" stroke="#1f2328" stroke-width="1.5" marker-end="url(#cramArrow)"/>
+
+  <!-- ===== container rows: g(cy, active) ===== -->
+  <!-- helper cells drawn explicitly per row -->
+
+  <!-- TOP (skipped) -->
+  <g opacity="0.4">
+    <rect x="60" y="40" width="120" height="40" rx="4" fill="#f6f8fa" stroke="#59636e" stroke-width="1"/>
+    <rect x="192" y="40" width="90" height="40" rx="4" fill="#f6f8fa" stroke="#59636e" stroke-width="1"/>
+    <rect x="294" y="40" width="80" height="40" rx="4" fill="#f6f8fa" stroke="#59636e" stroke-width="1"/>
+    <rect x="386" y="40" width="80" height="40" rx="4" fill="#f6f8fa" stroke="#59636e" stroke-width="1"/>
+    <rect x="478" y="40" width="80" height="40" rx="4" fill="#f6f8fa" stroke="#59636e" stroke-width="1"/>
+    <rect x="586" y="40" width="80" height="40" rx="4" fill="#f6f8fa" stroke="#59636e" stroke-width="1"/>
+  </g>
+  <text x="694" y="64" font-size="11" fill="#59636e">skipped</text>
+
+  <!-- MIDDLE (active) -->
+  <rect x="60" y="120" width="120" height="40" rx="4" fill="#0969da" fill-opacity="0.12" stroke="#0969da" stroke-width="1"/>
+  <text x="120" y="137" text-anchor="middle" font-size="11" font-weight="500" fill="#1f2328">Container</text>
+  <text x="120" y="151" text-anchor="middle" font-size="10" fill="#59636e">header</text>
+
+  <rect x="192" y="120" width="90" height="40" rx="4" fill="#0969da" fill-opacity="0.12" stroke="#0969da" stroke-width="1"/>
+  <text x="237" y="137" text-anchor="middle" font-size="11" font-weight="500" fill="#1f2328">Slice</text>
+  <text x="237" y="151" text-anchor="middle" font-size="10" fill="#59636e">header</text>
+
+  <rect x="294" y="120" width="80" height="40" rx="4" fill="#0969da" fill-opacity="0.12" stroke="#0969da" stroke-width="1"/>
+  <text x="334" y="144" text-anchor="middle" font-size="11" font-weight="500" fill="#1f2328">Block</text>
+  <rect x="386" y="120" width="80" height="40" rx="4" fill="#0969da" fill-opacity="0.12" stroke="#0969da" stroke-width="1"/>
+  <text x="426" y="144" text-anchor="middle" font-size="11" font-weight="500" fill="#1f2328">Block</text>
+  <rect x="478" y="120" width="80" height="40" rx="4" fill="#0969da" fill-opacity="0.12" stroke="#0969da" stroke-width="1"/>
+  <text x="518" y="144" text-anchor="middle" font-size="11" font-weight="500" fill="#1f2328">Block</text>
+  <text x="572" y="144" font-size="14" fill="#59636e">…</text>
+  <rect x="586" y="120" width="80" height="40" rx="4" fill="#f6f8fa" stroke="#59636e" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="626" y="144" text-anchor="middle" font-size="11" fill="#59636e">Block</text>
+  <text x="680" y="144" font-size="14" fill="#59636e">…</text>
+
+  <!-- BOTTOM (skipped) -->
+  <g opacity="0.4">
+    <rect x="60" y="200" width="120" height="40" rx="4" fill="#f6f8fa" stroke="#59636e" stroke-width="1"/>
+    <rect x="192" y="200" width="90" height="40" rx="4" fill="#f6f8fa" stroke="#59636e" stroke-width="1"/>
+    <rect x="294" y="200" width="80" height="40" rx="4" fill="#f6f8fa" stroke="#59636e" stroke-width="1"/>
+    <rect x="386" y="200" width="80" height="40" rx="4" fill="#f6f8fa" stroke="#59636e" stroke-width="1"/>
+    <rect x="478" y="200" width="80" height="40" rx="4" fill="#f6f8fa" stroke="#59636e" stroke-width="1"/>
+    <rect x="586" y="200" width="80" height="40" rx="4" fill="#f6f8fa" stroke="#59636e" stroke-width="1"/>
+  </g>
+  <text x="694" y="224" font-size="11" fill="#59636e">skipped</text>
+
+  <!-- data-series bracket above active blocks -->
+  <path d="M 294 112 L 294 106 L 558 106 L 558 112" fill="none" stroke="#59636e" stroke-width="0.75"/>
+  <text x="426" y="100" text-anchor="middle" font-size="11" fill="#59636e">Data series — one block per field</text>
+
+  <!-- field labels under active blocks -->
+  <g font-size="11" font-family="ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace" fill="#1f2328" text-anchor="middle">
+    <text x="334" y="182">RN</text>
+    <text x="426" y="182">QS</text>
+    <text x="518" y="182">BF</text>
+    <text x="626" y="182" fill="#59636e">OQ:Z</text>
+  </g>
+  <text x="626" y="196" text-anchor="middle" font-size="10" fill="#59636e">(skipped)</text>
+</svg>

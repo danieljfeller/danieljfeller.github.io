@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300"
+     role="img" text-rendering="geometricPrecision"
+     font-family="'Inter', Arial, Helvetica, sans-serif">
+  <title>Structure of a medical claims data extract</title>
+  <desc>The fields of one medical claim grouped into five domains — member and
+    plan information, encounter details, provider information, diagnosis and
+    procedure data, and financials — each listing its columns with example
+    values. Illustrative synthetic data.</desc>
+
+  <!-- five domain cards -->
+  <!-- card template: top rule (category color) + surface fill + fields -->
+
+  <!-- 1 Member & Plan Info (blue) -->
+  <rect x="40" y="30" width="156" height="210" rx="4" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+  <rect x="40" y="30" width="156" height="4" rx="2" fill="#0969da"/>
+  <text x="52" y="54" font-size="11" font-weight="700" fill="#1f2328">Member &amp; plan</text>
+  <g font-size="9.5">
+    <text x="52" y="78" font-family="ui-monospace, monospace" fill="#0969da">member_id</text>
+    <text x="52" y="92" fill="#59636e">M123456789</text>
+    <text x="52" y="116" font-family="ui-monospace, monospace" fill="#0969da">group_id</text>
+    <text x="52" y="130" fill="#59636e">G98765</text>
+    <text x="52" y="154" font-family="ui-monospace, monospace" fill="#0969da">patient_dob</text>
+    <text x="52" y="168" fill="#59636e">1985-04-12</text>
+  </g>
+
+  <!-- 2 Encounter Details (vermillion) -->
+  <rect x="212" y="30" width="156" height="210" rx="4" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+  <rect x="212" y="30" width="156" height="4" rx="2" fill="#d55e00"/>
+  <text x="224" y="54" font-size="11" font-weight="700" fill="#1f2328">Encounter</text>
+  <g font-size="9.5">
+    <text x="224" y="78" font-family="ui-monospace, monospace" fill="#d55e00">claim_id</text>
+    <text x="224" y="92" fill="#59636e">C102938475</text>
+    <text x="224" y="116" font-family="ui-monospace, monospace" fill="#d55e00">date_of_service</text>
+    <text x="224" y="130" fill="#59636e">2024-10-26</text>
+    <text x="224" y="154" font-family="ui-monospace, monospace" fill="#d55e00">place_of_service</text>
+    <text x="224" y="168" fill="#59636e">11 (Office)</text>
+  </g>
+
+  <!-- 3 Provider Information (green) -->
+  <rect x="384" y="30" width="156" height="210" rx="4" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+  <rect x="384" y="30" width="156" height="4" rx="2" fill="#009e73"/>
+  <text x="396" y="54" font-size="11" font-weight="700" fill="#1f2328">Provider</text>
+  <g font-size="9.5">
+    <text x="396" y="78" font-family="ui-monospace, monospace" fill="#009e73">provider_npi</text>
+    <text x="396" y="92" fill="#59636e">NPI1234567890</text>
+    <text x="396" y="116" font-family="ui-monospace, monospace" fill="#009e73">specialty_code</text>
+    <text x="396" y="130" fill="#59636e">207Q00000X</text>
+    <text x="396" y="142" fill="#59636e">(Family Medicine)</text>
+    <text x="396" y="166" font-family="ui-monospace, monospace" fill="#009e73">network_status</text>
+    <text x="396" y="180" fill="#59636e">In-Network</text>
+  </g>
+
+  <!-- 4 Diagnosis & Procedure (purple) -->
+  <rect x="556" y="30" width="156" height="210" rx="4" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+  <rect x="556" y="30" width="156" height="4" rx="2" fill="#7d55c7"/>
+  <text x="568" y="54" font-size="11" font-weight="700" fill="#1f2328">Dx &amp; procedure</text>
+  <g font-size="9.5">
+    <text x="568" y="78" font-family="ui-monospace, monospace" fill="#7d55c7">diagnosis_code</text>
+    <text x="568" y="92" fill="#59636e">E11.9</text>
+    <text x="568" y="104" fill="#59636e">(Type 2 Diabetes)</text>
+    <text x="568" y="128" font-family="ui-monospace, monospace" fill="#7d55c7">procedure_code</text>
+    <text x="568" y="142" fill="#59636e">99213</text>
+    <text x="568" y="154" fill="#59636e">(Office Visit, Est.)</text>
+  </g>
+
+  <!-- 5 Financials (amber) -->
+  <rect x="728" y="30" width="132" height="210" rx="4" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+  <rect x="728" y="30" width="132" height="4" rx="2" fill="#e69f00"/>
+  <text x="740" y="54" font-size="11" font-weight="700" fill="#1f2328">Financials</text>
+  <g font-size="9.5">
+    <text x="740" y="78" font-family="ui-monospace, monospace" fill="#b07c00">paid_amount</text>
+    <text x="740" y="92" fill="#59636e">$150.00</text>
+    <text x="740" y="116" font-family="ui-monospace, monospace" fill="#b07c00">copay_amount</text>
+    <text x="740" y="130" fill="#59636e">$25.00</text>
+  </g>
+
+  <text x="40" y="262" font-size="10" fill="#59636e">Simplified extract — a real claims file contains many more columns. Illustrative synthetic data.</text>
+</svg>

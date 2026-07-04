@@ -1,0 +1,45 @@
+<!--
+  TEMPLATE — family 3: quantitative chart / time series
+  Plotted signals with axes.
+  Use for: accelerometer traces, wearable time series, AGP, trend lines, EMG/ECG.
+
+  IMPORTANT: for family 3, invoke the `dataviz` skill and follow its mark/color
+  rules; this template only fixes the book's frame (margins, axis weight, tokens,
+  panel labels). A stacked-panel layout is shown; single-panel is the same minus
+  the extra <g>. Round coordinates to <=2 decimals. Delete these comments.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300"
+     role="img" text-rendering="geometricPrecision"
+     font-family="'Inter', Arial, Helvetica, sans-serif">
+  <title>Chart — REPLACE</title>
+  <desc>REPLACE with a fuller description of the axes and what the trace shows.</desc>
+
+  <!-- ==== panel a ==== -->
+  <g>
+    <text x="24" y="40" font-size="15" font-weight="700" fill="#1f2328">a</text>
+    <!-- y-axis + baseline (secondary, 0.75) with outward ticks -->
+    <line x1="60" y1="30" x2="60" y2="110" stroke="#59636e" stroke-width="0.75"/>
+    <line x1="60" y1="110" x2="860" y2="110" stroke="#59636e" stroke-width="0.75"/>
+    <!-- tick example -->
+    <line x1="56" y1="30" x2="60" y2="30" stroke="#59636e" stroke-width="0.75"/>
+    <text x="52" y="34" text-anchor="end" font-size="11" fill="#59636e">1.0</text>
+    <!-- data trace (primary blue, 1.5-2) -->
+    <path d="M 60 70 L 200 70" fill="none" stroke="#0969da" stroke-width="1.75"
+          stroke-linejoin="round" stroke-linecap="round"/>
+    <!-- axis label -->
+    <text x="30" y="70" text-anchor="middle" font-size="13" font-weight="500"
+          fill="#1f2328" transform="rotate(-90 30 70)">y label</text>
+  </g>
+
+  <!-- ==== panel b (shares x-scale / left edge with a) ==== -->
+  <g>
+    <text x="24" y="180" font-size="15" font-weight="700" fill="#1f2328">b</text>
+    <line x1="60" y1="170" x2="60" y2="250" stroke="#59636e" stroke-width="0.75"/>
+    <line x1="60" y1="250" x2="860" y2="250" stroke="#59636e" stroke-width="0.75"/>
+    <path d="M 60 210 L 200 210" fill="none" stroke="#d55e00" stroke-width="1.75"
+          stroke-linejoin="round" stroke-linecap="round"/>
+  </g>
+
+  <!-- shared x-axis label -->
+  <text x="460" y="285" text-anchor="middle" font-size="13" font-weight="500" fill="#1f2328">x label (units)</text>
+</svg>

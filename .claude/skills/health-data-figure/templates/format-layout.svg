@@ -1,0 +1,41 @@
+<!--
+  TEMPLATE — family 1: file-format layout
+  Annotated monospace records/tables with callout labels.
+  Use for: FASTQ, SAM/BAM, VCF, CRAM, claims records, code-structure figures.
+
+  How to use: copy this file, replace the sample rows/callouts, keep the tokens.
+  Double-column width (900). Data glyphs use the mono stack; labels use the sans
+  stack. Callout lines are hairlines from a label to the byte/field it explains.
+  Delete these comments in the final figure.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360"
+     role="img" text-rendering="geometricPrecision"
+     font-family="'Inter', Arial, Helvetica, sans-serif">
+  <title>Format layout — REPLACE</title>
+  <desc>REPLACE with a fuller description of the record structure shown.</desc>
+
+  <!-- ==== record block (mono) ==== -->
+  <g font-family="ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace"
+     font-size="13" fill="#1f2328">
+    <!-- one <text> per record line; x=40 keeps the ≥12u margin with room for a row label -->
+    <text x="40" y="120">@SAMPLE:LINE:1  ...replace...</text>
+    <text x="40" y="150">GATTACA...replace...</text>
+    <text x="40" y="180">+</text>
+    <text x="40" y="210">!''*((((***...replace...</text>
+  </g>
+
+  <!-- ==== field/row labels (sans, secondary) ==== -->
+  <g font-size="11" fill="#59636e">
+    <text x="40" y="104">1  identifier</text>
+  </g>
+
+  <!-- ==== callout: hairline + label pointing at a field ==== -->
+  <g stroke="#d0d7de" stroke-width="0.75" fill="none">
+    <path d="M 300 132 L 300 250 L 360 250"/>
+  </g>
+  <text x="368" y="254" font-size="13" font-weight="500" fill="#1f2328">Callout — replace</text>
+
+  <!-- Panel label 'a' only if this is one panel of several:
+  <text x="24" y="40" font-size="15" font-weight="700" fill="#1f2328">a</text>
+  -->
+</svg>

@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 240"
+     role="img" text-rendering="geometricPrecision"
+     font-family="'Inter', Arial, Helvetica, sans-serif">
+  <title>ICD-10-CM code structure: S86.011D</title>
+  <desc>The ICD-10-CM code S86.011D broken into three parts: the category S86
+    (first three characters) meaning injury of muscle, fascia, and tendon of the
+    lower leg; the etiology and anatomic site .011 meaning strain of the right
+    Achilles tendon; and the extension D (final character) meaning a subsequent
+    encounter.</desc>
+
+  <!-- the code (mono, segment-colored) -->
+  <g font-family="ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace"
+     font-size="42" font-weight="700">
+    <text x="352" y="70" fill="#0969da">S86</text>
+    <text x="424" y="70" fill="#d55e00">.011</text>
+    <text x="520" y="70" fill="#009e73">D</text>
+  </g>
+
+  <!-- leaders from each segment to its label column -->
+  <g stroke="#d0d7de" stroke-width="0.75" fill="none">
+    <path d="M 388 84 L 388 100 L 180 100 L 180 120"/>
+    <path d="M 470 84 L 470 120"/>
+    <path d="M 532 84 L 532 100 L 720 100 L 720 120"/>
+  </g>
+
+  <!-- label columns -->
+  <g text-anchor="middle">
+    <!-- Category -->
+    <text x="180" y="138" font-size="13" font-weight="700" fill="#0969da">Category</text>
+    <text x="180" y="155" font-size="11" fill="#59636e">first 3 characters</text>
+    <text x="180" y="181" font-size="12" fill="#1f2328">Injury of muscle, fascia,</text>
+    <text x="180" y="197" font-size="12" fill="#1f2328">and tendon of lower leg</text>
+
+    <!-- Etiology & anatomic site -->
+    <text x="470" y="138" font-size="13" font-weight="700" fill="#d55e00">Etiology &amp; anatomic site</text>
+    <text x="470" y="155" font-size="11" fill="#59636e">following characters</text>
+    <text x="470" y="181" font-size="12" fill="#1f2328">Strain of right</text>
+    <text x="470" y="197" font-size="12" fill="#1f2328">Achilles tendon</text>
+
+    <!-- Extension -->
+    <text x="720" y="138" font-size="13" font-weight="700" fill="#009e73">Extension</text>
+    <text x="720" y="155" font-size="11" fill="#59636e">final character</text>
+    <text x="720" y="181" font-size="12" fill="#1f2328">Subsequent encounter</text>
+    <text x="720" y="197" font-size="12" fill="#1f2328">(e.g. follow-up)</text>
+  </g>
+</svg>

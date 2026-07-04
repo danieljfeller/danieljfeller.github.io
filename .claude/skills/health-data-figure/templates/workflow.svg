@@ -1,0 +1,50 @@
+<!--
+  TEMPLATE — family 2: workflow / pipeline
+  Labeled boxes joined by arrows.
+  Use for: sequencing pipelines, Illumina workflow, data-type maps.
+
+  How to use: copy, replace node labels and count, keep the marker + tokens.
+  A stage uses the primary blue tint; a terminal/output node can use another
+  categorical color. Arrows share the <marker>. Delete these comments.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 240"
+     role="img" text-rendering="geometricPrecision"
+     font-family="'Inter', Arial, Helvetica, sans-serif">
+  <title>Workflow — REPLACE</title>
+  <desc>REPLACE with a fuller description of the pipeline steps and flow.</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#59636e"/>
+    </marker>
+  </defs>
+
+  <!-- ==== node helper: rounded box + centered label ==== -->
+  <!-- Stage node (primary tint) -->
+  <g>
+    <rect x="40" y="90" width="150" height="60" rx="4"
+          fill="#0969da" fill-opacity="0.12" stroke="#0969da" stroke-width="1"/>
+    <text x="115" y="125" text-anchor="middle" font-size="13" font-weight="500" fill="#1f2328">Stage 1</text>
+  </g>
+
+  <!-- arrow between nodes -->
+  <line x1="190" y1="120" x2="250" y2="120" stroke="#59636e" stroke-width="1.5"
+        marker-end="url(#arrow)"/>
+
+  <g>
+    <rect x="250" y="90" width="150" height="60" rx="4"
+          fill="#0969da" fill-opacity="0.12" stroke="#0969da" stroke-width="1"/>
+    <text x="325" y="125" text-anchor="middle" font-size="13" font-weight="500" fill="#1f2328">Stage 2</text>
+  </g>
+
+  <line x1="400" y1="120" x2="460" y2="120" stroke="#59636e" stroke-width="1.5"
+        marker-end="url(#arrow)"/>
+
+  <!-- Terminal/output node (distinct categorical color) -->
+  <g>
+    <rect x="460" y="90" width="150" height="60" rx="4"
+          fill="#009e73" fill-opacity="0.12" stroke="#009e73" stroke-width="1"/>
+    <text x="535" y="125" text-anchor="middle" font-size="13" font-weight="500" fill="#1f2328">Output</text>
+  </g>
+</svg>

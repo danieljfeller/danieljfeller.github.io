@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300"
+     role="img" text-rendering="geometricPrecision"
+     font-family="'Inter', Arial, Helvetica, sans-serif">
+  <title>FASTQ file format</title>
+  <desc>One FASTQ read record shown as four lines — identifier, nucleotide
+    sequence, plus-sign separator, and per-base quality string — with a callout
+    labelling each line and a note on how ASCII characters encode Phred quality
+    scores.</desc>
+
+  <!-- line labels (left, secondary) -->
+  <g font-size="11" fill="#59636e">
+    <text x="24" y="90">Line 1</text>
+    <text x="24" y="130">Line 2</text>
+    <text x="24" y="170">Line 3</text>
+    <text x="24" y="210">Line 4</text>
+  </g>
+
+  <!-- record (mono, ink) -->
+  <g font-family="ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace"
+     font-size="14" fill="#1f2328">
+    <text x="90" y="90">@M01234:56:000000000-ABCDE:1:1101:15589:1332</text>
+    <text x="90" y="130">GATTACAGATCGGAAGAGCACACGTCTGAACTCCAGTCAC</text>
+    <text x="90" y="170">+</text>
+    <text x="90" y="210">IIIIIIIIFFFFFFF&lt;&lt;&lt;&lt;&lt;AAAA7777))))))''''</text>
+  </g>
+
+  <!-- callout leaders (hairlines) -->
+  <g stroke="#d0d7de" stroke-width="0.75" fill="none">
+    <path d="M 470 86 L 545 86"/>
+    <path d="M 430 126 L 545 126"/>
+    <path d="M 108 166 L 545 166"/>
+    <path d="M 430 206 L 545 206"/>
+  </g>
+
+  <!-- callout labels -->
+  <g font-size="12">
+    <text x="552" y="82" font-weight="600" fill="#1f2328">Identifier</text>
+    <text x="552" y="98" fill="#59636e">Instrument, run, flow cell, lane, tile, and X:Y</text>
+    <text x="552" y="112" fill="#59636e">position of the cluster</text>
+
+    <text x="552" y="122" font-weight="600" fill="#1f2328">Sequence</text>
+    <text x="552" y="138" fill="#59636e">Base calls: A, C, G, T, or N</text>
+
+    <text x="552" y="162" font-weight="600" fill="#1f2328">Separator</text>
+    <text x="552" y="178" fill="#59636e">A “+”; may optionally repeat the identifier</text>
+
+    <text x="552" y="202" font-weight="600" fill="#1f2328">Quality</text>
+    <text x="552" y="218" fill="#59636e">One ASCII character per base</text>
+  </g>
+
+  <!-- Phred encoding note -->
+  <g stroke="#d0d7de" stroke-width="0.75" fill="none">
+    <path d="M 90 222 L 90 248 L 430 248 L 430 222"/>
+  </g>
+  <g font-size="12" fill="#59636e">
+    <text x="90" y="272">Quality encoding: Phred score Q = ASCII code − 33. Higher Q means higher</text>
+    <text x="90" y="288">base-call confidence — Q20 = 99% accuracy, Q30 = 99.9%, Q40 = 99.99%.</text>
+  </g>
+</svg>

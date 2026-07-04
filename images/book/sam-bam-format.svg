@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 340"
+     role="img" text-rendering="geometricPrecision"
+     font-family="'Inter', Arial, Helvetica, sans-serif">
+  <title>SAM / BAM alignment format</title>
+  <desc>A SAM file shown as a header section (@HD and @SQ lines) and an alignment
+    section whose columns — QNAME, FLAG, RNAME, POS, MAPQ, CIGAR, RNEXT, PNEXT,
+    TLEN, SEQ, QUAL, and optional TAG fields — are defined in a legend below.</desc>
+
+  <!-- section labels -->
+  <g font-size="11" fill="#59636e">
+    <text x="24" y="78">Header</text>
+    <text x="24" y="134">Alignment</text>
+  </g>
+
+  <!-- header section (mono) -->
+  <g font-family="ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace"
+     font-size="12" fill="#1f2328">
+    <text x="90" y="70">@HD  VN:1.5  SO:coordinate</text>
+    <text x="90" y="86">@SQ  SN:ref  LN:45</text>
+  </g>
+
+  <!-- divider -->
+  <line x1="40" y1="98" x2="860" y2="98" stroke="#d0d7de" stroke-width="0.75"/>
+
+  <!-- column headers (sans) -->
+  <g font-size="10" font-weight="600" fill="#0969da">
+    <text x="90" y="118">QNAME</text>
+    <text x="150" y="118">FLAG</text>
+    <text x="190" y="118">RNAME</text>
+    <text x="232" y="118">POS</text>
+    <text x="266" y="118">MAPQ</text>
+    <text x="306" y="118">CIGAR</text>
+    <text x="392" y="118">RNEXT</text>
+    <text x="434" y="118">PNEXT</text>
+    <text x="474" y="118">TLEN</text>
+    <text x="512" y="118">SEQ</text>
+    <text x="604" y="118">QUAL</text>
+    <text x="642" y="118">OPT</text>
+  </g>
+
+  <!-- alignment rows (mono) -->
+  <g font-family="ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace"
+     font-size="12" fill="#1f2328">
+    <!-- row 1 -->
+    <text x="90" y="138">r001</text>
+    <text x="150" y="138">99</text>
+    <text x="190" y="138">ref</text>
+    <text x="232" y="138">7</text>
+    <text x="266" y="138">30</text>
+    <text x="306" y="138">8M2I4M1D3M</text>
+    <text x="392" y="138">=</text>
+    <text x="434" y="138">37</text>
+    <text x="474" y="138">39</text>
+    <text x="512" y="138">TTAGATAAAGG</text>
+    <text x="604" y="138">*</text>
+    <!-- row 2 -->
+    <text x="90" y="156">r003</text>
+    <text x="150" y="156">0</text>
+    <text x="190" y="156">ref</text>
+    <text x="232" y="156">9</text>
+    <text x="266" y="156">30</text>
+    <text x="306" y="156">5S6M</text>
+    <text x="392" y="156">*</text>
+    <text x="434" y="156">0</text>
+    <text x="474" y="156">0</text>
+    <text x="512" y="156">GCCTAAGCTAA</text>
+    <text x="604" y="156">*</text>
+    <text x="642" y="156" fill="#59636e">SA:Z:ref,29,-,6H5M,17,0;</text>
+    <!-- row 3 -->
+    <text x="90" y="174">r001</text>
+    <text x="150" y="174">147</text>
+    <text x="190" y="174">ref</text>
+    <text x="232" y="174">37</text>
+    <text x="266" y="174">30</text>
+    <text x="306" y="174">9M</text>
+    <text x="392" y="174">=</text>
+    <text x="434" y="174">7</text>
+    <text x="474" y="174">-39</text>
+    <text x="512" y="174">CAGCGGCAT</text>
+    <text x="604" y="174">*</text>
+    <text x="642" y="174" fill="#59636e">NM:i:1</text>
+  </g>
+
+  <!-- legend -->
+  <line x1="40" y1="196" x2="860" y2="196" stroke="#d0d7de" stroke-width="0.75"/>
+  <g font-size="11">
+    <g fill="#1f2328" font-weight="600">
+      <text x="40" y="222">QNAME</text><text x="40" y="242">FLAG</text>
+      <text x="40" y="262">RNAME</text><text x="40" y="282">POS</text>
+      <text x="40" y="302">MAPQ</text><text x="40" y="322">CIGAR</text>
+      <text x="470" y="222">RNEXT</text><text x="470" y="242">PNEXT</text>
+      <text x="470" y="262">TLEN</text><text x="470" y="282">SEQ</text>
+      <text x="470" y="302">QUAL</text><text x="470" y="322">OPT</text>
+    </g>
+    <g fill="#59636e">
+      <text x="120" y="222">— query template (read) name</text>
+      <text x="120" y="242">— bitwise alignment flags (paired, mapped …)</text>
+      <text x="120" y="262">— reference sequence name</text>
+      <text x="120" y="282">— 1-based leftmost mapping position</text>
+      <text x="120" y="302">— mapping quality</text>
+      <text x="120" y="322">— alignment: matches, insertions, deletions</text>
+      <text x="550" y="222">— reference name of the mate read</text>
+      <text x="550" y="242">— position of the mate read</text>
+      <text x="550" y="262">— observed template length</text>
+      <text x="550" y="282">— segment (read) sequence</text>
+      <text x="550" y="302">— per-base quality (* = unavailable)</text>
+      <text x="550" y="322">— optional TAG:TYPE:VALUE fields</text>
+    </g>
+  </g>
+</svg>
