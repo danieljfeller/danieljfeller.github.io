@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thea &amp; Umi — Champion Silken Windhounds of Portland, Maine</title>
+<meta name="description" content="Thea and Umi are champion silken windhounds patrolling the beaches of Portland, Maine, in every season.">
+<meta property="og:title" content="Thea & Umi — Champion Silken Windhounds">
+<meta property="og:description" content="Portland, Maine's fastest and fluffiest beach patrol.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='50' y='72' font-size='64' text-anchor='middle'%3E🐕%3C/text%3E%3C/svg%3E">
+<style>
+:root {
+  --navy: #16303f;
+  --navy-deep: #0d2230;
+  --sea: #2e6475;
+  --sand: #f6f1e7;
+  --sand-dark: #ece3d1;
+  --coral: #e2745c;
+  --gold: #d9a441;
+  --ink: #22333c;
+  --ink-soft: #5a6a71;
+  --serif: "Fraunces", Georgia, serif;
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--sand);
+  color: var(--ink);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; }
+.wrap { max-width: 1000px; margin: 0 auto; padding: 0 22px; }
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  background: linear-gradient(170deg, var(--navy-deep) 0%, var(--navy) 55%, var(--sea) 130%);
+  color: var(--sand);
+  overflow: hidden;
+  text-align: center;
+  padding: 72px 22px 0;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(246, 241, 231, 0.07) 1px, transparent 1.5px);
+  background-size: 26px 26px;
+  pointer-events: none;
+}
+.hero-inner { position: relative; max-width: 760px; margin: 0 auto; }
+.rosette {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid rgba(217, 164, 65, 0.45);
+  border-radius: 999px;
+  padding: 8px 18px;
+  margin-bottom: 26px;
+}
+.hero h1 {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(3rem, 12vw, 5.6rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+}
+.hero h1 .amp {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--coral);
+  font-size: 0.7em;
+  margin: 0 0.08em;
+}
+.hero .subtitle {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.1rem, 3.5vw, 1.45rem);
+  color: var(--gold);
+  margin: 18px 0 14px;
+}
+.hero p.lede {
+  color: rgba(246, 241, 231, 0.78);
+  max-width: 46ch;
+  margin: 0 auto 44px;
+  font-size: 1.02rem;
+}
+.hero-photo {
+  position: relative;
+  max-width: 620px;
+  margin: 0 auto;
+  border-radius: 22px 22px 0 0;
+  overflow: hidden;
+  box-shadow: 0 -12px 60px rgba(13, 34, 48, 0.55);
+}
+.hero-photo img { width: 100%; }
+.hero-photo figcaption {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  background: rgba(13, 34, 48, 0.72);
+  backdrop-filter: blur(6px);
+  color: var(--sand);
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 7px 14px;
+  border-radius: 999px;
+}
+
+/* ---------- Wave divider ---------- */
+.wave { display: block; width: 100%; height: 44px; margin-top: -1px; }
+
+/* ---------- Sections ---------- */
+section { padding: 72px 0; }
+@media (max-width: 640px) { section { padding: 54px 0; } }
+.kicker {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sea);
+  margin-bottom: 12px;
+}
+h2 {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: clamp(1.7rem, 5vw, 2.4rem);
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+  color: var(--navy);
+  margin-bottom: 16px;
+}
+.section-intro { color: var(--ink-soft); max-width: 58ch; margin-bottom: 44px; }
+
+/* ---------- Stats ---------- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+}
+.stat-card {
+  background: #fff;
+  border: 1px solid rgba(22, 48, 63, 0.1);
+  border-radius: 18px;
+  padding: 26px 22px;
+  text-align: center;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.stat-card:hover { transform: translateY(-4px); box-shadow: 0 14px 34px rgba(22, 48, 63, 0.12); }
+.stat-card b {
+  display: block;
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 2.1rem;
+  color: var(--coral);
+  line-height: 1.15;
+}
+.stat-card span { font-size: 0.84rem; color: var(--ink-soft); }
+
+/* ---------- Gallery ---------- */
+.gallery { background: var(--sand-dark); }
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  align-items: start;
+}
+.gallery figure {
+  background: #fff;
+  border-radius: 18px;
+  padding: 12px 12px 16px;
+  box-shadow: 0 8px 28px rgba(22, 48, 63, 0.1);
+  transition: transform 0.3s;
+}
+.gallery figure:hover { transform: translateY(-5px) rotate(-0.4deg); }
+.gallery figure:nth-child(2):hover { transform: translateY(-5px) rotate(0.4deg); }
+.gallery img { border-radius: 10px; width: 100%; }
+.gallery figcaption {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--navy);
+  padding: 12px 6px 0;
+}
+.gallery figcaption small {
+  display: block;
+  font-family: var(--sans);
+  font-style: normal;
+  font-size: 0.76rem;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+/* ---------- Titles / accolades ---------- */
+.titles-list { display: grid; gap: 14px; }
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: #fff;
+  border: 1px solid rgba(22, 48, 63, 0.1);
+  border-radius: 16px;
+  padding: 18px 22px;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.title-row:hover { transform: translateX(4px); border-color: var(--gold); }
+.medal {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(140deg, var(--gold), #b9822a);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 1.15rem;
+  box-shadow: 0 4px 12px rgba(217, 164, 65, 0.4);
+}
+.title-row h3 { font-family: var(--serif); font-weight: 600; font-size: 1.06rem; color: var(--navy); }
+.title-row p { font-size: 0.86rem; color: var(--ink-soft); }
+
+/* ---------- Footer band ---------- */
+.footer-band {
+  background: linear-gradient(170deg, var(--navy) 0%, var(--navy-deep) 100%);
+  color: var(--sand);
+  text-align: center;
+  padding: 68px 22px 30px;
+}
+.footer-band .paws { font-size: 1.5rem; letter-spacing: 0.5em; margin-bottom: 18px; }
+.footer-band h2 { color: var(--sand); max-width: none; margin-bottom: 10px; }
+.footer-band p { color: rgba(246, 241, 231, 0.7); max-width: 44ch; margin: 0 auto 44px; }
+.footer-band .fine {
+  border-top: 1px solid rgba(246, 241, 231, 0.15);
+  padding-top: 22px;
+  font-size: 0.8rem;
+  color: rgba(246, 241, 231, 0.5);
+}
+
+/* ---------- Reveal ---------- */
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <span class="rosette">🏆 Portland, Maine</span>
+    <h1>Thea <span class="amp">&amp;</span> Umi</h1>
+    <p class="subtitle">Champion Silken Windhounds</p>
+    <p class="lede">Two sighthounds. Four seasons. One beach that will never be the same. Portland's fastest and fluffiest coastal patrol, on duty since forever (in dog years).</p>
+    <figure class="hero-photo">
+      <img src="img/winter-silken.jpg" alt="A silken windhound standing on the winter sand, casting a long shadow" width="448" height="480">
+      <figcaption>Winter patrol, low tide</figcaption>
+    </figure>
+  </div>
+</div>
+<svg class="wave" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0 30 C 240 60 480 0 720 30 C 960 60 1200 0 1440 30 L 1440 0 L 0 0 Z" fill="#16303f"/></svg>
+
+<section>
+  <div class="wrap">
+    <p class="kicker reveal">Vital Statistics</p>
+    <h2 class="reveal">The numbers behind the legend.</h2>
+    <p class="section-intro reveal">Silken windhounds are built for speed, born for couches, and — in Thea and Umi's case — sworn to the shoreline. Independent judges (us) confirm the following career statistics.</p>
+    <div class="stats">
+      <div class="stat-card reveal"><b>35+</b><span>mph, allegedly, when a seagull is involved</span></div>
+      <div class="stat-card reveal"><b>4</b><span>seasons of beach patrol, zero days off</span></div>
+      <div class="stat-card reveal"><b>∞</b><span>compliments received from strangers</span></div>
+      <div class="stat-card reveal"><b>0</b><span>seagulls ever actually caught</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery">
+  <div class="wrap">
+    <p class="kicker reveal">Field Notes</p>
+    <h2 class="reveal">A year on the sand.</h2>
+    <p class="section-intro reveal">From July fog to January glare, the patrol never stops. Selected moments from the archive.</p>
+    <div class="gallery-grid">
+      <figure class="reveal">
+        <img src="img/summer-silken.jpg" alt="A silken windhound standing in profile on a summer beach" loading="lazy" width="446" height="570">
+        <figcaption>Summer inspection, full show stance
+          <small>Willard-adjacent sands, July</small>
+        </figcaption>
+      </figure>
+      <figure class="reveal">
+        <img src="img/winter-silken.jpg" alt="A silken windhound alone on the winter sand with a long shadow" loading="lazy" width="448" height="480">
+        <figcaption>Scanning the tide line for intruders
+          <small>Deep winter, golden hour</small>
+        </figcaption>
+      </figure>
+      <figure class="reveal">
+        <img src="img/winter-spotted.jpg" alt="A white dog with black spots standing on the winter beach" loading="lazy" width="380" height="496">
+        <figcaption>The deputy reviews the perimeter
+          <small>Honorary patrol member, January</small>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="kicker reveal">Accolades</p>
+    <h2 class="reveal">Titles &amp; distinctions.</h2>
+    <p class="section-intro reveal">A partial list. The trophy shelf is a couch, and they are always on it.</p>
+    <div class="titles-list">
+      <div class="title-row reveal">
+        <div class="medal">🥇</div>
+        <div>
+          <h3>Grand Champions, Beach Zoomies — Open Division</h3>
+          <p>Undefeated across all Portland-area sand, wet or dry conditions.</p>
+        </div>
+      </div>
+      <div class="title-row reveal">
+        <div class="medal">🌊</div>
+        <div>
+          <h3>Masters of the Dramatic Coastal Silhouette</h3>
+          <p>Awarded for consistently excellent posing against the tide line.</p>
+        </div>
+      </div>
+      <div class="title-row reveal">
+        <div class="medal">❄️</div>
+        <div>
+          <h3>All-Weather Patrol Certification</h3>
+          <p>July fog, January snow — the shoreline is never unsupervised.</p>
+        </div>
+      </div>
+      <div class="title-row reveal">
+        <div class="medal">🛋️</div>
+        <div>
+          <h3>Synchronized Napping, Pairs — World Class</h3>
+          <p>Recovery is part of the training program. They take it seriously.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="footer-band">
+  <div class="paws">🐾 🐾</div>
+  <h2>See them in the wild.</h2>
+  <p>Thea and Umi can be spotted patrolling the beaches of Portland, Maine, most mornings. Approach slowly. Compliments accepted.</p>
+  <p class="fine">Thea &amp; Umi · Champion Silken Windhounds · Portland, Maine · Est. on the couch</p>
+</div>
+
+<script>
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e) => {
+    if (e.isIntersecting) {
+      e.target.classList.add("in");
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+</script>
+
+</body>
+</html>
