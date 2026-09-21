@@ -20,6 +20,8 @@ description: "Daniel Feller, PhD: Director, Data Solutions at Rhino Federated Co
   <p>I'm Director of Data Solutions at <a href="https://www.rhinohealth.com/" target="_blank" rel="noopener">Rhino Federated Computing</a>, where I build tools for collaborative data science and MLOps. Previously, I built the analytics &amp; data science team at <a href="https://www.rightwayhealthcare.com/" target="_blank" rel="noopener">Rightway Healthcare</a>. I have served as an advisor to several companies including <a href="https://swordhealth.com/" target="_blank" rel="noopener">Sword Health</a>.</p>
 
   <p>In 2020, I completed my PhD in Biomedical Informatics at <a href="https://www.dbmi.columbia.edu/" target="_blank" rel="noopener">Columbia University</a>, where I worked with physicians to develop algorithms for HIV screening. Before that, I was a researcher at the <a href="https://www.health.ny.gov/diseases/aids/" target="_blank" rel="noopener">NYS Department of Health</a>. My <a href="{{ '/research/' | relative_url }}">published research</a> spans clinical natural language processing, social determinants of health in the EHR, patient-generated data, and HIV care quality.</p>
+
+  <p>Away from work, I like to ski. I also built <a href="{{ '/mountain/' | relative_url }}">Mountain Studio</a>, a browser game where you sculpt a mountain, plant the forest, string lifts, cut and groom runs, and then paint a hand-drawn-style trail map of the resort you designed.</p>
 </section>
 
 {% include book-promo.html %}

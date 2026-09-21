@@ -1,0 +1,1828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mountain Studio — Build a ski resort and paint its trail map</title>
+<meta name="description" content="Sculpt a mountain, plant forests, string lifts, cut and groom runs, then render a hand-painted style trail map you can download and share.">
+<meta property="og:title" content="Mountain Studio — Build a ski resort and paint its trail map">
+<meta property="og:description" content="A browser toy for designing a ski resort and generating a painted trail map of it.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2316303f'/%3E%3Cpath d='M10 82 L38 30 L52 52 L62 40 L90 82 Z' fill='%23f6f9fc'/%3E%3Cpath d='M38 30 L46 44 L52 52 L58 46 L62 40 L56 30 L48 40 Z' fill='%23c9d6e6'/%3E%3C/svg%3E">
+<style>
+:root {
+  --ice: #eef3f8;
+  --ice-deep: #dfe7f0;
+  --panel: #ffffff;
+  --line: #d3dce6;
+  --ink: #1c2a3a;
+  --ink-soft: #5b6b7c;
+  --pine: #1f4d2e;
+  --pine-soft: #2e6b41;
+  --lift: #c8102e;
+  --gold: #d9a441;
+  --accent: #2b6cb0;
+  --accent-soft: #e3eefa;
+  --green: #1f9d55;
+  --blue: #1f6fd1;
+  --black: #111418;
+  --serif: "Fraunces", Georgia, serif;
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --radius: 10px;
+  --shadow: 0 1px 2px rgba(20,40,60,.06), 0 8px 24px rgba(20,40,60,.08);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--ice);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow: hidden;
+}
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+
+/* ---------- Header ---------- */
+.top {
+  display: flex; align-items: center; gap: 14px;
+  padding: 10px 16px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand svg { width: 30px; height: 30px; }
+.brand .word { font-family: var(--serif); font-weight: 700; font-size: 20px; letter-spacing: -.01em; }
+.brand .sub { font-size: 11px; color: var(--ink-soft); display: block; margin-top: -2px; }
+.name-input {
+  flex: 1 1 200px; min-width: 160px; max-width: 360px;
+  font-family: var(--serif); font-size: 18px; font-weight: 600;
+  border: 1px solid transparent; border-radius: 8px; padding: 6px 10px;
+  background: var(--ice);
+}
+.name-input:hover, .name-input:focus { border-color: var(--line); outline: none; background: #fff; }
+.tabs { display: flex; background: var(--ice); border-radius: 999px; padding: 3px; }
+.tabs button {
+  border: 0; background: transparent; padding: 7px 16px; border-radius: 999px;
+  font-weight: 600; font-size: 14px; color: var(--ink-soft);
+}
+.tabs button.active { background: var(--ink); color: #fff; }
+.actions { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
+.btn {
+  border: 1px solid var(--line); background: #fff; border-radius: 8px;
+  padding: 7px 12px; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;
+}
+.btn:hover { background: var(--ice); }
+.btn:disabled { opacity: .45; cursor: default; }
+.btn.primary { background: var(--pine); border-color: var(--pine); color: #fff; }
+.btn.primary:hover { background: var(--pine-soft); }
+.btn.danger { color: var(--lift); }
+.btn svg { width: 14px; height: 14px; }
+
+/* ---------- Layout ---------- */
+main { flex: 1; min-height: 0; display: flex; }
+.view { display: none; flex: 1; min-height: 0; }
+.view.active { display: flex; }
+.tools {
+  width: 84px; background: var(--panel); border-right: 1px solid var(--line);
+  padding: 10px 8px; display: flex; flex-direction: column; gap: 4px; overflow-y: auto;
+}
+.tools .group { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); padding: 8px 4px 2px; }
+.tool {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  border: 1px solid transparent; background: transparent; border-radius: 8px;
+  padding: 7px 2px; font-size: 11px; font-weight: 500; color: var(--ink);
+}
+.tool svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.tool:hover { background: var(--ice); }
+.tool.active { background: var(--accent-soft); border-color: #bcd3ee; color: var(--accent); }
+.tool kbd { font-size: 9px; color: var(--ink-soft); font-family: var(--sans); }
+
+.canvas-wrap {
+  flex: 1; min-width: 0; position: relative; background: var(--ice-deep);
+  overflow: hidden;
+}
+.canvas-wrap canvas { display: block; width: 100%; height: 100%; cursor: crosshair; touch-action: none; }
+.hud {
+  position: absolute; left: 12px; bottom: 12px;
+  font-size: 12px; color: var(--ink-soft); background: rgba(255,255,255,.85);
+  padding: 6px 10px; border-radius: 8px; pointer-events: none; backdrop-filter: blur(4px);
+  display: flex; gap: 14px;
+}
+.hud b { color: var(--ink); font-weight: 600; }
+.hint {
+  position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+  font-size: 12px; background: rgba(28,42,58,.88); color: #fff; padding: 6px 12px; border-radius: 999px;
+  pointer-events: none; white-space: nowrap; opacity: 0; transition: opacity .2s;
+}
+.hint.show { opacity: 1; }
+.zoom-ctl { position: absolute; right: 12px; bottom: 12px; display: flex; gap: 4px; }
+.zoom-ctl button { width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--line); background: rgba(255,255,255,.9); font-weight: 600; }
+
+.panel {
+  width: 300px; background: var(--panel); border-left: 1px solid var(--line);
+  overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 14px;
+}
+.card { border: 1px solid var(--line); border-radius: var(--radius); padding: 12px; }
+.card h3 {
+  font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft);
+  font-weight: 600; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;
+}
+.card h3 .small { text-transform: none; letter-spacing: 0; font-weight: 500; }
+.row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.row:last-child { margin-bottom: 0; }
+.row label { font-size: 12px; color: var(--ink-soft); flex: 0 0 96px; }
+.row .val { font-size: 12px; color: var(--ink); min-width: 44px; text-align: right; font-variant-numeric: tabular-nums; }
+.row input[type=range] { flex: 1 1 0; min-width: 0; accent-color: var(--accent); }
+.row select, .row input[type=text], .row input[type=number] {
+  flex: 1; border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px; font-size: 13px; background: #fff; min-width: 0;
+}
+.row input[type=checkbox] { accent-color: var(--pine); width: 16px; height: 16px; }
+.row .btn { padding: 5px 10px; font-size: 12px; }
+.seg { display: flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; flex: 1; }
+.seg button { flex: 1; border: 0; background: #fff; padding: 5px 0; font-size: 12px; font-weight: 500; }
+.seg button + button { border-left: 1px solid var(--line); }
+.seg button.active { background: var(--ink); color: #fff; }
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; font-size: 12px; margin-top: 8px; }
+.stats div { color: var(--ink-soft); }
+.stats div b { display: block; color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.warn { font-size: 12px; color: #a15c07; background: #fdf3e1; padding: 6px 8px; border-radius: 6px; margin-top: 8px; }
+.list { display: flex; flex-direction: column; gap: 2px; max-height: 260px; overflow-y: auto; }
+.list button {
+  display: flex; align-items: center; gap: 8px; border: 0; background: transparent; text-align: left;
+  padding: 5px 6px; border-radius: 6px; font-size: 13px; width: 100%;
+}
+.list button:hover { background: var(--ice); }
+.list button.sel { background: var(--accent-soft); }
+.list .meta { margin-left: auto; font-size: 11px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.sym { width: 12px; height: 12px; flex: none; display: inline-block; }
+.sym.green { background: var(--green); border-radius: 50%; }
+.sym.blue { background: var(--blue); }
+.sym.black { background: var(--black); transform: rotate(45deg) scale(.8); }
+.sym.double { background: linear-gradient(90deg, var(--black) 45%, transparent 45%, transparent 55%, var(--black) 55%); transform: rotate(45deg) scale(.8); }
+.sym.lift { background: var(--lift); height: 3px; border-radius: 2px; }
+.sym.lodge { background: #7a5230; border-radius: 2px; }
+.empty { font-size: 12px; color: var(--ink-soft); padding: 4px 6px; }
+.help { font-size: 12px; color: var(--ink-soft); line-height: 1.5; }
+.help kbd { font-family: var(--sans); font-size: 11px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 0 4px; background: #fff; }
+
+/* ---------- Map view ---------- */
+.map-wrap {
+  flex: 1; min-width: 0; display: flex; align-items: center; justify-content: center;
+  background: #cfd8e3; position: relative; padding: 20px; overflow: auto;
+}
+.map-wrap canvas {
+  max-width: 100%; max-height: 100%; box-shadow: 0 10px 40px rgba(20,40,60,.25); background: #fff;
+}
+#mapStatus {
+  position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
+  background: rgba(28,42,58,.88); color: #fff; font-size: 12px; padding: 6px 12px; border-radius: 999px;
+  opacity: 0; transition: opacity .15s; pointer-events: none;
+}
+#mapStatus.show { opacity: 1; }
+
+#toast {
+  position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(20px);
+  background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 10px; font-size: 13px;
+  opacity: 0; transition: all .25s; pointer-events: none; max-width: 90vw; text-align: center; z-index: 50;
+}
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+.modal-bg { position: fixed; inset: 0; background: rgba(20,30,40,.45); display: none; align-items: center; justify-content: center; z-index: 40; }
+.modal-bg.show { display: flex; }
+.modal { background: #fff; border-radius: 14px; padding: 22px; width: min(460px, 92vw); box-shadow: var(--shadow); }
+.modal h2 { font-family: var(--serif); font-size: 22px; margin-bottom: 8px; }
+.modal p { font-size: 14px; color: var(--ink-soft); line-height: 1.5; margin-bottom: 14px; }
+.modal .row label { flex-basis: 110px; }
+.modal .foot { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
+
+@media (max-width: 900px) {
+  body { overflow: auto; }
+  main { flex-direction: column; }
+  .view.active { flex-direction: column; }
+  .tools { width: auto; flex: none; flex-direction: row; flex-wrap: wrap; overflow: visible; border-right: 0; border-bottom: 1px solid var(--line); }
+  .tool { flex: 0 0 64px; }
+  .tools .group { width: 100%; padding: 4px; }
+  .canvas-wrap { min-height: 60vh; }
+  .panel { width: auto; border-left: 0; border-top: 1px solid var(--line); }
+  .actions { margin-left: 0; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">
+    <svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="20" fill="#16303f"/><path d="M10 82 L38 30 L52 52 L62 40 L90 82 Z" fill="#f6f9fc"/><path d="M38 30 L46 44 L52 52 L58 46 L62 40 L56 30 L48 40 Z" fill="#c9d6e6"/></svg>
+    <div><span class="word">Mountain Studio</span><span class="sub">Build a ski resort. Paint its trail map.</span></div>
+  </div>
+  <input id="resortName" class="name-input" type="text" maxlength="40" aria-label="Resort name" spellcheck="false">
+  <nav class="tabs" role="tablist">
+    <button data-tab="build" class="active" role="tab">Build</button>
+    <button data-tab="map" role="tab">Trail Map</button>
+  </nav>
+  <div class="actions">
+    <button class="btn" id="undoBtn" title="Undo (⌘Z)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/></svg>Undo</button>
+    <button class="btn" id="redoBtn" title="Redo (⇧⌘Z)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 14 5-5-5-5"/><path d="M20 9H9a5 5 0 0 0 0 10h3"/></svg>Redo</button>
+    <button class="btn" id="shareBtn" title="Copy a link that opens this exact resort"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>Share link</button>
+    <button class="btn" id="newBtn">New mountain</button>
+  </div>
+</header>
+
+<main>
+  <!-- ================= BUILD VIEW ================= -->
+  <section id="buildView" class="view active">
+    <aside class="tools" id="toolbar">
+      <div class="group">Terrain</div>
+      <button class="tool" data-tool="raise" title="Raise terrain"><svg viewBox="0 0 24 24"><path d="M3 19h18"/><path d="M6 19 12 6l6 13"/></svg>Raise<kbd>1</kbd></button>
+      <button class="tool" data-tool="lower" title="Lower terrain"><svg viewBox="0 0 24 24"><path d="M3 5h18"/><path d="M6 5l6 13 6-13"/></svg>Lower<kbd>2</kbd></button>
+      <button class="tool" data-tool="smooth" title="Smooth terrain"><svg viewBox="0 0 24 24"><path d="M3 15c3 0 3-6 6-6s3 6 6 6 3-6 6-6"/></svg>Smooth<kbd>3</kbd></button>
+      <button class="tool" data-tool="flatten" title="Flatten to the elevation where you click"><svg viewBox="0 0 24 24"><path d="M3 12h18"/><path d="M6 18h12"/><path d="M8 6h8"/></svg>Flatten<kbd>4</kbd></button>
+      <div class="group">Forest</div>
+      <button class="tool" data-tool="plant" title="Plant trees"><svg viewBox="0 0 24 24"><path d="M12 3 7 11h3l-4 6h12l-4-6h3z"/><path d="M12 17v4"/></svg>Plant<kbd>5</kbd></button>
+      <button class="tool" data-tool="clear" title="Clear trees"><svg viewBox="0 0 24 24"><path d="M12 3 7 11h3l-4 6h12l-4-6h3z" opacity=".4"/><path d="M4 4l16 16"/></svg>Clear<kbd>6</kbd></button>
+      <div class="group">Resort</div>
+      <button class="tool" data-tool="lift" title="Lift: click bottom terminal, then top terminal"><svg viewBox="0 0 24 24"><path d="M4 18 20 6"/><circle cx="4" cy="18" r="1.6"/><circle cx="20" cy="6" r="1.6"/><path d="M10 13.5v3M14 10.5v3"/></svg>Lift<kbd>7</kbd></button>
+      <button class="tool" data-tool="run" title="Run: click to add points, double-click or Enter to finish"><svg viewBox="0 0 24 24"><path d="M6 4c0 6 4 6 4 10s-2 6 6 6"/><circle cx="6" cy="4" r="1.6"/><circle cx="16" cy="20" r="1.6"/></svg>Run<kbd>8</kbd></button>
+      <button class="tool" data-tool="groom" title="Groom: click a run to toggle grooming"><svg viewBox="0 0 24 24"><path d="M4 8h16M4 12h16M4 16h16"/></svg>Groom<kbd>9</kbd></button>
+      <button class="tool" data-tool="lodge" title="Place a lodge"><svg viewBox="0 0 24 24"><path d="M4 11 12 4l8 7"/><path d="M6 10v10h12V10"/><path d="M10 20v-6h4v6"/></svg>Lodge<kbd>0</kbd></button>
+      <div class="group">Edit</div>
+      <button class="tool" data-tool="select" title="Select and move"><svg viewBox="0 0 24 24"><path d="M5 3l14 8-6 2-3 6z"/></svg>Select<kbd>V</kbd></button>
+    </aside>
+
+    <div class="canvas-wrap" id="canvasWrap">
+      <canvas id="editor"></canvas>
+      <div class="hint" id="hint"></div>
+      <div class="hud" id="hud"></div>
+      <div class="zoom-ctl"><button id="zoomOut" title="Zoom out">−</button><button id="zoomFit" title="Fit">⤢</button><button id="zoomIn" title="Zoom in">+</button></div>
+    </div>
+
+    <aside class="panel">
+      <div class="card" id="brushCard">
+        <h3>Brush</h3>
+        <div class="row"><label>Size</label><input type="range" id="brushSize" min="2" max="30" step="1" value="9"><span class="val" id="brushSizeVal"></span></div>
+        <div class="row"><label>Strength</label><input type="range" id="brushStrength" min="0.1" max="1" step="0.05" value="0.5"><span class="val" id="brushStrengthVal"></span></div>
+      </div>
+
+      <div class="card" id="inspector" style="display:none"></div>
+
+      <div class="card">
+        <h3>Mountain <span class="small" id="mtnSummary"></span></h3>
+        <div class="row"><label>Shape</label>
+          <select id="preset">
+            <option value="peak">Single peak</option>
+            <option value="ridge">Long ridge</option>
+            <option value="bowl">Cirque bowl</option>
+            <option value="twin">Twin summits</option>
+          </select>
+        </div>
+        <div class="row"><label>Seed</label><input type="number" id="seed" min="1" max="999999"><button class="btn" id="randSeed" title="Random seed">🎲</button></div>
+        <div class="row"><label>Treeline</label><input type="range" id="treeline" min="0.3" max="1" step="0.01" value="0.62"><span class="val" id="treelineVal"></span></div>
+        <div class="row"><label>Base elev.</label><input type="number" id="baseElev" step="100"><span class="val" id="unitLabel1"></span></div>
+        <div class="row"><label>Vertical rise</label><input type="number" id="rise" step="100"><span class="val" id="unitLabel2"></span></div>
+        <div class="row"><label>Units</label><div class="seg" id="unitsSeg"><button data-u="ft">feet</button><button data-u="m">meters</button></div></div>
+        <div class="row"><label></label><button class="btn primary" id="regenBtn">Regenerate terrain</button></div>
+        <div class="help" style="margin-top:8px">Regenerating keeps your lifts, runs, and lodges but replaces the terrain and forest.</div>
+      </div>
+
+      <div class="card">
+        <h3>Runs <span class="small" id="runCount"></span></h3>
+        <div class="list" id="runList"></div>
+      </div>
+      <div class="card">
+        <h3>Lifts &amp; lodges <span class="small" id="liftCount"></span></h3>
+        <div class="list" id="liftList"></div>
+      </div>
+
+      <div class="card">
+        <h3>How to play</h3>
+        <div class="help">
+          The map looks <b>north</b>: the base is at the bottom, the summit at the top. Sculpt with the terrain brushes, plant or clear forest, then string <b>lifts</b> (bottom terminal first) and draw <b>runs</b> from top to bottom. Difficulty is rated from the pitch automatically. Groom runs for corduroy, or leave them as moguls. Switch to <b>Trail Map</b> when you want to see the painting.<br><br>
+          <kbd>scroll</kbd> zoom · <kbd>space</kbd>+drag pan · <kbd>[</kbd> <kbd>]</kbd> brush size · <kbd>⌘Z</kbd> undo · <kbd>⌫</kbd> delete selection · <kbd>esc</kbd> cancel
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- ================= MAP VIEW ================= -->
+  <section id="mapView" class="view">
+    <div class="map-wrap">
+      <canvas id="mapCanvas" width="1800" height="1200"></canvas>
+      <div id="mapStatus">Painting…</div>
+    </div>
+    <aside class="panel">
+      <div class="card">
+        <h3>Trail map</h3>
+        <div class="row"><label>View from</label><div class="seg" id="viewSeg"><button data-v="S">South</button><button data-v="E">East</button><button data-v="N">North</button><button data-v="W">West</button></div></div>
+        <div class="row"><label>Sun</label><div class="seg" id="sunSeg"><button data-s="left">Left</button><button data-s="right">Right</button></div></div>
+        <div class="row"><label>Relief</label><input type="range" id="exag" min="1" max="3.5" step="0.1" value="2.2"><span class="val" id="exagVal"></span></div>
+        <div class="row"><label>Detail</label><input type="range" id="detail" min="1" max="4" step="1" value="3"><span class="val" id="detailVal"></span></div>
+        <div class="row"><label>Labels</label><input type="checkbox" id="optLabels" checked></div>
+        <div class="row"><label>Legend</label><input type="checkbox" id="optLegend" checked></div>
+        <div class="row"><label>Haze</label><input type="checkbox" id="optHaze" checked></div>
+        <div class="row"><label>Paper</label><input type="checkbox" id="optPaper" checked></div>
+        <div class="row"><label>Distant peaks</label><input type="checkbox" id="optRange" checked></div>
+      </div>
+      <div class="card">
+        <h3>Export</h3>
+        <div class="row"><button class="btn primary" id="downloadBtn" style="flex:1;justify-content:center">Download PNG</button></div>
+        <div class="row"><button class="btn" id="shareBtn2" style="flex:1;justify-content:center">Copy share link</button></div>
+        <div class="help" style="margin-top:8px">The PNG is 1800 × 1200, sized for a LinkedIn post. The share link encodes your whole resort in the URL.</div>
+      </div>
+      <div class="card">
+        <h3>Resort stats</h3>
+        <div class="stats" id="mapStats"></div>
+      </div>
+    </aside>
+  </section>
+</main>
+
+<div id="toast"></div>
+
+<div class="modal-bg" id="newModal">
+  <div class="modal">
+    <h2>New mountain</h2>
+    <p>Start over with a fresh mountain. This clears your lifts, runs, and lodges. Your current resort stays in the browser until you build on the new one, and any share link you copied keeps working.</p>
+    <div class="row"><label>Shape</label>
+      <select id="newPreset">
+        <option value="peak">Single peak</option>
+        <option value="ridge">Long ridge</option>
+        <option value="bowl">Cirque bowl</option>
+        <option value="twin">Twin summits</option>
+      </select>
+    </div>
+    <div class="row"><label>Seed</label><input type="number" id="newSeed" min="1" max="999999"><button class="btn" id="newRandSeed">🎲</button></div>
+    <div class="foot"><button class="btn" id="newCancel">Cancel</button><button class="btn primary" id="newGo">Build it</button></div>
+  </div>
+</div>
+
+<script>
+'use strict';
+/* =====================================================================
+   Mountain Studio
+   One data model (a heightmap, a forest density map, and vector runs,
+   lifts, and lodges) rendered two ways: a top-down topo editor and an
+   oblique painted trail map.
+   ===================================================================== */
+
+// ---------- Grid & world constants ----------
+const W = 160, H = 120;          // heightmap cells
+const CELL_M = 35;               // meters per cell → 5.6 km × 4.2 km
+const FIELD_UP = 2;              // run distance field resolution multiplier
+const FW = W * FIELD_UP, FH = H * FIELD_UP;
+const STORAGE_KEY = 'mountain-studio-v1';
+
+const DIFF = {
+  green:  { label: 'Easier',          color: '#1f9d55' },
+  blue:   { label: 'More Difficult',  color: '#1f6fd1' },
+  black:  { label: 'Most Difficult',  color: '#111418' },
+  double: { label: 'Experts Only',    color: '#111418' },
+};
+const DIFF_ORDER = ['green', 'blue', 'black', 'double'];
+
+// ---------- Small utilities ----------
+const clamp = (v, a, b) => v < a ? a : v > b ? b : v;
+const lerp = (a, b, t) => a + (b - a) * t;
+const smoothstep = (a, b, x) => { const t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
+const dist = (ax, ay, bx, by) => Math.hypot(bx - ax, by - ay);
+const $ = id => document.getElementById(id);
+const fmt = n => Math.round(n).toLocaleString('en-US');
+const escapeHtml = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+// Deterministic integer hash → [0,1). Used for noise and per-cell jitter so
+// the same seed produces the same mountain in every browser.
+function hash2(ix, iy, seed) {
+  let h = (ix * 374761393 + iy * 668265263 + seed * 1442695041) | 0;
+  h = Math.imul(h ^ (h >>> 13), 1274126177);
+  h ^= h >>> 16;
+  return (h >>> 0) / 4294967296;
+}
+function hash3(ix, iy, k, seed) { return hash2(ix + k * 7919, iy - k * 104729, seed); }
+
+function vnoise(x, y, seed) {
+  const ix = Math.floor(x), iy = Math.floor(y);
+  const fx = x - ix, fy = y - iy;
+  const u = fx * fx * (3 - 2 * fx), v = fy * fy * (3 - 2 * fy);
+  const a = hash2(ix, iy, seed), b = hash2(ix + 1, iy, seed);
+  const c = hash2(ix, iy + 1, seed), d = hash2(ix + 1, iy + 1, seed);
+  return lerp(lerp(a, b, u), lerp(c, d, u), v);
+}
+function fbm(x, y, seed, oct = 5, gain = 0.5) {
+  let s = 0, a = 1, f = 1, n = 0;
+  for (let i = 0; i < oct; i++) { s += a * vnoise(x * f, y * f, seed + i * 101); n += a; a *= gain; f *= 2; }
+  return s / n;
+}
+function ridged(x, y, seed, oct = 4) {
+  let s = 0, a = 1, f = 1, n = 0;
+  for (let i = 0; i < oct; i++) {
+    const v = 1 - Math.abs(vnoise(x * f, y * f, seed + i * 77) * 2 - 1);
+    s += a * v * v; n += a; a *= 0.5; f *= 2;
+  }
+  return s / n;
+}
+function mulberry32(seed) {
+  let a = seed >>> 0;
+  return () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+}
+
+// ---------- Procedural terrain ----------
+// Returns the base heightmap (0..1) and forest density (0..255) for a seed,
+// shape preset, and treeline. User sculpting is stored as a delta from this
+// base, which is what makes share links small.
+function generateBase(seed, preset, treeline) {
+  const h = new Float32Array(W * H), t = new Uint8Array(W * H);
+  const asp = W / H;
+  let mn = Infinity, mx = -Infinity;
+  for (let y = 0; y < H; y++) {
+    const v = y / (H - 1);
+    for (let x = 0; x < W; x++) {
+      const u = x / (W - 1), i = y * W + x;
+      let shape;
+      if (preset === 'ridge') {
+        const vc = 0.15 + 0.07 * (vnoise(u * 3, 0.5, seed + 5) * 2 - 1);
+        const dv = v - vc;
+        shape = Math.exp(-dv * dv / 0.09) * (0.6 + 0.4 * vnoise(u * 4.5, 0.2, seed + 9)) + (1 - v) * 0.35;
+      } else if (preset === 'bowl') {
+        const dx = (u - 0.5) * asp, dy = (v - 0.40);
+        const r = Math.hypot(dx, dy);
+        const rim = smoothstep(0.10, 0.55, r) * (1 - smoothstep(0.45, 0.85, v));
+        shape = rim * 0.85 + (1 - v) * 0.35;
+      } else if (preset === 'twin') {
+        const d1 = Math.hypot((u - 0.30) * asp, v - 0.20), d2 = Math.hypot((u - 0.70) * asp, v - 0.15);
+        shape = Math.max(Math.exp(-d1 * d1 / 0.11) * 0.8, Math.exp(-d2 * d2 / 0.13) * 0.92) + (1 - v) * 0.35;
+      } else { // peak
+        const dx = (u - 0.5) * asp, dy = v - 0.16;
+        const d = Math.hypot(dx, dy);
+        shape = Math.exp(-d * d / 0.17) * 0.85 + (1 - v) * 0.35;
+      }
+      const nx = x / 34, ny = y / 34;
+      const f = fbm(nx, ny, seed, 5);
+      const r = ridged(nx * 0.9, ny * 0.9, seed + 1000, 4);
+      let e = shape + (f - 0.5) * 0.42 * (0.25 + shape) + (r - 0.5) * 0.46 * shape;
+      // Flatten the base area so there is somewhere to put the village.
+      e *= 0.12 + 0.88 * smoothstep(0, 0.16, 1 - v);
+      h[i] = e;
+      if (e < mn) mn = e; if (e > mx) mx = e;
+    }
+  }
+  for (let i = 0; i < h.length; i++) h[i] = (h[i] - mn) / (mx - mn);
+
+  // Forest: noise-driven density, thinning toward the treeline and on cliffs.
+  const SLOPE_SCALE = 760 / 35; // fixed so the base never depends on user settings
+  for (let y = 0; y < H; y++) {
+    const v = y / (H - 1);
+    for (let x = 0; x < W; x++) {
+      const i = y * W + x;
+      const hx = (h[Math.min(x + 1, W - 1) + y * W] - h[Math.max(x - 1, 0) + y * W]) * 0.5 * SLOPE_SCALE;
+      const hy = (h[x + Math.min(y + 1, H - 1) * W] - h[x + Math.max(y - 1, 0) * W]) * 0.5 * SLOPE_SCALE;
+      const slope = Math.hypot(hx, hy); // rise/run
+      const dens = fbm(x / 13, y / 13, seed + 777, 3);
+      let d = clamp((dens - 0.40) * 2.8, 0, 1);
+      d *= 1 - smoothstep(treeline - 0.10, treeline + 0.02, h[i] + (vnoise(x / 6, y / 6, seed + 42) - 0.5) * 0.06);
+      d *= 1 - smoothstep(0.9, 1.5, slope);
+      if (v > 0.93) d *= 0.25;
+      t[i] = Math.round(d * 255);
+    }
+  }
+  return { h, t };
+}
+
+// ---------- State ----------
+const RESORT_NAMES_A = ['Silver', 'Whiskey', 'Raven', 'Timber', 'Glacier', 'Bighorn', 'Sawtooth', 'Lone Pine', 'Marmot', 'Ptarmigan', 'Wolverine', 'Cinnabar', 'Granite', 'Bluebird', 'Hollow Creek', 'Thunder'];
+const RESORT_NAMES_B = ['Peak', 'Ridge', 'Basin', 'Mountain', 'Bowl', 'Summit', 'Hollow', 'Pass', 'Cirque'];
+
+let S = null;              // the resort
+let baseCache = null;      // { key, h, t } procedural base for the current seed/preset/treeline
+
+function newState(seed, preset) {
+  const rnd = mulberry32(seed);
+  const name = RESORT_NAMES_A[Math.floor(rnd() * RESORT_NAMES_A.length)] + ' ' + RESORT_NAMES_B[Math.floor(rnd() * RESORT_NAMES_B.length)];
+  const st = {
+    v: 1, name, seed, preset, treeline: 0.62,
+    baseElev: 2000,    // meters (≈ 6,560 ft)
+    rise: 760,         // meters (≈ 2,500 ft)
+    units: 'ft',
+    height: null, trees: null,
+    runs: [], lifts: [], lodges: [],
+    nextId: 1,
+    map: { view: 'S', sun: 'left', exag: 2.2, detail: 3, labels: true, legend: true, haze: true, paper: true, range: true },
+  };
+  const base = getBase(seed, preset, st.treeline);
+  st.height = new Float32Array(base.h);
+  st.trees = new Uint8Array(base.t);
+  return st;
+}
+
+function getBase(seed, preset, treeline) {
+  const key = seed + '|' + preset + '|' + treeline;
+  if (!baseCache || baseCache.key !== key) { const b = generateBase(seed, preset, treeline); baseCache = { key, h: b.h, t: b.t }; }
+  return baseCache;
+}
+
+// ---------- Elevation sampling ----------
+function hAt(x, y) { // bilinear sample of the heightmap at fractional grid coords
+  x = clamp(x, 0, W - 1); y = clamp(y, 0, H - 1);
+  const x0 = Math.floor(x), y0 = Math.floor(y);
+  const x1 = Math.min(x0 + 1, W - 1), y1 = Math.min(y0 + 1, H - 1);
+  const fx = x - x0, fy = y - y0, hh = S.height;
+  return lerp(lerp(hh[y0 * W + x0], hh[y0 * W + x1], fx), lerp(hh[y1 * W + x0], hh[y1 * W + x1], fx), fy);
+}
+const elevM = (x, y) => S.baseElev + hAt(x, y) * S.rise;
+const toUnit = m => S.units === 'ft' ? m * 3.28084 : m;
+const unitLabel = () => S.units === 'ft' ? 'ft' : 'm';
+const fmtElev = m => fmt(toUnit(m)) + ' ' + unitLabel();
+const fmtLen = m => S.units === 'ft' ? (m > 1500 ? (m / 1609.34).toFixed(1) + ' mi' : fmt(m * 3.28084) + ' ft') : (m > 1000 ? (m / 1000).toFixed(1) + ' km' : fmt(m) + ' m');
+
+// ---------- Paths ----------
+// Catmull-Rom smoothing so hand-clicked runs read as flowing ribbons.
+function smoothPath(pts, segs = 8) {
+  if (pts.length < 2) return pts.map(p => [p[0], p[1]]);
+  if (pts.length === 2) {
+    const out = [];
+    for (let i = 0; i <= segs; i++) out.push([lerp(pts[0][0], pts[1][0], i / segs), lerp(pts[0][1], pts[1][1], i / segs)]);
+    return out;
+  }
+  const out = [];
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p0 = pts[Math.max(i - 1, 0)], p1 = pts[i], p2 = pts[i + 1], p3 = pts[Math.min(i + 2, pts.length - 1)];
+    for (let k = 0; k < segs; k++) {
+      const t = k / segs, t2 = t * t, t3 = t2 * t;
+      out.push([
+        0.5 * ((2 * p1[0]) + (-p0[0] + p2[0]) * t + (2 * p0[0] - 5 * p1[0] + 4 * p2[0] - p3[0]) * t2 + (-p0[0] + 3 * p1[0] - 3 * p2[0] + p3[0]) * t3),
+        0.5 * ((2 * p1[1]) + (-p0[1] + p2[1]) * t + (2 * p0[1] - 5 * p1[1] + 4 * p2[1] - p3[1]) * t2 + (-p0[1] + 3 * p1[1] - 3 * p2[1] + p3[1]) * t3),
+      ]);
+    }
+  }
+  out.push([pts[pts.length - 1][0], pts[pts.length - 1][1]]);
+  return out;
+}
+// Resample a dense polyline at a fixed spacing (grid units).
+function resample(pts, step) {
+  if (pts.length < 2) return pts;
+  const out = [pts[0]]; let carry = 0;
+  for (let i = 1; i < pts.length; i++) {
+    let [ax, ay] = pts[i - 1]; const [bx, by] = pts[i];
+    let segLen = dist(ax, ay, bx, by);
+    while (carry + segLen >= step) {
+      const t = (step - carry) / segLen;
+      ax = lerp(ax, bx, t); ay = lerp(ay, by, t);
+      out.push([ax, ay]); segLen = dist(ax, ay, bx, by); carry = 0;
+    }
+    carry += segLen;
+  }
+  out.push(pts[pts.length - 1]);
+  return out;
+}
+function pathLength(pts) { let L = 0; for (let i = 1; i < pts.length; i++) L += dist(pts[i - 1][0], pts[i - 1][1], pts[i][0], pts[i][1]); return L; }
+function pointSegDist(px, py, ax, ay, bx, by) {
+  const dx = bx - ax, dy = by - ay, l2 = dx * dx + dy * dy;
+  let t = l2 ? ((px - ax) * dx + (py - ay) * dy) / l2 : 0; t = clamp(t, 0, 1);
+  return dist(px, py, ax + dx * t, ay + dy * t);
+}
+function pointPathDist(px, py, pts) { let m = Infinity; for (let i = 1; i < pts.length; i++) m = Math.min(m, pointSegDist(px, py, pts[i - 1][0], pts[i - 1][1], pts[i][0], pts[i][1])); return m; }
+
+// ---------- Run distance field ----------
+// Signed distance (grid units) from every field cell to the nearest run edge,
+// kept separately for cleared trails and thinned glades. Trees inside a trail
+// are removed in both renderers; trees inside a glade are thinned.
+let distTrail = new Float32Array(FW * FH), distGlade = new Float32Array(FW * FH);
+let runPathCache = new Map(); // run.id → dense smoothed path
+function runPath(run) {
+  const key = run.id;
+  let c = runPathCache.get(key);
+  const sig = JSON.stringify(run.points);
+  if (!c || c.sig !== sig) { c = { sig, pts: smoothPath(run.points, 8) }; runPathCache.set(key, c); }
+  return c.pts;
+}
+function rebuildRunField() {
+  distTrail.fill(1e9); distGlade.fill(1e9);
+  for (const run of S.runs) {
+    const field = run.glade ? distGlade : distTrail;
+    const pts = runPath(run), hw = run.width / 2;
+    for (let i = 1; i < pts.length; i++) {
+      const ax = pts[i - 1][0] * FIELD_UP, ay = pts[i - 1][1] * FIELD_UP, bx = pts[i][0] * FIELD_UP, by = pts[i][1] * FIELD_UP;
+      const pad = hw * FIELD_UP + 2;
+      const x0 = Math.max(0, Math.floor(Math.min(ax, bx) - pad)), x1 = Math.min(FW - 1, Math.ceil(Math.max(ax, bx) + pad));
+      const y0 = Math.max(0, Math.floor(Math.min(ay, by) - pad)), y1 = Math.min(FH - 1, Math.ceil(Math.max(ay, by) + pad));
+      for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) {
+        const d = pointSegDist(x + 0.5, y + 0.5, ax, ay, bx, by) / FIELD_UP - hw;
+        const k = y * FW + x; if (d < field[k]) field[k] = d;
+      }
+    }
+  }
+}
+// Forest presence at a fractional grid point given the run field: 0 cleared, 1 keep.
+function treeKeep(gx, gy, jitter) {
+  const fx = clamp(Math.floor(gx * FIELD_UP), 0, FW - 1), fy = clamp(Math.floor(gy * FIELD_UP), 0, FH - 1);
+  const k = fy * FW + fx;
+  if (distTrail[k] < 0) return 0;
+  if (distGlade[k] < 0) return jitter < 0.3 ? 1 : 0;
+  return 1;
+}
+
+// ---------- Run stats & difficulty ----------
+function runStats(run) {
+  const pts = resample(runPath(run), 0.5);
+  const stepM = 0; let lengthM = 0, maxPitch = 0, uphill = 0;
+  const elev = pts.map(p => elevM(p[0], p[1]));
+  const grades = [], seg = [];
+  for (let i = 1; i < pts.length; i++) {
+    const ds = dist(pts[i - 1][0], pts[i - 1][1], pts[i][0], pts[i][1]) * CELL_M;
+    if (ds < 1e-6) continue;
+    lengthM += ds;
+    const g = (elev[i - 1] - elev[i]) / ds; // positive = descending
+    grades.push(g); seg.push(ds);
+    if (g < -0.03) uphill += ds;
+  }
+  // Sustained pitch: the steepest ~100 m stretch, so one steep step doesn't rate a whole run.
+  let acc = 0, accLen = 0, j = 0;
+  for (let i = 0; i < grades.length; i++) {
+    acc += grades[i] * seg[i]; accLen += seg[i];
+    while (accLen > 180 && j < i) { acc -= grades[j] * seg[j]; accLen -= seg[j]; j++; }
+    if (accLen >= 120) maxPitch = Math.max(maxPitch, acc / accLen);
+  }
+  const vert = elev[0] - elev[elev.length - 1];
+  const avgGrade = lengthM ? vert / lengthM : 0;
+  const auto = maxPitch < 0.22 ? 'green' : maxPitch < 0.40 ? 'blue' : maxPitch < 0.60 ? 'black' : 'double';
+  return { lengthM, vertM: vert, avgGrade, maxPitch, uphillM: uphill, auto, top: elev[0], bottom: elev[elev.length - 1] };
+}
+const runDifficulty = run => run.difficulty === 'auto' || !run.difficulty ? runStats(run).auto : run.difficulty;
+
+function liftStats(lift) {
+  const a = elevM(lift.a[0], lift.a[1]), b = elevM(lift.b[0], lift.b[1]);
+  const lengthM = dist(lift.a[0], lift.a[1], lift.b[0], lift.b[1]) * CELL_M;
+  return { lengthM, vertM: b - a, bottom: a, top: b };
+}
+
+// ---------- Names ----------
+const RUN_NAMES = {
+  green: ['Meadow Lane', 'Sunnyside', 'Easy Street', 'Homeward Bound', 'Cruiser', 'Snowflake', 'Lower Village Run', 'Milk Run', 'Tenderfoot', 'Sleepy Hollow', 'Bunny Meadow', 'Long Way Home', 'Schoolmarm', 'Pipeline'],
+  blue: ['Ridge Runner', 'Ptarmigan', 'Powderhorn', 'Windrift', 'Timberline', 'Bear Paw', 'Silver Queen', 'Elk Track', 'Whiskey Jack', 'Sundance', 'Bluebird', 'Coyote Run', 'Moonshine', 'Crossroads', 'High Noon', 'Buckhorn'],
+  black: ['Widowmaker', 'Cornice', 'Hangman’s', 'Avalanche Alley', 'Devil’s Elbow', 'Steeplechase', 'Thunderhead', 'Rock Garden', 'Outlaw', 'Grizzly', 'Lightning', 'Nosedive', 'Vertigo', 'Freefall'],
+  double: ['Palisades', 'The Cirque', 'Headwall', 'The Chutes', 'Lone Pine Face', 'Cliffhanger', 'Spiral Stairs', 'The Fingers', 'Corbet’s Cousin', 'Deliverance'],
+};
+const LIFT_NAMES = { chair: ['Summit Express', 'Eagle Quad', 'Timber Triple', 'Ridgeline Six', 'Cirque Chair', 'Sunrise Lift', 'Whiskey Creek Express', 'Panorama Quad', 'Storm Peak Express', 'Elk Camp Chair', 'Sundown Lift', 'Bighorn Express'], gondola: ['Village Gondola', 'Skyline Gondola', 'Summit Tram', 'Silver Gondola'], surface: ['Bunny Tow', 'Magic Carpet', 'Meadow T-Bar', 'Village Poma'] };
+const LODGE_NAMES = ['Base Lodge', 'Summit House', 'Mid-Mountain Lodge', 'The Village', 'Warming Hut', 'Ridge Restaurant', 'Timberline Lodge'];
+function pickName(list, used) {
+  const free = list.filter(n => !used.has(n));
+  const pool = free.length ? free : list;
+  return pool[Math.floor(Math.random() * pool.length)] + (free.length ? '' : ' II');
+}
+
+// ---------- Undo ----------
+const undoStack = [], redoStack = [];
+function snapshot() {
+  return { height: new Float32Array(S.height), trees: new Uint8Array(S.trees), vec: JSON.stringify({ runs: S.runs, lifts: S.lifts, lodges: S.lodges, nextId: S.nextId }) };
+}
+function restore(snap) {
+  S.height = new Float32Array(snap.height); S.trees = new Uint8Array(snap.trees);
+  const v = JSON.parse(snap.vec); S.runs = v.runs; S.lifts = v.lifts; S.lodges = v.lodges; S.nextId = v.nextId;
+  runPathCache.clear();
+}
+function pushUndo() { undoStack.push(snapshot()); if (undoStack.length > 40) undoStack.shift(); redoStack.length = 0; updateUndoButtons(); }
+function undo() { if (!undoStack.length) return; redoStack.push(snapshot()); restore(undoStack.pop()); afterModelChange(true); }
+function redo() { if (!redoStack.length) return; undoStack.push(snapshot()); restore(redoStack.pop()); afterModelChange(true); }
+function updateUndoButtons() { $('undoBtn').disabled = !undoStack.length; $('redoBtn').disabled = !redoStack.length; }
+
+// ---------- Serialization ----------
+function b64enc(u8) { let s = ''; for (let i = 0; i < u8.length; i += 0x8000) s += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000)); return btoa(s); }
+function b64dec(s) { const bin = atob(s); const u8 = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i); return u8; }
+const b64url = s => s.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+const b64unurl = s => s.replace(/-/g, '+').replace(/_/g, '/') + '='.repeat((4 - s.length % 4) % 4);
+
+function headerJSON() {
+  const { name, seed, preset, treeline, baseElev, rise, units, runs, lifts, lodges, nextId, map } = S;
+  return { v: 1, name, seed, preset, treeline, baseElev, rise, units, runs, lifts, lodges, nextId, map };
+}
+// Local autosave keeps the full arrays; nothing needs to be small here.
+function saveLocal() {
+  try {
+    const o = headerJSON();
+    o.height = b64enc(new Uint8Array(S.height.buffer));
+    o.trees = b64enc(S.trees);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(o));
+  } catch (e) { /* private mode or quota: ignore */ }
+}
+function loadLocal() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY); if (!raw) return null;
+    const o = JSON.parse(raw);
+    const st = fromHeader(o);
+    st.height = new Float32Array(b64dec(o.height).buffer);
+    st.trees = b64dec(o.trees);
+    if (st.height.length !== W * H || st.trees.length !== W * H) return null;
+    return st;
+  } catch (e) { return null; }
+}
+function fromHeader(o) {
+  const st = newState(o.seed | 0 || 1, o.preset || 'peak');
+  Object.assign(st, { name: o.name || st.name, treeline: o.treeline ?? 0.62, baseElev: o.baseElev ?? 2000, rise: o.rise ?? 760, units: o.units || 'ft', runs: o.runs || [], lifts: o.lifts || [], lodges: o.lodges || [], nextId: o.nextId || 1 });
+  st.map = Object.assign(st.map, o.map || {});
+  return st;
+}
+
+// Share links store the terrain as a deflated Int16 delta from the procedural
+// base. An unsculpted mountain compresses to a few hundred bytes.
+async function encodeShare() {
+  const hdr = new TextEncoder().encode(JSON.stringify(headerJSON()));
+  const base = getBase(S.seed, S.preset, S.treeline);
+  const dh = new Int16Array(W * H), dt = new Int16Array(W * H);
+  for (let i = 0; i < W * H; i++) { dh[i] = Math.round((S.height[i] - base.h[i]) * 32000); dt[i] = S.trees[i] - base.t[i]; }
+  const buf = new Uint8Array(4 + hdr.length + dh.byteLength + dt.byteLength);
+  new DataView(buf.buffer).setUint32(0, hdr.length);
+  buf.set(hdr, 4); buf.set(new Uint8Array(dh.buffer), 4 + hdr.length); buf.set(new Uint8Array(dt.buffer), 4 + hdr.length + dh.byteLength);
+  let packed = buf, tag = 'r0';
+  if ('CompressionStream' in window) {
+    try {
+      const cs = new CompressionStream('deflate-raw');
+      const w = cs.writable.getWriter(); w.write(buf); w.close();
+      packed = new Uint8Array(await new Response(cs.readable).arrayBuffer()); tag = 'r1';
+    } catch (e) { packed = buf; tag = 'r0'; }
+  }
+  return location.origin + location.pathname + '#' + tag + '.' + b64url(b64enc(packed));
+}
+async function decodeShare(hash) {
+  const m = /^#?(r[01])\.([A-Za-z0-9\-_]+)$/.exec(hash); if (!m) return null;
+  let buf = b64dec(b64unurl(m[2]));
+  if (m[1] === 'r1') {
+    const ds = new DecompressionStream('deflate-raw');
+    const w = ds.writable.getWriter(); w.write(buf); w.close();
+    buf = new Uint8Array(await new Response(ds.readable).arrayBuffer());
+  }
+  const hl = new DataView(buf.buffer, buf.byteOffset).getUint32(0);
+  const o = JSON.parse(new TextDecoder().decode(buf.subarray(4, 4 + hl)));
+  const st = fromHeader(o);
+  const base = getBase(st.seed, st.preset, st.treeline);
+  const body = buf.slice(4 + hl); // slice → aligned copy for Int16 views
+  const dh = new Int16Array(body.buffer, 0, W * H), dt = new Int16Array(body.buffer, W * H * 2, W * H);
+  st.height = new Float32Array(W * H); st.trees = new Uint8Array(W * H);
+  for (let i = 0; i < W * H; i++) { st.height[i] = clamp(base.h[i] + dh[i] / 32000, 0, 1); st.trees[i] = clamp(base.t[i] + dt[i], 0, 255); }
+  return st;
+}
+
+/* =====================================================================
+   EDITOR — top-down topo view
+   ===================================================================== */
+const editor = $('editor'), ectx = editor.getContext('2d');
+const wrap = $('canvasWrap');
+const LAYER_UP = 4;                                   // terrain layer pixels per cell
+const layer = document.createElement('canvas'); layer.width = W * LAYER_UP; layer.height = H * LAYER_UP;
+const lctx = layer.getContext('2d');
+let layerImg = lctx.createImageData(layer.width, layer.height);
+const elevBuf = new Float32Array(layer.width * layer.height);
+
+const view = { scale: 5, ox: 0, oy: 0, fit: 5 };
+let dpr = 1, cw = 0, ch = 0;
+let terrainDirty = true, renderQueued = false;
+
+// UI state for tools
+let tool = 'raise';
+let brush = { size: 9, strength: 0.5 };
+let runOpts = { width: 1.5, groomed: true, glade: false };
+let liftType = 'chair';
+let cursor = null;               // [gx, gy] under the pointer, or null
+let painting = false, flattenTarget = 0, lastPaint = null;
+let pendingLift = null;          // first terminal while placing a lift
+let pendingRun = null;           // points while drawing a run
+let selection = null;            // { type: 'run'|'lift'|'lodge', id }
+let drag = null;                 // active handle drag
+let spaceDown = false, panning = null;
+
+function resizeEditor() {
+  dpr = Math.min(window.devicePixelRatio || 1, 2);
+  cw = wrap.clientWidth; ch = wrap.clientHeight;
+  editor.width = Math.round(cw * dpr); editor.height = Math.round(ch * dpr);
+  ectx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+function fitView() {
+  resizeEditor();
+  view.fit = Math.min((cw - 30) / W, (ch - 30) / H);
+  view.scale = view.fit;
+  view.ox = (cw - W * view.scale) / 2 + view.scale / 2;
+  view.oy = (ch - H * view.scale) / 2 + view.scale / 2;
+  requestRender();
+}
+function zoomAt(sx, sy, factor) {
+  const ns = clamp(view.scale * factor, view.fit * 0.6, view.fit * 8);
+  const k = ns / view.scale;
+  view.ox = sx - (sx - view.ox) * k; view.oy = sy - (sy - view.oy) * k; view.scale = ns;
+  requestRender();
+}
+const toScreen = (gx, gy) => [view.ox + gx * view.scale, view.oy + gy * view.scale];
+const toGrid = (sx, sy) => [(sx - view.ox) / view.scale, (sy - view.oy) / view.scale];
+
+// ---------- Terrain layer ----------
+const TINT = [[0, [176, 192, 160]], [0.22, [206, 205, 178]], [0.48, [228, 224, 210]], [0.72, [238, 240, 243]], [1, [253, 253, 255]]];
+function tint(h) {
+  for (let i = 1; i < TINT.length; i++) if (h <= TINT[i][0]) {
+    const t = (h - TINT[i - 1][0]) / (TINT[i][0] - TINT[i - 1][0]), a = TINT[i - 1][1], b = TINT[i][1];
+    return [lerp(a[0], b[0], t), lerp(a[1], b[1], t), lerp(a[2], b[2], t)];
+  }
+  return TINT[TINT.length - 1][1];
+}
+function renderLayer() {
+  const LW = layer.width, LH = layer.height, hh = S.height;
+  // Pass 1: bilinear elevation (0..1) for every layer pixel.
+  const xs0 = new Int32Array(LW), xs1 = new Int32Array(LW), xf = new Float32Array(LW);
+  for (let px = 0; px < LW; px++) {
+    const gx = clamp(-0.5 + (px + 0.5) / LAYER_UP, 0, W - 1);
+    xs0[px] = Math.floor(gx); xs1[px] = Math.min(xs0[px] + 1, W - 1); xf[px] = gx - xs0[px];
+  }
+  for (let py = 0; py < LH; py++) {
+    const gy = clamp(-0.5 + (py + 0.5) / LAYER_UP, 0, H - 1);
+    const y0 = Math.floor(gy), y1 = Math.min(y0 + 1, H - 1), fy = gy - y0, r0 = y0 * W, r1 = y1 * W, row = py * LW;
+    for (let px = 0; px < LW; px++) {
+      const a = hh[r0 + xs0[px]], b = hh[r0 + xs1[px]], c = hh[r1 + xs0[px]], d = hh[r1 + xs1[px]], fx = xf[px];
+      elevBuf[row + px] = (a + (b - a) * fx) * (1 - fy) + (c + (d - c) * fx) * fy;
+    }
+  }
+  // Pass 2: hillshade + hypsometric tint + contours.
+  const data = layerImg.data;
+  const zs = S.rise / (CELL_M / LAYER_UP);      // vertical exaggeration for the gradient (m per layer px)
+  const lx = -0.55, ly = -0.55, lz = 0.63;      // light from the north-west
+  const intervalM = S.units === 'ft' ? 60.96 : 50;
+  const contourScale = S.rise / intervalM;      // contours per unit h
+  const treelineH = S.treeline;
+  for (let py = 0; py < LH; py++) {
+    const row = py * LW, rowU = Math.max(py - 1, 0) * LW, rowD = Math.min(py + 1, LH - 1) * LW;
+    for (let px = 0; px < LW; px++) {
+      const i = row + px;
+      const h = elevBuf[i];
+      const dhx = (elevBuf[row + Math.min(px + 1, LW - 1)] - elevBuf[row + Math.max(px - 1, 0)]) * 0.5 * zs;
+      const dhy = (elevBuf[rowD + px] - elevBuf[rowU + px]) * 0.5 * zs;
+      const nl = 1 / Math.sqrt(dhx * dhx + dhy * dhy + 1);
+      const lam = (-dhx * lx - dhy * ly + lz) * nl;
+      const shade = 0.62 + 0.55 * clamp(lam, -0.2, 1);
+      let [r, g, b] = tint(h);
+      const slope = Math.hypot(dhx, dhy);
+      if (slope > 0.9 && h > treelineH - 0.15) { const k = smoothstep(0.9, 1.6, slope) * 0.75; r = lerp(r, 141, k); g = lerp(g, 133, k); b = lerp(b, 124, k); }
+      r *= shade; g *= shade; b *= shade;
+      // Contours: compare the contour index with the right and lower neighbour.
+      const c0 = Math.floor((S.baseElev / intervalM) + h * contourScale);
+      const c1 = Math.floor((S.baseElev / intervalM) + elevBuf[row + Math.min(px + 1, LW - 1)] * contourScale);
+      const c2 = Math.floor((S.baseElev / intervalM) + elevBuf[rowD + px] * contourScale);
+      if (c0 !== c1 || c0 !== c2) {
+        const idx = Math.max(c0, c1, c2) % 5 === 0 ? 0.55 : 0.78;
+        r *= idx; g *= idx; b *= idx;
+      }
+      const o = i * 4; data[o] = r; data[o + 1] = g; data[o + 2] = b; data[o + 3] = 255;
+    }
+  }
+  // Pass 3: forest stipple, skipping trees cleared by runs.
+  const tt = S.trees;
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const d = tt[y * W + x]; if (!d) continue;
+    const n = Math.ceil(d / 255 * 5);
+    for (let k = 0; k < n; k++) {
+      const gx = x - 0.5 + hash3(x, y, k, 1), gy = y - 0.5 + hash3(x, y, k, 2);
+      if (!treeKeep(gx, gy, hash3(x, y, k, 3))) continue;
+      const px = Math.round((gx + 0.5) * LAYER_UP), py = Math.round((gy + 0.5) * LAYER_UP);
+      const v = hash3(x, y, k, 4);
+      const r = 34 + v * 30, g = 84 + v * 40, b = 50 + v * 25;
+      for (let dy = 0; dy < 2; dy++) for (let dx = 0; dx < 2; dx++) {
+        const qx = px + dx - 1, qy = py + dy - 1; if (qx < 0 || qy < 0 || qx >= LW || qy >= LH) continue;
+        const o = (qy * LW + qx) * 4; data[o] = r; data[o + 1] = g; data[o + 2] = b;
+      }
+    }
+  }
+  lctx.putImageData(layerImg, 0, 0);
+  terrainDirty = false;
+}
+
+// ---------- Overlay drawing ----------
+function requestRender() { if (renderQueued) return; renderQueued = true; requestAnimationFrame(renderEditor); }
+function renderEditor() {
+  renderQueued = false;
+  if (!S) return;
+  if (terrainDirty) renderLayer();
+  const c = ectx;
+  c.save(); c.setTransform(dpr, 0, 0, dpr, 0, 0);
+  c.fillStyle = '#dfe7f0'; c.fillRect(0, 0, cw, ch);
+  const [x0, y0] = toScreen(-0.5, -0.5), sw = W * view.scale, sh = H * view.scale;
+  c.imageSmoothingEnabled = true;
+  c.drawImage(layer, x0, y0, sw, sh);
+  c.strokeStyle = 'rgba(28,42,58,.35)'; c.lineWidth = 1; c.strokeRect(x0 + 0.5, y0 + 0.5, sw, sh);
+  // North arrow
+  c.fillStyle = 'rgba(28,42,58,.6)'; c.font = '600 11px Inter, sans-serif'; c.textAlign = 'left'; c.fillText('N ↑  summit side', x0 + 6, y0 - 6);
+  c.fillText('base side', x0 + 6, y0 + sh + 14);
+
+  for (const run of S.runs) drawRunEditor(c, run, selection && selection.type === 'run' && selection.id === run.id);
+  for (const lift of S.lifts) drawLiftEditor(c, lift, selection && selection.type === 'lift' && selection.id === lift.id);
+  for (const lodge of S.lodges) drawLodgeEditor(c, lodge, selection && selection.type === 'lodge' && selection.id === lodge.id);
+
+  // Tool previews
+  if (pendingRun && cursor) {
+    const pts = [...pendingRun, cursor];
+    c.setLineDash([6, 4]); c.strokeStyle = '#2b6cb0'; c.lineWidth = Math.max(2, runOpts.width * view.scale);
+    c.globalAlpha = 0.5; strokePath(c, smoothPath(pts, 6).map(p => toScreen(p[0], p[1]))); c.globalAlpha = 1; c.setLineDash([]);
+    for (const p of pendingRun) { const [sx, sy] = toScreen(p[0], p[1]); c.fillStyle = '#2b6cb0'; c.beginPath(); c.arc(sx, sy, 4, 0, 7); c.fill(); }
+  }
+  if (pendingLift && cursor) {
+    const [ax, ay] = toScreen(pendingLift[0], pendingLift[1]), [bx, by] = toScreen(cursor[0], cursor[1]);
+    c.setLineDash([6, 4]); c.strokeStyle = '#c8102e'; c.lineWidth = 2; c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx, by); c.stroke(); c.setLineDash([]);
+    c.fillStyle = '#c8102e'; c.beginPath(); c.arc(ax, ay, 4, 0, 7); c.fill();
+  }
+  if (cursor && isBrushTool(tool)) {
+    const [sx, sy] = toScreen(cursor[0], cursor[1]);
+    c.strokeStyle = 'rgba(28,42,58,.7)'; c.lineWidth = 1.2; c.setLineDash([4, 3]);
+    c.beginPath(); c.arc(sx, sy, brush.size * view.scale, 0, 7); c.stroke(); c.setLineDash([]);
+  }
+  c.restore();
+  updateHud();
+}
+function strokePath(c, pts) { if (pts.length < 2) return; c.beginPath(); c.moveTo(pts[0][0], pts[0][1]); for (let i = 1; i < pts.length; i++) c.lineTo(pts[i][0], pts[i][1]); c.stroke(); }
+function offsetPath(pts, off) { // parallel offset of a dense screen-space path
+  const out = [];
+  for (let i = 0; i < pts.length; i++) {
+    const p = pts[Math.max(i - 1, 0)], q = pts[Math.min(i + 1, pts.length - 1)];
+    const dx = q[0] - p[0], dy = q[1] - p[1], L = Math.hypot(dx, dy) || 1;
+    out.push([pts[i][0] - dy / L * off, pts[i][1] + dx / L * off]);
+  }
+  return out;
+}
+function drawSymbol(c, diff, x, y, s) {
+  c.save(); c.translate(x, y);
+  c.fillStyle = DIFF[diff].color; c.strokeStyle = 'rgba(255,255,255,.9)'; c.lineWidth = Math.max(1, s * 0.18);
+  if (diff === 'green') { c.beginPath(); c.arc(0, 0, s * 0.5, 0, 7); c.fill(); c.stroke(); }
+  else if (diff === 'blue') { c.beginPath(); c.rect(-s * 0.45, -s * 0.45, s * 0.9, s * 0.9); c.fill(); c.stroke(); }
+  else {
+    const dia = (ox) => { c.beginPath(); c.moveTo(ox, -s * 0.55); c.lineTo(ox + s * 0.45, 0); c.lineTo(ox, s * 0.55); c.lineTo(ox - s * 0.45, 0); c.closePath(); c.fill(); c.stroke(); };
+    if (diff === 'black') dia(0); else { dia(-s * 0.32); dia(s * 0.32); }
+  }
+  c.restore();
+}
+function drawRunEditor(c, run, sel) {
+  const pts = runPath(run).map(p => toScreen(p[0], p[1]));
+  const diff = runDifficulty(run), w = Math.max(2, run.width * view.scale);
+  c.lineCap = 'round'; c.lineJoin = 'round';
+  if (sel) { c.strokeStyle = '#d9a441'; c.lineWidth = w + 8; c.globalAlpha = 0.6; strokePath(c, pts); c.globalAlpha = 1; }
+  c.strokeStyle = DIFF[diff].color; c.lineWidth = w + Math.max(1.5, view.scale * 0.35); strokePath(c, pts);
+  c.strokeStyle = run.glade ? '#e6efe4' : '#fbfdff'; c.lineWidth = w; strokePath(c, pts);
+  if (run.groomed && w >= 5) {
+    c.strokeStyle = 'rgba(160,178,200,.55)'; c.lineWidth = 1;
+    for (const off of [-w * 0.3, 0, w * 0.3]) strokePath(c, offsetPath(pts, off));
+  } else if (!run.groomed && w >= 5) {
+    c.strokeStyle = 'rgba(160,178,200,.7)'; c.lineWidth = w * 0.28; c.setLineDash([0.1, w * 0.7]); strokePath(c, pts); c.setLineDash([]);
+  }
+  // Top marker + label
+  const s = pts[0];
+  if (view.scale >= 3) {
+    const m = pts[Math.floor(pts.length / 2)], m2 = pts[Math.min(pts.length - 1, Math.floor(pts.length / 2) + 2)];
+    let ang = Math.atan2(m2[1] - m[1], m2[0] - m[0]); if (Math.cos(ang) < 0) ang += Math.PI;
+    c.save(); c.translate(m[0], m[1]); c.rotate(ang);
+    c.font = `600 ${clamp(view.scale * 2.1, 10, 14)}px Inter, sans-serif`; c.textAlign = 'left'; c.textBaseline = 'middle';
+    c.lineWidth = 3; c.strokeStyle = 'rgba(255,255,255,.9)'; c.strokeText(run.name, 8, -w / 2 - 6); c.fillStyle = '#1c2a3a'; c.fillText(run.name, 8, -w / 2 - 6);
+    drawSymbol(c, diff, 0, -w / 2 - 6, 9);
+    c.restore();
+  }
+  c.fillStyle = DIFF[diff].color; c.beginPath(); c.arc(s[0], s[1], Math.max(3, w * 0.35), 0, 7); c.fill();
+  if (sel) for (const p of run.points) { const [sx, sy] = toScreen(p[0], p[1]); c.fillStyle = '#fff'; c.strokeStyle = '#d9a441'; c.lineWidth = 2; c.beginPath(); c.arc(sx, sy, 5, 0, 7); c.fill(); c.stroke(); }
+}
+function drawLiftEditor(c, lift, sel) {
+  const [ax, ay] = toScreen(lift.a[0], lift.a[1]), [bx, by] = toScreen(lift.b[0], lift.b[1]);
+  c.lineCap = 'round';
+  if (sel) { c.strokeStyle = '#d9a441'; c.lineWidth = 9; c.globalAlpha = 0.6; c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx, by); c.stroke(); c.globalAlpha = 1; }
+  c.strokeStyle = '#c8102e'; c.lineWidth = lift.type === 'gondola' ? 3.5 : 2;
+  if (lift.type === 'surface') c.setLineDash([6, 4]);
+  c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx, by); c.stroke(); c.setLineDash([]);
+  // towers
+  const L = Math.hypot(bx - ax, by - ay), n = Math.max(1, Math.floor(L / (3 * view.scale)));
+  const nx = -(by - ay) / L * 4, ny = (bx - ax) / L * 4;
+  c.lineWidth = 1.5;
+  for (let i = 1; i < n; i++) { const t = i / n, x = lerp(ax, bx, t), y = lerp(ay, by, t); c.beginPath(); c.moveTo(x - nx, y - ny); c.lineTo(x + nx, y + ny); c.stroke(); }
+  c.fillStyle = '#c8102e'; c.beginPath(); c.arc(ax, ay, 4.5, 0, 7); c.fill();
+  c.fillRect(bx - 4.5, by - 4.5, 9, 9);
+  if (view.scale >= 3) {
+    c.font = `500 italic ${clamp(view.scale * 2, 10, 13)}px Inter, sans-serif`; c.textAlign = 'center'; c.textBaseline = 'bottom';
+    c.lineWidth = 3; c.strokeStyle = 'rgba(255,255,255,.9)'; c.strokeText(lift.name, bx, by - 8); c.fillStyle = '#c8102e'; c.fillText(lift.name, bx, by - 8);
+  }
+  if (sel) for (const p of [lift.a, lift.b]) { const [sx, sy] = toScreen(p[0], p[1]); c.fillStyle = '#fff'; c.strokeStyle = '#d9a441'; c.lineWidth = 2; c.beginPath(); c.arc(sx, sy, 6, 0, 7); c.fill(); c.stroke(); }
+}
+function drawLodgeEditor(c, lodge, sel) {
+  const [sx, sy] = toScreen(lodge.x, lodge.y), s = Math.max(10, view.scale * 2.2);
+  if (sel) { c.strokeStyle = '#d9a441'; c.lineWidth = 3; c.strokeRect(sx - s / 2 - 3, sy - s / 2 - 3, s + 6, s + 6); }
+  c.fillStyle = '#7a5230'; c.fillRect(sx - s / 2, sy - s / 2, s, s);
+  c.fillStyle = '#fff'; c.beginPath(); c.moveTo(sx - s / 2, sy - s / 6); c.lineTo(sx, sy - s / 2 - s * 0.25); c.lineTo(sx + s / 2, sy - s / 6); c.closePath(); c.fill();
+  if (view.scale >= 3) {
+    c.font = `500 ${clamp(view.scale * 2, 10, 13)}px Inter, sans-serif`; c.textAlign = 'center'; c.textBaseline = 'top';
+    c.lineWidth = 3; c.strokeStyle = 'rgba(255,255,255,.9)'; c.strokeText(lodge.name, sx, sy + s / 2 + 3); c.fillStyle = '#1c2a3a'; c.fillText(lodge.name, sx, sy + s / 2 + 3);
+  }
+}
+function updateHud() {
+  const hud = $('hud');
+  if (!cursor || cursor[0] < -0.5 || cursor[1] < -0.5 || cursor[0] > W - 0.5 || cursor[1] > H - 0.5) { hud.innerHTML = `<span>${S.runs.length} runs · ${S.lifts.length} lifts</span>`; return; }
+  const e = elevM(cursor[0], cursor[1]);
+  const t = S.trees[clamp(Math.round(cursor[1]), 0, H - 1) * W + clamp(Math.round(cursor[0]), 0, W - 1)];
+  hud.innerHTML = `<span>Elevation <b>${fmtElev(e)}</b></span><span>Forest <b>${Math.round(t / 255 * 100)}%</b></span><span>Zoom <b>${(view.scale / view.fit).toFixed(1)}×</b></span>`;
+}
+
+// ---------- Brushes ----------
+const isBrushTool = t => ['raise', 'lower', 'smooth', 'flatten', 'plant', 'clear'].includes(t);
+function applyBrush(gx, gy) {
+  const r = brush.size, k = brush.strength, hh = S.height, tt = S.trees;
+  const x0 = Math.max(0, Math.floor(gx - r)), x1 = Math.min(W - 1, Math.ceil(gx + r));
+  const y0 = Math.max(0, Math.floor(gy - r)), y1 = Math.min(H - 1, Math.ceil(gy + r));
+  let src = null;
+  if (tool === 'smooth') src = new Float32Array(hh);
+  for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) {
+    const d = dist(x, y, gx, gy) / r; if (d >= 1) continue;
+    const w = (1 - d * d) * (1 - d * d), i = y * W + x;
+    switch (tool) {
+      case 'raise': hh[i] = Math.min(1, hh[i] + 0.012 * k * w); break;
+      case 'lower': hh[i] = Math.max(0, hh[i] - 0.012 * k * w); break;
+      case 'flatten': hh[i] = lerp(hh[i], flattenTarget, 0.25 * k * w); break;
+      case 'smooth': {
+        let s = 0, n = 0;
+        for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) { const xx = x + dx, yy = y + dy; if (xx < 0 || yy < 0 || xx >= W || yy >= H) continue; s += src[yy * W + xx]; n++; }
+        hh[i] = lerp(hh[i], s / n, 0.5 * k * w); break;
+      }
+      case 'plant': tt[i] = Math.min(255, tt[i] + 255 * 0.35 * k * w); break;
+      case 'clear': tt[i] = Math.max(0, tt[i] - 255 * 0.5 * k * w); break;
+    }
+  }
+  terrainDirty = true;
+}
+function paintTo(gx, gy) {
+  if (!lastPaint) { applyBrush(gx, gy); lastPaint = [gx, gy]; return; }
+  const d = dist(lastPaint[0], lastPaint[1], gx, gy), step = Math.max(0.5, brush.size / 3), n = Math.max(1, Math.ceil(d / step));
+  for (let i = 1; i <= n; i++) applyBrush(lerp(lastPaint[0], gx, i / n), lerp(lastPaint[1], gy, i / n));
+  lastPaint = [gx, gy];
+}
+
+// ---------- Hit testing ----------
+function hitTest(gx, gy) {
+  const tol = 8 / view.scale;
+  if (selection) { // handles first
+    const sel = getSelected();
+    if (sel && selection.type === 'run') for (let i = 0; i < sel.points.length; i++) if (dist(gx, gy, sel.points[i][0], sel.points[i][1]) < tol) return { type: 'runpt', run: sel, idx: i };
+    if (sel && selection.type === 'lift') for (const key of ['a', 'b']) if (dist(gx, gy, sel[key][0], sel[key][1]) < tol) return { type: 'liftpt', lift: sel, key };
+  }
+  for (const lodge of S.lodges) if (dist(gx, gy, lodge.x, lodge.y) < tol + 1) return { type: 'lodge', lodge };
+  for (const lift of S.lifts) if (pointSegDist(gx, gy, lift.a[0], lift.a[1], lift.b[0], lift.b[1]) < tol) return { type: 'lift', lift };
+  let best = null, bestD = Infinity;
+  for (const run of S.runs) { const d = pointPathDist(gx, gy, runPath(run)) - run.width / 2; if (d < tol && d < bestD) { bestD = d; best = run; } }
+  if (best) return { type: 'run', run: best };
+  return null;
+}
+function getSelected() {
+  if (!selection) return null;
+  const list = selection.type === 'run' ? S.runs : selection.type === 'lift' ? S.lifts : S.lodges;
+  return list.find(o => o.id === selection.id) || null;
+}
+function select(type, id) { selection = type ? { type, id } : null; renderInspector(); renderLists(); requestRender(); }
+
+// ---------- Creating things ----------
+function finishRun() {
+  if (!pendingRun || pendingRun.length < 2) { pendingRun = null; showHint(''); requestRender(); return; }
+  let pts = pendingRun.map(p => [+p[0].toFixed(2), +p[1].toFixed(2)]);
+  if (elevM(pts[0][0], pts[0][1]) < elevM(pts[pts.length - 1][0], pts[pts.length - 1][1])) pts.reverse();
+  pushUndo();
+  const run = { id: S.nextId++, name: '', points: pts, width: runOpts.width, groomed: runOpts.groomed, glade: runOpts.glade, difficulty: 'auto' };
+  S.runs.push(run);
+  run.name = pickName(RUN_NAMES[runStats(run).auto], new Set(S.runs.map(r => r.name)));
+  pendingRun = null; showHint('');
+  afterModelChange(true); select('run', run.id);
+  toast(`${run.name} cut — rated ${DIFF[runDifficulty(run)].label.toLowerCase()}`);
+}
+function addLift(a, b) {
+  if (elevM(a[0], a[1]) > elevM(b[0], b[1])) [a, b] = [b, a];
+  pushUndo();
+  const lift = { id: S.nextId++, name: pickName(LIFT_NAMES[liftType], new Set(S.lifts.map(l => l.name))), type: liftType, a: [+a[0].toFixed(2), +a[1].toFixed(2)], b: [+b[0].toFixed(2), +b[1].toFixed(2)] };
+  S.lifts.push(lift); afterModelChange(true); select('lift', lift.id);
+  toast(`${lift.name} strung — ${fmtElev(liftStats(lift).vertM)} vertical`);
+}
+function addLodge(x, y) {
+  pushUndo();
+  const lodge = { id: S.nextId++, name: pickName(LODGE_NAMES, new Set(S.lodges.map(l => l.name))), x: +x.toFixed(2), y: +y.toFixed(2) };
+  S.lodges.push(lodge); afterModelChange(true); select('lodge', lodge.id);
+}
+function deleteSelected() {
+  const sel = getSelected(); if (!sel) return;
+  pushUndo();
+  if (selection.type === 'run') S.runs = S.runs.filter(r => r !== sel);
+  else if (selection.type === 'lift') S.lifts = S.lifts.filter(l => l !== sel);
+  else S.lodges = S.lodges.filter(l => l !== sel);
+  selection = null; afterModelChange(true);
+}
+
+// ---------- Pointer input ----------
+function pointerGrid(ev) { const r = editor.getBoundingClientRect(); return toGrid(ev.clientX - r.left, ev.clientY - r.top); }
+editor.addEventListener('contextmenu', e => e.preventDefault());
+editor.addEventListener('pointerdown', ev => {
+  editor.setPointerCapture(ev.pointerId);
+  const [gx, gy] = pointerGrid(ev); cursor = [gx, gy];
+  if (ev.button === 1 || ev.button === 2 || spaceDown) { panning = { x: ev.clientX, y: ev.clientY, ox: view.ox, oy: view.oy }; return; }
+  if (ev.button !== 0) return;
+  const inside = gx >= -0.5 && gy >= -0.5 && gx <= W - 0.5 && gy <= H - 0.5;
+  if (isBrushTool(tool)) {
+    if (!inside) return;
+    pushUndo(); painting = true; lastPaint = null; flattenTarget = hAt(gx, gy); paintTo(gx, gy); requestRender(); return;
+  }
+  if (tool === 'lift') {
+    if (!inside) return;
+    if (!pendingLift) { pendingLift = [gx, gy]; showHint('Now click the top terminal'); }
+    else { addLift(pendingLift, [gx, gy]); pendingLift = null; showHint(''); }
+    requestRender(); return;
+  }
+  if (tool === 'run') {
+    if (!inside) return;
+    if (!pendingRun) { pendingRun = [[gx, gy]]; showHint('Click to add points · double-click or Enter to finish · Esc to cancel'); }
+    else if (dist(gx, gy, pendingRun[pendingRun.length - 1][0], pendingRun[pendingRun.length - 1][1]) > 0.6) pendingRun.push([gx, gy]);
+    requestRender(); return;
+  }
+  if (tool === 'lodge') { if (inside) addLodge(gx, gy); return; }
+  if (tool === 'groom') {
+    const hit = hitTest(gx, gy);
+    if (hit && hit.type === 'run') { pushUndo(); hit.run.groomed = !hit.run.groomed; afterModelChange(false); select('run', hit.run.id); toast(hit.run.groomed ? `${hit.run.name}: groomed overnight` : `${hit.run.name}: left to bump up`); }
+    return;
+  }
+  if (tool === 'select') {
+    const hit = hitTest(gx, gy);
+    if (!hit) { select(null); return; }
+    if (hit.type === 'runpt') { pushUndo(); drag = hit; return; }
+    if (hit.type === 'liftpt') { pushUndo(); drag = hit; return; }
+    if (hit.type === 'lodge') { select('lodge', hit.lodge.id); pushUndo(); drag = { type: 'lodge', lodge: hit.lodge }; return; }
+    if (hit.type === 'lift') { select('lift', hit.lift.id); return; }
+    if (hit.type === 'run') { select('run', hit.run.id); return; }
+  }
+});
+editor.addEventListener('pointermove', ev => {
+  const [gx, gy] = pointerGrid(ev); cursor = [gx, gy];
+  if (panning) { view.ox = panning.ox + (ev.clientX - panning.x); view.oy = panning.oy + (ev.clientY - panning.y); requestRender(); return; }
+  if (painting) { paintTo(clamp(gx, 0, W - 1), clamp(gy, 0, H - 1)); }
+  if (drag) {
+    const cx = clamp(gx, 0, W - 1), cy = clamp(gy, 0, H - 1);
+    if (drag.type === 'runpt') { drag.run.points[drag.idx] = [+cx.toFixed(2), +cy.toFixed(2)]; }
+    else if (drag.type === 'liftpt') { drag.lift[drag.key] = [+cx.toFixed(2), +cy.toFixed(2)]; }
+    else if (drag.type === 'lodge') { drag.lodge.x = +cx.toFixed(2); drag.lodge.y = +cy.toFixed(2); }
+    if (drag.type === 'runpt') { runPathCache.delete(drag.run.id); rebuildRunField(); terrainDirty = true; }
+  }
+  requestRender();
+});
+function endPointer() {
+  if (painting) { painting = false; lastPaint = null; afterModelChange(false); }
+  if (drag) { drag = null; afterModelChange(true); }
+  panning = null;
+}
+editor.addEventListener('pointerup', endPointer);
+editor.addEventListener('pointercancel', endPointer);
+editor.addEventListener('pointerleave', () => { cursor = null; requestRender(); });
+editor.addEventListener('dblclick', ev => {
+  if (tool === 'run' && pendingRun) {
+    // the double-click's second click may have appended a duplicate point
+    if (pendingRun.length > 2) { const a = pendingRun[pendingRun.length - 1], b = pendingRun[pendingRun.length - 2]; if (dist(a[0], a[1], b[0], b[1]) < 1.2) pendingRun.pop(); }
+    finishRun();
+  }
+});
+editor.addEventListener('wheel', ev => {
+  ev.preventDefault();
+  const r = editor.getBoundingClientRect();
+  if (ev.ctrlKey || ev.metaKey || Math.abs(ev.deltaY) > Math.abs(ev.deltaX) * 2 && !ev.shiftKey) {
+    zoomAt(ev.clientX - r.left, ev.clientY - r.top, Math.exp(-ev.deltaY * 0.0015));
+  } else { view.ox -= ev.deltaX; view.oy -= ev.deltaY; requestRender(); }
+}, { passive: false });
+
+function setTool(t) {
+  tool = t; pendingLift = null; pendingRun = null; showHint('');
+  document.querySelectorAll('.tool').forEach(b => b.classList.toggle('active', b.dataset.tool === t));
+  editor.style.cursor = isBrushTool(t) ? 'none' : t === 'select' ? 'default' : 'crosshair';
+  renderToolCard(); requestRender();
+}
+let hintTimer = null;
+function showHint(msg) { const h = $('hint'); h.textContent = msg; h.classList.toggle('show', !!msg); }
+
+/* =====================================================================
+   TRAIL MAP — oblique painted view
+   The heightmap is projected as a 2.5-D mesh drawn back to front. A
+   front-to-back pass first records, for every screen column, the highest
+   terrain silhouette nearer than each row; anything on the surface (trees,
+   runs, lift cables) is only drawn where it rises above that silhouette.
+   ===================================================================== */
+const MW = 1800, MH = 1200;
+const mapCanvas = $('mapCanvas'), mctx = mapCanvas.getContext('2d');
+let mapDirty = true, mapBusy = false, mapTimer = null;
+const PAPER = '#f4f0e8';
+
+function makeRotation(dir) {
+  // Rotated coords: rx runs left→right on screen, ry runs far (0) → near.
+  let RW = W, RH = H, toR, fromR;
+  if (dir === 'N') { toR = (x, y) => [W - 1 - x, H - 1 - y]; fromR = (rx, ry) => [W - 1 - rx, H - 1 - ry]; }
+  else if (dir === 'E') { RW = H; RH = W; toR = (x, y) => [H - 1 - y, x]; fromR = (rx, ry) => [ry, H - 1 - rx]; }
+  else if (dir === 'W') { RW = H; RH = W; toR = (x, y) => [y, W - 1 - x]; fromR = (rx, ry) => [W - 1 - ry, rx]; }
+  else { toR = (x, y) => [x, y]; fromR = (rx, ry) => [rx, ry]; }
+  return { RW, RH, toR, fromR, hR: (rx, ry) => { const [x, y] = fromR(rx, ry); return hAt(x, y); } };
+}
+
+function buildProjection(R) {
+  const marginX = 60, topMargin = 120, bottomMargin = 120;
+  const P = { RW: R.RW, RH: R.RH, farScale: 0.8, cx: MW / 2, cellPx: (MW - 2 * marginX) / (R.RW - 1), groundTop: 0, groundDepth: 540, vert: 0 };
+  P.vert = S.rise / CELL_M * P.cellPx * S.map.exag;
+  const fs = P.farScale, norm = fs + (1 - fs) / 2;
+  P.rowY = t => P.groundTop + P.groundDepth * (fs * t + (1 - fs) * t * t / 2) / norm;
+  P.project = (rx, ry, h) => { const t = ry / (P.RH - 1), s = lerp(fs, 1, t); return [P.cx + (rx - (P.RW - 1) / 2) * P.cellPx * s, P.rowY(t) - h * P.vert * s, s]; };
+  // Fit: find the highest projected point, pin it to the top margin, then shrink if the base overflows.
+  for (let pass = 0; pass < 2; pass++) {
+    let minY = Infinity;
+    for (let ry = 0; ry < R.RH; ry += 2) for (let rx = 0; rx < R.RW; rx += 2) { const y = P.project(rx, ry, R.hR(rx, ry))[1]; if (y < minY) minY = y; }
+    P.groundTop += topMargin - minY;
+    const overflow = (P.groundTop + P.groundDepth) - (MH - bottomMargin);
+    if (overflow > 0) { const f = (MH - bottomMargin - topMargin) / (P.groundTop + P.groundDepth - topMargin); P.vert *= f; P.groundDepth *= f; P.groundTop = topMargin + (P.groundTop - topMargin) * f; }
+  }
+  return P;
+}
+
+function rgb(r, g, b) { return `rgb(${r | 0},${g | 0},${b | 0})`; }
+function mix3(a, b, t) { return [lerp(a[0], b[0], t), lerp(a[1], b[1], t), lerp(a[2], b[2], t)]; }
+
+let paperTex = null;
+function getPaper() {
+  if (paperTex) return paperTex;
+  const c = document.createElement('canvas'); c.width = c.height = 256; const x = c.getContext('2d');
+  const img = x.createImageData(256, 256);
+  for (let i = 0; i < 256 * 256; i++) { const v = 200 + hash2(i % 256, (i / 256) | 0, 99) * 55; img.data[i * 4] = img.data[i * 4 + 1] = img.data[i * 4 + 2] = v; img.data[i * 4 + 3] = 255; }
+  x.putImageData(img, 0, 0); paperTex = c; return c;
+}
+
+function scheduleMapRender(delay = 60) {
+  mapDirty = true;
+  if (!$('mapView').classList.contains('active')) return;
+  clearTimeout(mapTimer); mapTimer = setTimeout(renderMapNow, delay);
+}
+async function renderMapNow() {
+  if (mapBusy) { mapDirty = true; return; }
+  mapBusy = true; $('mapStatus').classList.add('show');
+  try { await document.fonts.load('700 60px Fraunces'); await document.fonts.load('600 14px Inter'); } catch (e) { /* fall back to system fonts */ }
+  await new Promise(r => setTimeout(r, 10));
+  const t0 = performance.now();
+  try { renderMap(); } catch (e) { console.error(e); toast('Map render failed: ' + e.message); }
+  mapDirty = false; mapBusy = false; $('mapStatus').classList.remove('show');
+  renderMapStats();
+  console.debug('trail map painted in', Math.round(performance.now() - t0), 'ms');
+}
+
+function renderMap() {
+  const c = mctx, R = makeRotation(S.map.view), P = buildProjection(R);
+  const UP = S.map.detail | 0 || 2, RWU = (R.RW - 1) * UP + 1, RHU = (R.RH - 1) * UP + 1;
+  const sunLeft = S.map.sun !== 'right';
+  const L = (() => { const v = [sunLeft ? -0.6 : 0.6, 0.5, 0.62], n = Math.hypot(...v); return v.map(a => a / n); })();
+  const zs = S.rise / (CELL_M / UP);      // meters of rise per mesh step at h=1
+  const seed = S.seed;
+
+  // ---- 1. Mesh vertices ----
+  const vx = new Float32Array(RWU * RHU), vy = new Float32Array(RWU * RHU), vh = new Float32Array(RWU * RHU), vs = new Float32Array(RHU);
+  for (let j = 0; j < RHU; j++) {
+    const ry = j / UP;
+    for (let i = 0; i < RWU; i++) {
+      const rx = i / UP, h = R.hR(rx, ry), [sx, sy, s] = P.project(rx, ry, h), k = j * RWU + i;
+      vx[k] = sx; vy[k] = sy; vh[k] = h; vs[j] = s;
+    }
+  }
+
+  // ---- 2. Visibility buffer (front to back) ----
+  const yBuf = new Float32Array(MW).fill(1e9), yNear = new Float32Array(RHU * MW);
+  for (let j = RHU - 1; j >= 0; j--) {
+    yNear.set(yBuf, j * MW);
+    for (let i = 0; i < RWU - 1; i++) {
+      const k = j * RWU + i, ax = vx[k], ay = vy[k], bx = vx[k + 1], by = vy[k + 1];
+      const x0 = Math.max(0, Math.ceil(Math.min(ax, bx))), x1 = Math.min(MW - 1, Math.floor(Math.max(ax, bx)));
+      for (let x = x0; x <= x1; x++) { const t = bx === ax ? 0 : (x - ax) / (bx - ax); const y = ay + (by - ay) * t; if (y < yBuf[x]) yBuf[x] = y; }
+    }
+  }
+  const visible = (ry, sx, sy, tol = 1.5) => { const j = clamp(Math.round(ry * UP), 0, RHU - 1), x = clamp(Math.round(sx), 0, MW - 1); return sy < yNear[j * MW + x] + tol; };
+
+  // ---- 3. Sky, haze, distant ranges ----
+  c.setTransform(1, 0, 0, 1, 0, 0); c.globalAlpha = 1; c.globalCompositeOperation = 'source-over';
+  c.fillStyle = PAPER; c.fillRect(0, 0, MW, MH);
+  const horizonY = P.rowY(0) + 8;
+  const sky = c.createLinearGradient(0, 0, 0, horizonY);
+  sky.addColorStop(0, '#a9c6e6'); sky.addColorStop(0.55, '#d3e3f2'); sky.addColorStop(1, '#eef4f9');
+  c.fillStyle = sky; c.fillRect(0, 0, MW, horizonY);
+  const ground = c.createLinearGradient(0, horizonY, 0, horizonY + 160);
+  ground.addColorStop(0, '#e9eff5'); ground.addColorStop(1, PAPER);
+  c.fillStyle = ground; c.fillRect(0, horizonY, MW, MH - horizonY);
+  if (S.map.range) {
+    const cols = ['#c9d8e7', '#b9cbdd', '#aabfd3'];
+    for (let l = 0; l < 3; l++) {
+      const amp = 110 - l * 25, base = horizonY + 6 + l * 14, freq = 260 - l * 50;
+      c.beginPath(); c.moveTo(0, MH);
+      for (let x = 0; x <= MW; x += 6) { const n = ridged(x / freq + l * 13.7 + seed * 0.01, l * 3.1, seed + 900 + l, 3); c.lineTo(x, base - amp * Math.pow(n, 1.6) - 10 * fbm(x / 60, l, seed + 40, 2)); }
+      c.lineTo(MW, MH); c.closePath(); c.fillStyle = cols[l]; c.globalAlpha = 0.9; c.fill();
+    }
+    c.globalAlpha = 1;
+  }
+
+  // ---- 4. Terrain quads, back to front ----
+  const SNOW_LIT = [253, 253, 251], SNOW_SHADE = [166, 185, 212], ROCK_LIT = [156, 146, 133], ROCK_SHADE = [74, 68, 63], HAZE = [216, 227, 238];
+  const treelineH = S.treeline, SKYB = [238, 244, 249], PAPER3 = [244, 240, 232];
+  c.lineWidth = 0.8; c.lineJoin = 'round';
+  for (let j = 0; j < RHU - 1; j++) {
+    const t = j / (RHU - 1), hazeK = S.map.haze ? 0.34 * Math.pow(1 - t, 1.7) : 0;
+    const farK = 1 - smoothstep(0, 0.06, t), EDGE = mix3(SKYB, PAPER3, smoothstep(0, 0.5, t));
+    for (let i = 0; i < RWU - 1; i++) {
+      const edgeK = 1 - smoothstep(0, 0.16, Math.min(i, RWU - 2 - i) / (RWU - 2));
+      const k00 = j * RWU + i, k01 = k00 + 1, k10 = k00 + RWU, k11 = k10 + 1;
+      const h00 = vh[k00], h01 = vh[k01], h10 = vh[k10], h11 = vh[k11];
+      const dhx = ((h01 + h11) - (h00 + h10)) * 0.5 * zs / CELL_M, dhy = ((h10 + h11) - (h00 + h01)) * 0.5 * zs / CELL_M;
+      const nl = 1 / Math.sqrt(dhx * dhx + dhy * dhy + 1);
+      const lam = clamp((-dhx * L[0] - dhy * L[1] + L[2]) * nl, 0, 1);
+      const hm = (h00 + h01 + h10 + h11) * 0.25, slope = Math.hypot(dhx, dhy);
+      let col = mix3(SNOW_SHADE, SNOW_LIT, Math.pow(lam, 1.1) * 0.92 + 0.08);
+      const rockK = smoothstep(0.95, 1.6, slope) * smoothstep(treelineH - 0.25, treelineH + 0.05, hm) * 0.9;
+      if (rockK > 0.01) col = mix3(col, mix3(ROCK_SHADE, ROCK_LIT, lam), rockK);
+      const paint = 1 + (fbm(i / 6.5, j / 6.5, seed + 31, 2) - 0.5) * 0.11 + (hash2(i, j, seed + 3) - 0.5) * 0.03;
+      col = [col[0] * paint, col[1] * paint, col[2] * paint];
+      if (hazeK) col = mix3(col, HAZE, hazeK);
+      const fade = Math.max(edgeK, farK); if (fade) col = mix3(col, EDGE, Math.pow(fade, 1.6));
+      const cs = rgb(col[0], col[1], col[2]);
+      c.fillStyle = cs; c.strokeStyle = cs;
+      c.beginPath(); c.moveTo(vx[k00], vy[k00]); c.lineTo(vx[k01], vy[k01]); c.lineTo(vx[k11], vy[k11]); c.lineTo(vx[k10], vy[k10]); c.closePath(); c.fill(); c.stroke();
+    }
+  }
+
+  // ---- 5. Forest ----
+  const treeColors = [];
+  for (let hz = 0; hz < 6; hz++) {
+    const hk = S.map.haze ? 0.32 * Math.pow(1 - hz / 5, 1.7) : 0; const row = [];
+    for (let v = 0; v < 4; v++) {
+      const f = v / 3;
+      row.push({ dark: rgb(...mix3([26 + f * 14, 62 + f * 22, 42 + f * 12], HAZE, hk)), lit: rgb(...mix3([58 + f * 22, 108 + f * 28, 66 + f * 18], HAZE, hk)) });
+    }
+    treeColors.push(row);
+  }
+  const shadowCol = 'rgba(40,60,95,0.22)';
+  for (let ry = 0; ry < R.RH; ry++) {
+    const hzIdx = clamp(Math.round(ry / (R.RH - 1) * 5), 0, 5);
+    for (let rx = 0; rx < R.RW; rx++) {
+      const [gx, gy] = R.fromR(rx, ry); const d = S.trees[gy * W + gx]; if (d < 60) continue;
+      const edgeKeep = smoothstep(0, 0.16, Math.min(rx, R.RW - 1 - rx) / (R.RW - 1)) * smoothstep(0, 0.06, ry / (R.RH - 1));
+      const n = Math.min(2, Math.ceil(d / 255 * 2));
+      for (let k = 0; k < n; k++) {
+        const ox = hash3(gx, gy, k, 1) - 0.5, oy = hash3(gx, gy, k, 2) - 0.5;
+        if (!treeKeep(gx + ox, gy + oy, hash3(gx, gy, k, 3))) continue;
+        if (hash3(gx, gy, k, 5) > edgeKeep * edgeKeep) continue;
+        const [trx, try_] = R.toR(gx + ox, gy + oy);
+        const h = hAt(gx + ox, gy + oy), [sx, sy, s] = P.project(trx, try_, h);
+        if (!visible(try_, sx, sy, 1)) continue;
+        const v = hash3(gx, gy, k, 4), size = P.cellPx * s * (0.95 + v * 0.6), w = size * 0.48;
+        const colr = treeColors[hzIdx][Math.floor(v * 3.99)];
+        c.fillStyle = shadowCol; c.beginPath(); c.ellipse(sx + (sunLeft ? 1 : -1) * w * 0.7, sy + 1, w * 0.9, w * 0.3, 0, 0, 7); c.fill();
+        c.fillStyle = colr.dark; c.beginPath(); c.moveTo(sx - w, sy); c.lineTo(sx + w, sy); c.lineTo(sx, sy - size); c.closePath(); c.fill();
+        c.fillStyle = colr.lit; c.beginPath(); c.moveTo(sx, sy); c.lineTo(sx + (sunLeft ? -w : w), sy); c.lineTo(sx, sy - size); c.closePath(); c.fill();
+      }
+    }
+  }
+
+  // ---- 6. Runs ----
+  const labelBoxes = [], labelJobs = [];
+  for (const run of S.runs) {
+    const dense = resample(runPath(run), 0.35);
+    const pts = dense.map(p => { const [rx, ry] = R.toR(p[0], p[1]); const h = hAt(p[0], p[1]); const [sx, sy, s] = P.project(rx, ry, h); return { sx, sy, s, vis: visible(ry, sx, sy, 2) }; });
+    const subs = []; let cur = [];
+    for (let i = 0; i < pts.length; i++) {
+      if (pts[i].vis || (i > 0 && i < pts.length - 1 && pts[i - 1].vis && pts[i + 1].vis)) cur.push(pts[i]);
+      else { if (cur.length >= 3) subs.push(cur); cur = []; }
+    }
+    if (cur.length >= 3) subs.push(cur);
+    const diff = runDifficulty(run);
+    for (const sub of subs) {
+      const sAvg = sub.reduce((a, p) => a + p.s, 0) / sub.length, w = Math.max(3, run.width * P.cellPx * sAvg);
+      const sp = sub.map(p => [p.sx, p.sy]);
+      c.lineCap = 'round'; c.lineJoin = 'round';
+      c.strokeStyle = 'rgba(120,145,178,0.35)'; c.lineWidth = w + 3; strokePath(c, offsetPath(sp, (sunLeft ? 1 : -1) * 1.5));
+      c.strokeStyle = 'rgba(152,172,198,0.85)'; c.lineWidth = w + 1.5; strokePath(c, sp);
+      c.strokeStyle = run.glade ? 'rgba(255,255,255,0.72)' : '#ffffff'; c.lineWidth = w; strokePath(c, sp);
+      if (w >= 6) {
+        if (run.groomed) { c.strokeStyle = 'rgba(168,186,210,0.5)'; c.lineWidth = 0.9; for (const off of [-w * 0.3, 0, w * 0.3]) strokePath(c, offsetPath(sp, off)); }
+        else { c.strokeStyle = 'rgba(162,180,205,0.42)'; c.lineWidth = w * 0.2; c.setLineDash([0.1, w * 0.5]); strokePath(c, offsetPath(sp, -w * 0.18)); c.lineDashOffset = w * 0.31; strokePath(c, offsetPath(sp, w * 0.18)); c.setLineDash([]); c.lineDashOffset = 0; }
+      }
+    }
+    if (S.map.labels && subs.length) {
+      const longest = subs.reduce((a, b) => b.length > a.length ? b : a);
+      labelJobs.push({ text: run.name, diff, path: longest, size: clamp(12.5 * (P.cellPx / 10.4) * longest[Math.floor(longest.length / 2)].s, 11, 16) });
+    }
+  }
+
+  // ---- 7. Lifts ----
+  for (const lift of S.lifts) {
+    const n = Math.max(2, Math.ceil(dist(lift.a[0], lift.a[1], lift.b[0], lift.b[1]) / 0.5));
+    const pts = [];
+    for (let i = 0; i <= n; i++) {
+      const t = i / n, x = lerp(lift.a[0], lift.b[0], t), y = lerp(lift.a[1], lift.b[1], t), hg = hAt(x, y), hc = hg + 11 / S.rise;
+      const [rx, ry] = R.toR(x, y); const [gsx, gsy] = P.project(rx, ry, hg); const [sx, sy, s] = P.project(rx, ry, hc);
+      pts.push({ sx, sy, gsx, gsy, s, vis: visible(ry, sx, sy, 2) });
+    }
+    const red = '#c8102e';
+    // towers & carriers
+    for (let i = 1; i < n; i++) {
+      const p = pts[i]; if (!p.vis) continue;
+      if (i % 12 === 0) { c.strokeStyle = '#3a2f2a'; c.lineWidth = 1.6 * p.s; c.beginPath(); c.moveTo(p.gsx, p.gsy); c.lineTo(p.sx, p.sy); c.stroke(); }
+      if (lift.type === 'chair' && i % 5 === 2) { c.strokeStyle = '#4a1a22'; c.lineWidth = 1.3; c.beginPath(); c.moveTo(p.sx, p.sy); c.lineTo(p.sx, p.sy + 5 * p.s); c.stroke(); c.fillStyle = '#4a1a22'; c.fillRect(p.sx - 2 * p.s, p.sy + 5 * p.s, 4 * p.s, 2.2 * p.s); }
+      if (lift.type === 'gondola' && i % 9 === 4) { c.fillStyle = '#7a1020'; c.beginPath(); c.roundRect(p.sx - 3 * p.s, p.sy + 2 * p.s, 6 * p.s, 7 * p.s, 1.5); c.fill(); }
+    }
+    let cur = [];
+    const flush = () => { if (cur.length >= 2) { c.strokeStyle = red; c.lineWidth = (lift.type === 'gondola' ? 3.4 : 2.2) * cur[0].s; if (lift.type === 'surface') c.setLineDash([7, 5]); strokePath(c, cur.map(p => [p.sx, p.sy])); c.setLineDash([]); } cur = []; };
+    for (const p of pts) { if (p.vis) cur.push(p); else flush(); } flush();
+    const A = pts[0], B = pts[n];
+    c.fillStyle = '#8a0f22';
+    if (A.vis) { c.beginPath(); c.arc(A.gsx, A.gsy - 2, 4.5 * A.s, 0, 7); c.fill(); }
+    if (B.vis) { c.fillRect(B.gsx - 4.5 * B.s, B.gsy - 7 * B.s, 9 * B.s, 7 * B.s); }
+    if (S.map.labels && B.vis) {
+      c.font = `italic 600 ${clamp(13.5 * B.s, 11, 15)}px Inter, sans-serif`; c.textAlign = 'center'; c.textBaseline = 'bottom';
+      c.lineWidth = 3.5; c.strokeStyle = 'rgba(255,255,255,0.92)'; c.strokeText(lift.name, B.gsx, B.gsy - 10 * B.s); c.fillStyle = red; c.fillText(lift.name, B.gsx, B.gsy - 10 * B.s);
+      const m = c.measureText(lift.name); labelBoxes.push([B.gsx - m.width / 2 - 2, B.gsy - 10 * B.s - 14, m.width + 4, 16]);
+    }
+  }
+
+  // ---- 8. Lodges ----
+  for (const lodge of S.lodges) {
+    const [rx, ry] = R.toR(lodge.x, lodge.y), h = hAt(lodge.x, lodge.y), [sx, sy, s] = P.project(rx, ry, h);
+    if (!visible(ry, sx, sy, 2)) continue;
+    const w = 24 * s * (P.cellPx / 10.4), hh = 12 * s * (P.cellPx / 10.4);
+    c.fillStyle = 'rgba(40,60,95,0.25)'; c.beginPath(); c.ellipse(sx, sy + 1, w * 0.7, hh * 0.25, 0, 0, 7); c.fill();
+    c.fillStyle = '#6e4a2e'; c.fillRect(sx - w / 2, sy - hh, w, hh);
+    c.fillStyle = '#8b6240'; c.fillRect(sx - w / 2, sy - hh, w * (sunLeft ? 0.5 : 1), hh); if (!sunLeft) { c.fillStyle = '#6e4a2e'; c.fillRect(sx - w / 2, sy - hh, w * 0.5, hh); }
+    c.fillStyle = '#fbfbf8'; c.beginPath(); c.moveTo(sx - w / 2 - 2, sy - hh); c.lineTo(sx, sy - hh - hh * 0.75); c.lineTo(sx + w / 2 + 2, sy - hh); c.closePath(); c.fill();
+    c.fillStyle = '#f2c766'; for (let i = 0; i < 3; i++) c.fillRect(sx - w / 2 + w * (0.18 + i * 0.28), sy - hh * 0.65, w * 0.1, hh * 0.3);
+    if (S.map.labels) {
+      c.font = `600 ${clamp(12 * s, 10, 14)}px Inter, sans-serif`; c.textAlign = 'center'; c.textBaseline = 'top';
+      c.lineWidth = 3.5; c.strokeStyle = 'rgba(255,255,255,0.92)'; c.strokeText(lodge.name, sx, sy + 4); c.fillStyle = '#3b2a1e'; c.fillText(lodge.name, sx, sy + 4);
+    }
+  }
+
+  // ---- 9. Run labels (greedy collision avoidance) ----
+  const overlaps = (b) => labelBoxes.some(o => b[0] < o[0] + o[2] && b[0] + b[2] > o[0] && b[1] < o[1] + o[3] && b[1] + b[3] > o[1]);
+  for (const job of labelJobs) {
+    c.font = `600 ${job.size}px Inter, sans-serif`; const tw = c.measureText(job.text).width + job.size * 1.4;
+    let placed = null;
+    for (const frac of [0.5, 0.32, 0.68, 0.2, 0.8]) {
+      const idx = Math.floor(job.path.length * frac), p = job.path[idx], q = job.path[Math.min(job.path.length - 1, idx + 4)], o = job.path[Math.max(0, idx - 4)];
+      let ang = Math.atan2(q.sy - o.sy, q.sx - o.sx); if (Math.cos(ang) < -0.05) ang += Math.PI;
+      const box = [p.sx - tw / 2 - 4, p.sy - job.size - 4, tw + 8, job.size * 2 + 8];
+      if (!overlaps(box)) { placed = { p, ang, box }; break; }
+      if (!placed) placed = { p, ang, box, forced: true };
+    }
+    labelBoxes.push(placed.box);
+    c.save(); c.translate(placed.p.sx, placed.p.sy); c.rotate(placed.ang);
+    c.textAlign = 'left'; c.textBaseline = 'middle';
+    const x0 = -tw / 2 + job.size * 0.7;
+    drawSymbol(c, job.diff, -tw / 2, 0, job.size * 0.85);
+    c.lineWidth = 3.5; c.strokeStyle = 'rgba(255,255,255,0.9)'; c.strokeText(job.text, x0 + job.size * 0.15, 0.5);
+    c.fillStyle = '#1c2a3a'; c.fillText(job.text, x0 + job.size * 0.15, 0.5);
+    c.restore();
+  }
+
+  // ---- 10. Edge feathering, paper, title, legend ----
+  for (const side of [0, 1]) {
+    const g = c.createLinearGradient(side ? MW : 0, 0, side ? MW - 190 : 190, 0);
+    g.addColorStop(0, PAPER); g.addColorStop(0.45, 'rgba(244,240,232,0.55)'); g.addColorStop(1, 'rgba(244,240,232,0)');
+    c.fillStyle = g; c.fillRect(side ? MW - 190 : 0, 0, 190, MH);
+  }
+  let nearEdgeY = Infinity; for (let i = 0; i < RWU; i++) nearEdgeY = Math.min(nearEdgeY, vy[(RHU - 1) * RWU + i]);
+  const bottomG = c.createLinearGradient(0, Math.min(MH, nearEdgeY + 24), 0, nearEdgeY - 80); bottomG.addColorStop(0, PAPER); bottomG.addColorStop(0.5, 'rgba(244,240,232,0.6)'); bottomG.addColorStop(1, 'rgba(244,240,232,0)');
+  c.fillStyle = bottomG; c.fillRect(0, nearEdgeY - 80, MW, MH - nearEdgeY + 80);
+  if (S.map.paper) {
+    c.globalCompositeOperation = 'multiply'; c.globalAlpha = 0.16;
+    const pat = c.createPattern(getPaper(), 'repeat'); c.fillStyle = pat; c.fillRect(0, 0, MW, MH);
+    c.globalAlpha = 1; c.globalCompositeOperation = 'source-over';
+    const vg = c.createRadialGradient(MW / 2, MH / 2, MH * 0.45, MW / 2, MH / 2, MH * 0.95);
+    vg.addColorStop(0, 'rgba(60,50,40,0)'); vg.addColorStop(1, 'rgba(60,50,40,0.16)'); c.fillStyle = vg; c.fillRect(0, 0, MW, MH);
+  }
+  drawTitle(c, R);
+  if (S.map.legend) drawLegend(c);
+}
+
+function summitStats() {
+  let mx = 0; for (let i = 0; i < S.height.length; i++) if (S.height[i] > mx) mx = S.height[i];
+  const summit = S.baseElev + mx * S.rise;
+  let lodgeBase = S.baseElev; if (S.lodges.length) lodgeBase = Math.min(...S.lodges.map(l => elevM(l.x, l.y)));
+  return { summit, base: S.baseElev, vertical: summit - S.baseElev, lodgeBase };
+}
+function drawTitle(c, R) {
+  const st = summitStats();
+  c.textAlign = 'left'; c.textBaseline = 'alphabetic';
+  c.fillStyle = '#1c2a3a'; c.font = '700 58px Fraunces, Georgia, serif';
+  c.fillText(S.name || 'Untitled Mountain', 60, 84);
+  c.font = '600 13px Inter, sans-serif'; c.fillStyle = '#4b5a6b';
+  const ls = 3; let x = 60;
+  for (const ch of 'TRAIL MAP') { c.fillText(ch, x, 112); x += c.measureText(ch).width + ls; }
+  c.font = '500 14px Inter, sans-serif'; c.fillStyle = '#4b5a6b';
+  c.fillText(`Summit ${fmtElev(st.summit)}  ·  Base ${fmtElev(st.base)}  ·  Vertical ${fmtElev(st.vertical)}  ·  ${S.runs.length} run${S.runs.length === 1 ? '' : 's'}  ·  ${S.lifts.length} lift${S.lifts.length === 1 ? '' : 's'}`, x + 18, 112);
+  // Orientation
+  const dirs = { S: 'north', N: 'south', E: 'west', W: 'east' };
+  c.textAlign = 'right'; c.font = 'italic 500 14px Inter, sans-serif'; c.fillStyle = '#4b5a6b';
+  c.fillText(`Looking ${dirs[S.map.view] || 'north'}`, MW - 60, 60);
+  c.font = '500 11px Inter, sans-serif'; c.fillText('Not to scale · Painted in Mountain Studio', MW - 60, 80);
+}
+function drawLegend(c) {
+  const x = MW - 60 - 320, y = MH - 60 - 176, w = 320, h = 176;
+  c.fillStyle = 'rgba(250,247,240,0.88)'; c.strokeStyle = 'rgba(28,42,58,0.35)'; c.lineWidth = 1;
+  c.beginPath(); c.roundRect(x, y, w, h, 8); c.fill(); c.stroke();
+  c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillStyle = '#1c2a3a';
+  c.font = '700 15px Fraunces, Georgia, serif'; c.fillText('Legend', x + 18, y + 22);
+  c.font = '500 13px Inter, sans-serif';
+  let yy = y + 50;
+  for (const d of DIFF_ORDER) { drawSymbol(c, d, x + 26, yy, 13); c.fillStyle = '#1c2a3a'; c.fillText(DIFF[d].label, x + 44, yy); yy += 24; }
+  const lx = x + 178; yy = y + 50;
+  const line = (label, width, dash) => { c.strokeStyle = '#c8102e'; c.lineWidth = width; c.setLineDash(dash || []); c.beginPath(); c.moveTo(lx, yy); c.lineTo(lx + 34, yy); c.stroke(); c.setLineDash([]); c.fillStyle = '#1c2a3a'; c.fillText(label, lx + 44, yy); yy += 24; };
+  line('Chairlift', 2.2); line('Gondola', 3.6); line('Surface lift', 2, [6, 4]);
+  const groomed = S.runs.filter(r => r.groomed).length;
+  c.fillStyle = '#4b5a6b'; c.font = '500 12px Inter, sans-serif';
+  c.fillText(S.runs.length ? `${groomed} of ${S.runs.length} runs groomed nightly` : 'No runs cut yet', lx, yy + 2);
+}
+
+function renderMapStats() {
+  const el = $('mapStats'); if (!S) return;
+  const st = summitStats(), byDiff = { green: 0, blue: 0, black: 0, double: 0 };
+  let totalLen = 0, acres = 0, longest = null, longestLen = 0;
+  for (const r of S.runs) { const s = runStats(r); byDiff[runDifficulty(r)]++; totalLen += s.lengthM; acres += s.lengthM * r.width * CELL_M / 4046.86; if (s.lengthM > longestLen) { longestLen = s.lengthM; longest = r; } }
+  const groomed = S.runs.filter(r => r.groomed).length;
+  el.innerHTML = `
+    <div>Summit<b>${fmtElev(st.summit)}</b></div><div>Vertical<b>${fmtElev(st.vertical)}</b></div>
+    <div>Runs<b>${S.runs.length}</b></div><div>Lifts<b>${S.lifts.length}</b></div>
+    <div>Skiable terrain<b>${fmt(acres)} acres</b></div><div>Trail length<b>${fmtLen(totalLen)}</b></div>
+    <div>Groomed<b>${S.runs.length ? Math.round(groomed / S.runs.length * 100) : 0}%</b></div><div>Longest run<b>${longest ? escapeHtml(longest.name) : '—'}</b></div>
+    <div style="grid-column:1/-1;margin-top:4px">Mix<b>${DIFF_ORDER.map(d => `${byDiff[d]} ${DIFF[d].label.toLowerCase()}`).join(' · ')}</b></div>`;
+}
+
+/* =====================================================================
+   UI WIRING
+   ===================================================================== */
+let saveTimer = null;
+function afterModelChange(structural) {
+  if (structural) { rebuildRunField(); terrainDirty = true; renderLists(); renderInspector(); }
+  clearTimeout(saveTimer); saveTimer = setTimeout(saveLocal, 400);
+  updateUndoButtons(); renderMountainSummary();
+  scheduleMapRender(); requestRender();
+}
+
+let toastTimer = null;
+function toast(msg) { const t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2600); }
+
+// ---------- Tabs ----------
+function showTab(name) {
+  document.querySelectorAll('.tabs button').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+  $('buildView').classList.toggle('active', name === 'build');
+  $('mapView').classList.toggle('active', name === 'map');
+  if (name === 'build') fitViewKeep();
+  else if (mapDirty) scheduleMapRender(20);
+}
+function fitViewKeep() { const first = !cw; resizeEditor(); if (first) fitView(); else requestRender(); }
+document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => showTab(b.dataset.tab)));
+
+// ---------- Tool card (changes with the active tool) ----------
+const BRUSH_HELP = { raise: 'Push the terrain up. Build ridges, shoulders, and summit knobs.', lower: 'Carve gullies, bowls, and the valley floor.', smooth: 'Soften noise and blend your edits into the surrounding slope.', flatten: 'Level toward the elevation where you first click. Good for base areas and lift terminals.', plant: 'Grow forest. The trail map draws every tree you plant, even above the treeline.', clear: 'Thin or remove forest to open glades and bowls.' };
+function renderToolCard() {
+  const card = $('brushCard');
+  if (isBrushTool(tool)) {
+    card.innerHTML = `<h3>Brush</h3>
+      <div class="row"><label>Size</label><input type="range" id="brushSize" min="2" max="30" step="1" value="${brush.size}"><span class="val" id="brushSizeVal">${brush.size}</span></div>
+      <div class="row"><label>Strength</label><input type="range" id="brushStrength" min="0.1" max="1" step="0.05" value="${brush.strength}"><span class="val" id="brushStrengthVal">${Math.round(brush.strength * 100)}%</span></div>
+      <div class="help" style="margin-top:6px">${BRUSH_HELP[tool]}</div>`;
+    $('brushSize').oninput = e => { brush.size = +e.target.value; $('brushSizeVal').textContent = brush.size; requestRender(); };
+    $('brushStrength').oninput = e => { brush.strength = +e.target.value; $('brushStrengthVal').textContent = Math.round(brush.strength * 100) + '%'; };
+  } else if (tool === 'run') {
+    card.innerHTML = `<h3>New run</h3>
+      <div class="row"><label>Width</label><input type="range" id="runWidth" min="1" max="5" step="0.5" value="${runOpts.width}"><span class="val" id="runWidthVal">${fmt(runOpts.width * CELL_M * (S.units === 'ft' ? 3.28084 : 1))} ${unitLabel()}</span></div>
+      <div class="row"><label>Groomed</label><input type="checkbox" id="runGroomed" ${runOpts.groomed ? 'checked' : ''}><span class="help">corduroy instead of moguls</span></div>
+      <div class="row"><label>Glade</label><input type="checkbox" id="runGlade" ${runOpts.glade ? 'checked' : ''}><span class="help">thin the trees instead of clearing them</span></div>
+      <div class="help" style="margin-top:6px">Click along the fall line from top to bottom. Double-click or press <kbd>Enter</kbd> to finish. The run is rated from its steepest sustained pitch and named automatically; rename it in the inspector.</div>`;
+    $('runWidth').oninput = e => { runOpts.width = +e.target.value; $('runWidthVal').textContent = fmt(runOpts.width * CELL_M * (S.units === 'ft' ? 3.28084 : 1)) + ' ' + unitLabel(); requestRender(); };
+    $('runGroomed').onchange = e => runOpts.groomed = e.target.checked;
+    $('runGlade').onchange = e => runOpts.glade = e.target.checked;
+  } else if (tool === 'lift') {
+    card.innerHTML = `<h3>New lift</h3>
+      <div class="row"><label>Type</label><div class="seg" id="liftTypeSeg"><button data-t="chair">Chair</button><button data-t="gondola">Gondola</button><button data-t="surface">Surface</button></div></div>
+      <div class="help" style="margin-top:6px">Click the bottom terminal, then the top terminal. Lifts are straight lines; the lower click becomes the base automatically.</div>`;
+    const seg = $('liftTypeSeg');
+    const paint = () => seg.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.t === liftType));
+    seg.querySelectorAll('button').forEach(b => b.onclick = () => { liftType = b.dataset.t; paint(); }); paint();
+  } else if (tool === 'groom') {
+    card.innerHTML = `<h3>Grooming</h3><div class="help">Click a run to send the cats out overnight, or click again to let it bump up. Groomed runs show corduroy on the trail map; ungroomed runs show moguls. Press <kbd>G</kbd> with a run selected to do the same.</div>`;
+  } else if (tool === 'lodge') {
+    card.innerHTML = `<h3>Lodges</h3><div class="help">Click to place a lodge, restaurant, or warming hut. The lowest lodge is treated as the village base.</div>`;
+  } else {
+    card.innerHTML = `<h3>Select</h3><div class="help">Click a run, lift, or lodge to inspect it. Drag the yellow handles to reshape a run or move a lift terminal. <kbd>⌫</kbd> deletes the selection.</div>`;
+  }
+}
+
+// ---------- Inspector ----------
+function renderInspector() {
+  const box = $('inspector'), sel = getSelected();
+  if (!sel) { box.style.display = 'none'; box.innerHTML = ''; return; }
+  box.style.display = '';
+  if (selection.type === 'run') {
+    const st = runStats(sel), diff = runDifficulty(sel);
+    box.innerHTML = `<h3>Run <span class="small"><span class="sym ${diff}"></span></span></h3>
+      <div class="row"><label>Name</label><input type="text" id="insName" value="${escapeHtml(sel.name)}" maxlength="32"></div>
+      <div class="row"><label>Rating</label><select id="insDiff">
+        <option value="auto" ${sel.difficulty === 'auto' ? 'selected' : ''}>Auto (${DIFF[st.auto].label})</option>
+        ${DIFF_ORDER.map(d => `<option value="${d}" ${sel.difficulty === d ? 'selected' : ''}>${DIFF[d].label}</option>`).join('')}</select></div>
+      <div class="row"><label>Width</label><input type="range" id="insWidth" min="1" max="5" step="0.5" value="${sel.width}"><span class="val">${fmt(toUnit(sel.width * CELL_M))} ${unitLabel()}</span></div>
+      <div class="row"><label>Groomed</label><input type="checkbox" id="insGroomed" ${sel.groomed ? 'checked' : ''}></div>
+      <div class="row"><label>Glade</label><input type="checkbox" id="insGlade" ${sel.glade ? 'checked' : ''}></div>
+      <div class="stats">
+        <div>Length<b>${fmtLen(st.lengthM)}</b></div><div>Vertical<b>${fmtElev(st.vertM)}</b></div>
+        <div>Average grade<b>${Math.round(st.avgGrade * 100)}%</b></div><div>Steepest pitch<b>${Math.round(st.maxPitch * 100)}% (${Math.round(Math.atan(st.maxPitch) * 180 / Math.PI)}°)</b></div>
+        <div>Top<b>${fmtElev(st.top)}</b></div><div>Bottom<b>${fmtElev(st.bottom)}</b></div>
+      </div>
+      ${st.uphillM > 20 ? `<div class="warn">${fmtLen(st.uphillM)} of this run climbs uphill. Drag its handles or lower the terrain so it flows.</div>` : ''}
+      <div class="row" style="margin-top:10px"><button class="btn danger" id="insDelete">Delete run</button></div>`;
+    $('insName').onchange = e => { pushUndo(); sel.name = e.target.value.trim() || sel.name; afterModelChange(true); };
+    $('insDiff').onchange = e => { pushUndo(); sel.difficulty = e.target.value; afterModelChange(true); };
+    $('insWidth').oninput = e => { sel.width = +e.target.value; rebuildRunField(); terrainDirty = true; requestRender(); };
+    $('insWidth').onchange = () => { afterModelChange(true); };
+    $('insGroomed').onchange = e => { pushUndo(); sel.groomed = e.target.checked; afterModelChange(true); };
+    $('insGlade').onchange = e => { pushUndo(); sel.glade = e.target.checked; afterModelChange(true); };
+    $('insDelete').onclick = deleteSelected;
+  } else if (selection.type === 'lift') {
+    const st = liftStats(sel);
+    box.innerHTML = `<h3>Lift <span class="small"><span class="sym lift" style="width:18px"></span></span></h3>
+      <div class="row"><label>Name</label><input type="text" id="insName" value="${escapeHtml(sel.name)}" maxlength="32"></div>
+      <div class="row"><label>Type</label><select id="insType"><option value="chair" ${sel.type === 'chair' ? 'selected' : ''}>Chairlift</option><option value="gondola" ${sel.type === 'gondola' ? 'selected' : ''}>Gondola</option><option value="surface" ${sel.type === 'surface' ? 'selected' : ''}>Surface lift</option></select></div>
+      <div class="stats">
+        <div>Length<b>${fmtLen(st.lengthM)}</b></div><div>Vertical<b>${fmtElev(st.vertM)}</b></div>
+        <div>Base terminal<b>${fmtElev(st.bottom)}</b></div><div>Top terminal<b>${fmtElev(st.top)}</b></div>
+      </div>
+      <div class="row" style="margin-top:10px"><button class="btn danger" id="insDelete">Delete lift</button></div>`;
+    $('insName').onchange = e => { pushUndo(); sel.name = e.target.value.trim() || sel.name; afterModelChange(true); };
+    $('insType').onchange = e => { pushUndo(); sel.type = e.target.value; afterModelChange(true); };
+    $('insDelete').onclick = deleteSelected;
+  } else {
+    box.innerHTML = `<h3>Lodge <span class="small"><span class="sym lodge"></span></span></h3>
+      <div class="row"><label>Name</label><input type="text" id="insName" value="${escapeHtml(sel.name)}" maxlength="32"></div>
+      <div class="stats"><div>Elevation<b>${fmtElev(elevM(sel.x, sel.y))}</b></div></div>
+      <div class="row" style="margin-top:10px"><button class="btn danger" id="insDelete">Delete lodge</button></div>`;
+    $('insName').onchange = e => { pushUndo(); sel.name = e.target.value.trim() || sel.name; afterModelChange(true); };
+    $('insDelete').onclick = deleteSelected;
+  }
+}
+
+// ---------- Lists ----------
+function renderLists() {
+  const rl = $('runList'), ll = $('liftList');
+  $('runCount').textContent = S.runs.length ? `${S.runs.length}` : '';
+  $('liftCount').textContent = (S.lifts.length + S.lodges.length) ? `${S.lifts.length} · ${S.lodges.length}` : '';
+  const sorted = [...S.runs].sort((a, b) => DIFF_ORDER.indexOf(runDifficulty(a)) - DIFF_ORDER.indexOf(runDifficulty(b)) || a.name.localeCompare(b.name));
+  rl.innerHTML = sorted.map(r => { const st = runStats(r); return `<button data-type="run" data-id="${r.id}" class="${selection && selection.type === 'run' && selection.id === r.id ? 'sel' : ''}"><span class="sym ${runDifficulty(r)}"></span>${escapeHtml(r.name)}${r.groomed ? '' : ' <span title="moguls">〰</span>'}<span class="meta">${fmtElev(st.vertM)}</span></button>`; }).join('') || '<div class="empty">Pick the Run tool and click down the mountain.</div>';
+  ll.innerHTML = (S.lifts.map(l => `<button data-type="lift" data-id="${l.id}" class="${selection && selection.type === 'lift' && selection.id === l.id ? 'sel' : ''}"><span class="sym lift"></span>${escapeHtml(l.name)}<span class="meta">${fmtElev(liftStats(l).vertM)}</span></button>`).join('')
+    + S.lodges.map(l => `<button data-type="lodge" data-id="${l.id}" class="${selection && selection.type === 'lodge' && selection.id === l.id ? 'sel' : ''}"><span class="sym lodge"></span>${escapeHtml(l.name)}<span class="meta">${fmtElev(elevM(l.x, l.y))}</span></button>`).join(''))
+    || '<div class="empty">No lifts yet. Skiers will complain.</div>';
+  for (const b of [...rl.querySelectorAll('button'), ...ll.querySelectorAll('button')]) b.onclick = () => { setTool('select'); select(b.dataset.type, +b.dataset.id); };
+}
+
+// ---------- Mountain settings ----------
+function renderMountainSummary() {
+  const st = summitStats();
+  $('mtnSummary').textContent = `summit ${fmtElev(st.summit)}`;
+  $('unitLabel1').textContent = unitLabel(); $('unitLabel2').textContent = unitLabel();
+  $('baseElev').value = Math.round(toUnit(S.baseElev)); $('rise').value = Math.round(toUnit(S.rise));
+  $('treelineVal').textContent = fmtElev(S.baseElev + S.treeline * S.rise);
+  $('unitsSeg').querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.u === S.units));
+}
+function syncSettingsUI() {
+  $('resortName').value = S.name; $('preset').value = S.preset; $('seed').value = S.seed; $('treeline').value = S.treeline;
+  $('exag').value = S.map.exag; $('exagVal').textContent = S.map.exag.toFixed(1) + '×';
+  $('detail').value = S.map.detail; $('detailVal').textContent = ['', 'Fast', 'Normal', 'Fine', 'Ultra'][S.map.detail];
+  $('optLabels').checked = S.map.labels; $('optLegend').checked = S.map.legend; $('optHaze').checked = S.map.haze; $('optPaper').checked = S.map.paper; $('optRange').checked = S.map.range;
+  $('viewSeg').querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.v === S.map.view));
+  $('sunSeg').querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.s === S.map.sun));
+  renderMountainSummary();
+}
+$('resortName').addEventListener('input', e => { S.name = e.target.value; clearTimeout(saveTimer); saveTimer = setTimeout(saveLocal, 400); scheduleMapRender(400); });
+$('preset').onchange = e => { S.preset = e.target.value; };
+$('seed').onchange = e => { S.seed = clamp(parseInt(e.target.value, 10) || 1, 1, 999999); e.target.value = S.seed; };
+$('randSeed').onclick = () => { S.seed = 1 + Math.floor(Math.random() * 999999); $('seed').value = S.seed; regenerateTerrain(); };
+$('regenBtn').onclick = regenerateTerrain;
+$('treeline').oninput = e => { S.treeline = +e.target.value; renderMountainSummary(); };
+$('treeline').onchange = () => { regenerateTerrain(true); };
+$('baseElev').onchange = e => { const v = +e.target.value; if (!isFinite(v)) return; S.baseElev = S.units === 'ft' ? v / 3.28084 : v; afterModelChange(true); };
+$('rise').onchange = e => { const v = +e.target.value; if (!isFinite(v) || v <= 0) return; S.rise = S.units === 'ft' ? v / 3.28084 : v; afterModelChange(true); };
+$('unitsSeg').querySelectorAll('button').forEach(b => b.onclick = () => { S.units = b.dataset.u; renderToolCard(); afterModelChange(true); });
+
+function regenerateTerrain(keepTrees) {
+  // Keep sculpted deltas? No: regeneration replaces the terrain. Vector work survives.
+  pushUndo();
+  const base = getBase(S.seed, S.preset, S.treeline);
+  if (keepTrees) {
+    // Only the treeline changed: rebuild the forest, keep the sculpted terrain.
+    S.trees = new Uint8Array(base.t);
+  } else {
+    S.height = new Float32Array(base.h); S.trees = new Uint8Array(base.t);
+  }
+  runPathCache.clear();
+  afterModelChange(true);
+  toast(keepTrees ? 'Forest regrown to the new treeline' : 'Fresh terrain generated');
+}
+
+// ---------- Map options ----------
+$('exag').oninput = e => { S.map.exag = +e.target.value; $('exagVal').textContent = S.map.exag.toFixed(1) + '×'; scheduleMapRender(250); saveLocalSoon(); };
+$('detail').oninput = e => { S.map.detail = +e.target.value; $('detailVal').textContent = ['', 'Fast', 'Normal', 'Fine', 'Ultra'][S.map.detail]; scheduleMapRender(250); saveLocalSoon(); };
+for (const [id, key] of [['optLabels', 'labels'], ['optLegend', 'legend'], ['optHaze', 'haze'], ['optPaper', 'paper'], ['optRange', 'range']]) $(id).onchange = e => { S.map[key] = e.target.checked; scheduleMapRender(20); saveLocalSoon(); };
+$('viewSeg').querySelectorAll('button').forEach(b => b.onclick = () => { S.map.view = b.dataset.v; syncSettingsUI(); scheduleMapRender(20); saveLocalSoon(); });
+$('sunSeg').querySelectorAll('button').forEach(b => b.onclick = () => { S.map.sun = b.dataset.s; syncSettingsUI(); scheduleMapRender(20); saveLocalSoon(); });
+function saveLocalSoon() { clearTimeout(saveTimer); saveTimer = setTimeout(saveLocal, 400); }
+
+$('downloadBtn').onclick = async () => {
+  if (mapDirty || mapBusy) await renderMapNow();
+  const slug = (S.name || 'mountain').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'mountain';
+  mapCanvas.toBlob(blob => {
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `${slug}-trail-map.png`; document.body.appendChild(a); a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+    toast('Trail map saved as PNG');
+  }, 'image/png');
+};
+
+async function shareLink() {
+  try {
+    const url = await encodeShare();
+    let copied = false;
+    try { await navigator.clipboard.writeText(url); copied = true; } catch (e) { /* clipboard blocked */ }
+    history.replaceState(null, '', url);
+    toast(copied ? `Share link copied (${fmt(url.length)} characters)` : 'Share link is now in the address bar');
+  } catch (e) { console.error(e); toast('Could not build a share link: ' + e.message); }
+}
+$('shareBtn').onclick = shareLink; $('shareBtn2').onclick = shareLink;
+
+// ---------- New mountain ----------
+$('newBtn').onclick = () => { $('newPreset').value = S.preset; $('newSeed').value = 1 + Math.floor(Math.random() * 999999); $('newModal').classList.add('show'); };
+$('newRandSeed').onclick = () => { $('newSeed').value = 1 + Math.floor(Math.random() * 999999); };
+$('newCancel').onclick = () => $('newModal').classList.remove('show');
+$('newModal').addEventListener('click', e => { if (e.target === $('newModal')) $('newModal').classList.remove('show'); });
+$('newGo').onclick = () => {
+  const seed = clamp(parseInt($('newSeed').value, 10) || 1, 1, 999999), preset = $('newPreset').value;
+  const units = S.units, map = S.map;
+  S = newState(seed, preset); S.units = units; S.map = map;
+  undoStack.length = 0; redoStack.length = 0; selection = null; runPathCache.clear();
+  history.replaceState(null, '', location.pathname);
+  $('newModal').classList.remove('show');
+  syncSettingsUI(); afterModelChange(true); fitView();
+  toast(`Welcome to ${S.name}`);
+};
+
+// ---------- Undo/redo, zoom buttons, toolbar ----------
+$('undoBtn').onclick = undo; $('redoBtn').onclick = redo;
+$('zoomIn').onclick = () => zoomAt(cw / 2, ch / 2, 1.3); $('zoomOut').onclick = () => zoomAt(cw / 2, ch / 2, 1 / 1.3); $('zoomFit').onclick = fitView;
+document.querySelectorAll('.tool').forEach(b => b.addEventListener('click', () => setTool(b.dataset.tool)));
+
+// ---------- Keyboard ----------
+const TOOL_KEYS = { '1': 'raise', '2': 'lower', '3': 'smooth', '4': 'flatten', '5': 'plant', '6': 'clear', '7': 'lift', '8': 'run', '9': 'groom', '0': 'lodge', 'v': 'select' };
+window.addEventListener('keydown', e => {
+  const inField = /^(INPUT|SELECT|TEXTAREA)$/.test(document.activeElement.tagName);
+  if (e.key === ' ' && !inField) { spaceDown = true; e.preventDefault(); return; }
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'z') { if (inField) return; e.preventDefault(); e.shiftKey ? redo() : undo(); return; }
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'y') { e.preventDefault(); redo(); return; }
+  if (inField) { if (e.key === 'Enter') document.activeElement.blur(); return; }
+  if (e.key === 'Escape') { if (pendingRun || pendingLift) { pendingRun = null; pendingLift = null; showHint(''); } else select(null); requestRender(); return; }
+  if (e.key === 'Enter' && pendingRun) { finishRun(); return; }
+  if ((e.key === 'Backspace' || e.key === 'Delete')) { if (pendingRun) { pendingRun.pop(); if (!pendingRun.length) pendingRun = null; requestRender(); } else if (selection) deleteSelected(); return; }
+  if (e.key === '[') { brush.size = Math.max(2, brush.size - 1); renderToolCard(); requestRender(); return; }
+  if (e.key === ']') { brush.size = Math.min(30, brush.size + 1); renderToolCard(); requestRender(); return; }
+  if (e.key.toLowerCase() === 'g' && selection && selection.type === 'run') { const r = getSelected(); pushUndo(); r.groomed = !r.groomed; afterModelChange(true); return; }
+  const t = TOOL_KEYS[e.key.toLowerCase()]; if (t && !e.metaKey && !e.ctrlKey) setTool(t);
+});
+window.addEventListener('keyup', e => { if (e.key === ' ') spaceDown = false; });
+window.addEventListener('resize', () => { if ($('buildView').classList.contains('active')) { resizeEditor(); requestRender(); } });
+new ResizeObserver(() => { if ($('buildView').classList.contains('active')) { resizeEditor(); requestRender(); } }).observe(wrap);
+
+// ---------- Startup ----------
+async function boot() {
+  let st = null, fromLink = false;
+  if (location.hash.length > 4) {
+    try { st = await decodeShare(location.hash); fromLink = !!st; } catch (e) { console.warn('bad share link', e); toast('That share link could not be read; loading your saved resort instead.'); }
+  }
+  if (!st) st = loadLocal();
+  if (!st) {
+    st = newState(1 + Math.floor(Math.random() * 999999), 'peak');
+    seedStarterResort(st);
+  }
+  S = st;
+  rebuildRunField();
+  syncSettingsUI(); setTool('raise'); renderLists(); renderInspector(); updateUndoButtons();
+  fitView(); scheduleMapRender(); renderMapStats();
+  if (fromLink) toast(`Opened ${S.name} from a share link`);
+}
+// A small starter resort so the first screen already looks like a ski area.
+function seedStarterResort(st) {
+  const saved = S; S = st;
+  const summitIdx = st.height.indexOf(Math.max(...st.height));
+  const sx = summitIdx % W, sy = Math.floor(summitIdx / W);
+  const baseX = clamp(sx + 6, 10, W - 10), baseY = H - 18;
+  st.lodges.push({ id: st.nextId++, name: 'Base Lodge', x: baseX, y: baseY });
+  const topX = clamp(sx + 2, 5, W - 5), topY = clamp(sy + 4, 2, H - 20);
+  st.lifts.push({ id: st.nextId++, name: 'Summit Express', type: 'chair', a: [baseX - 4, baseY - 2], b: [topX, topY] });
+  const mk = (pts, width, groomed, glade) => { const r = { id: st.nextId++, name: '', points: pts, width, groomed, glade, difficulty: 'auto' }; st.runs.push(r); r.name = pickName(RUN_NAMES[runStats(r).auto], new Set(st.runs.map(q => q.name))); };
+  mk([[topX - 1, topY + 1], [topX - 12, topY + 22], [topX - 10, topY + 48], [baseX - 12, baseY - 4]], 2.5, true, false);
+  mk([[topX + 2, topY + 1], [topX + 14, topY + 20], [topX + 9, topY + 46], [baseX + 4, baseY - 3]], 2, false, false);
+  mk([[topX - 3, topY + 12], [topX - 26, topY + 30], [topX - 22, topY + 55], [baseX - 20, baseY - 6]], 3, true, false);
+  S = saved;
+}
+boot();
+</script>
+</body>
+</html>
