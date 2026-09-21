@@ -43,7 +43,7 @@ def ecg_beat(t):
     return v
 
 def ecg_svg():
-    W, H = 900, 420
+    W, H = 900, 456
     s = head(W, H, "What the EHR keeps from an ECG",
              "Panel a shows a ten-second single-lead ECG waveform. Panel b enlarges one beat with the PR interval, "
              "QRS duration, and QT interval bracketed, beside a box listing the few measured values and the interpretation "

@@ -3,18 +3,42 @@
 Working drafts for the fall/winter distribution push. This folder starts with an
 underscore, so Jekyll never publishes it. Edit freely.
 
+**Schedule: launch post, then one chapter every Tuesday in book order**
+
+| Date (Tue) | Post | Image to attach |
+|---|---|---|
+| Sep 22, 2026 | Launch post (long form below) | `images/book/social-card.png` |
+| Sep 29 | 1. Introduction | `book/_promo/images/01-introduction.png` (share card) |
+| Oct 6 | 2. Core Concepts | `02-core-concepts.png` (ICD-10 code structure) |
+| Oct 13 | 3. Medical Claims | `03-medical-claims.png` (claims extract structure) |
+| Oct 20 | 4. Pharmacy Claims | `04-pharmacy-claims.png` (share card) |
+| Oct 27 | 5. Electronic Health Records | `05-ehr.png` (what the EHR keeps from an ECG) |
+| Nov 3 | 6. Medical Imaging | `06-medical-imaging.png` (DICOM hierarchy) |
+| Nov 10 | 7. Clinical Trial Data | `07-clinical-trials.png` (eCRF anatomy) |
+| Nov 17 | 8. Molecular Sequencing | `08-molecular-sequencing.png` (sequencing pipeline) |
+| Nov 24 | 9. Vital Signs Monitoring | `09-vital-signs.png` (AGP report) |
+| Dec 1 | 10. Adherence Monitoring Technology | `10-adherence.png` (share card) |
+| Dec 8 | 11. Activity & Lifestyle | `11-activity-lifestyle.png` (accelerometer traces) |
+| Dec 15 | 12. Patient-Reported Outcomes | `12-patient-reported-outcomes.png` (share card) |
+| Dec 22 | 13. Complex & Unstructured Data | `13-complex-unstructured.png` (structure spectrum) |
+| Dec 29 | 14. The Patient-Generated Data of the Future | `14-future.png` (PGD landscape) |
+| Jan 5, 2027 | 15. Methods to De-Identify Health Data | `15-de-identification.png` (share card) |
+| Jan 12, 2027 | 16. Putting It All Together | `16-multimodal-streams.png` (12-month timeline) |
+
+Thanksgiving week (Nov 24) and the two holiday weeks (Dec 22, Dec 29) are low-engagement;
+consider shifting those three to Thursdays or pausing and finishing in late January.
+Post images are regenerated with `python3 book/_build/figures/export_post_images.py`.
+Four chapters (Pharmacy Claims, Adherence, PROs, De-identification) have no figure yet and
+fall back to the share card; they are candidates for a new figure before their week.
+
 **Share mechanics that matter on LinkedIn**
-- Every chapter URL now unfurls with a title, the chapter's one-line description, and
+- Every chapter URL unfurls with a title, the chapter's one-line description, and
   `images/book/social-card.png` (Open Graph tags from jekyll-seo-tag). Paste the link
   in the post body *or* in the first comment; both render the card.
 - LinkedIn truncates posts after ~210 characters with "…see more". Put the hook in the
   first two lines. No links in the first two lines.
-- Native images outperform link cards for reach. For chapter posts, attach the
-  chapter's figure as an image (export the SVG to PNG at 1200 px wide) and put the
-  chapter link in the first comment.
-- One chapter per post, one post per week, gets you through the book by early spring.
-  Suggested order below follows the book, but the EHR, claims, and multimodal chapters
-  are the strongest standalone reads and can be pulled forward.
+- Native images outperform link cards for reach. Attach the chapter's post image from
+  `book/_promo/images/` and put the chapter link in the first comment.
 - Canonical link: https://danieljfeller.github.io/book/
 
 ---
