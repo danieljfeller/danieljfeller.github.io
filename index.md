@@ -9,7 +9,7 @@ description: "Daniel Feller, PhD: Director, Data Solutions at Rhino Federated Co
   <div class="hero-text">
     <h1>Daniel Feller, PhD</h1>
     <h2>Healthcare Data Science &amp; Federated Computing</h2>
-    <p class="tagline">Director, Data Solutions at Rhino Federated Computing<br>PhD in Biomedical Informatics, Columbia University<br>Author of <a href="{{ '/book/' | relative_url }}"><em>{{ site.data.book.title }}</em></a></p>
+    <p class="tagline">Director, Data Solutions at Rhino Federated Computing<br>PhD in Biomedical Informatics, Columbia University</p>
   </div>
 </div>
 <p class="hero-caption">At <a href="https://en.wikipedia.org/wiki/Le_Corbusier_House_(Zurich)" target="_blank" rel="noopener">Le Corbusier House</a> in Zurich. The house and its furnishings are designed around the <a href="https://en.wikipedia.org/wiki/Modulor" target="_blank" rel="noopener">Modulor</a> &mdash; an <a href="https://en.wikipedia.org/wiki/Anthropometry" target="_blank" rel="noopener">anthropometric</a> scale of proportions grounded in the human body and the <a href="https://en.wikipedia.org/wiki/Golden_ratio" target="_blank" rel="noopener">golden ratio</a>. Visitors are encouraged to place a red sticker at navel height and a blue sticker at eye level.</p>
