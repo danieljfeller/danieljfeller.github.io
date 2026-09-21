@@ -1,18 +1,18 @@
 # Site settings
 title: Daniel Feller, PhD
-description: Healthcare Data Scientist | Federated Learning | Solutions Engineer
+description: Director, Data Solutions at Rhino Federated Computing. Author of The Health Data Handbook, a free online guide to health data. PhD in Biomedical Informatics, Columbia University.
 url: "https://danieljfeller.github.io"
 baseurl: ""
 author:
   name: Daniel Feller
-  url: https://www.linkedin.com/in/danieljfeller
-# Default social-share image for pages that don't set their own (jekyll-seo-tag)
+  url: https://www.linkedin.com/in/daniel-feller-phd/
+# Default social-share image (jekyll-seo-tag)
 logo: /images/book/social-card.png
 
 # About/contact
 email: danieljfeller@gmail.com
 github_username: danieljfeller
-linkedin_username: danieljfeller
+linkedin_username: daniel-feller-phd
 
 # Build settings
 markdown: kramdown
@@ -26,14 +26,17 @@ plugins:
   - jekyll-sitemap
   - jekyll-redirect-from
 
-# Every page under book/ gets the book layout and the book's share card,
-# so a chapter link pasted into LinkedIn renders a title, blurb, and image.
 defaults:
+  # Every page gets the share card, so any link pasted into LinkedIn unfurls with an image.
+  - scope:
+      path: ""
+    values:
+      image: /images/book/social-card.png
+  # Every page under book/ gets the book layout.
   - scope:
       path: "book"
     values:
       layout: book
-      image: /images/book/social-card.png
 
 # Exclude from build
 exclude:

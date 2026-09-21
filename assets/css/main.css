@@ -226,8 +226,10 @@ h3::before {
   font-size: 0.85rem;
   color: var(--text-secondary);
   margin-bottom: 0;
-  line-height: 1.6;
+  line-height: 1.75;
 }
+
+.hero .tagline a { color: var(--accent-color); }
 
 .hero-description {
   font-size: 1.05rem;
@@ -389,80 +391,100 @@ h3::before {
   font-size: 0.95rem;
 }
 
-/* ---------------- Book ---------------- */
-.book-section {
-  margin-top: 1.5rem;
+/* ---------------- Book promo card (About, Contact) ---------------- */
+.book-promo {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  margin-top: 3rem;
+  padding: 1.75rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
 }
 
-.book-section h3 {
-  color: var(--text-color);
+.book-promo-cover {
+  flex-shrink: 0;
+  width: 150px;
 }
 
-.book-section p {
-  color: var(--text-color);
-  margin-bottom: 1rem;
-  line-height: 1.8;
+.book-promo-cover img {
+  display: block;
+  width: 100%;
+  border-radius: 4px;
+  box-shadow: 0 4px 18px rgba(31, 35, 40, 0.16);
+  transition: transform 0.15s;
 }
 
-.book-topics {
-  list-style: none;
-  margin-top: 1rem;
-}
+.book-promo-cover:hover img { transform: translateY(-2px); }
 
-.book-topics li {
-  padding: 0.45rem 0;
-  padding-left: 1.5rem;
-  color: var(--text-secondary);
-  position: relative;
-  line-height: 1.6;
-}
+.book-promo-body { flex: 1; min-width: 0; }
 
-.book-topics li::before {
-  content: "▸";
-  position: absolute;
-  left: 0;
-  color: var(--accent-color);
-}
-
-.book-cta {
-  display: inline-block;
-  margin-top: 1rem;
-  padding: 0.6rem 1.4rem;
+.book-promo-kicker {
   font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-color);
+  margin-bottom: 0.35rem;
+}
+
+.book-promo h3 {
+  font-family: var(--sans);
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.25rem;
+}
+
+.book-promo h3::before { content: ""; }
+
+.book-promo h3 a { color: var(--text-color); }
+.book-promo h3 a:hover { color: var(--accent-color); text-decoration: none; }
+
+.book-promo-subtitle {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+}
+
+.book-promo-text {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.book-promo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1.25rem;
+}
+
+.book-promo-cta {
+  display: inline-block;
+  padding: 0.55rem 1.1rem;
   background: var(--accent-color);
   color: #ffffff;
   border-radius: 6px;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 0.9rem;
-  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+  transition: background 0.15s, box-shadow 0.15s;
 }
 
-.book-cta:hover {
+.book-promo-cta:hover {
   background: var(--accent-hover);
   color: #ffffff;
   text-decoration: none;
   box-shadow: var(--shadow-md);
 }
 
-/* Large, prominent CTA */
-.book-cta-lg {
-  display: block;
-  width: 100%;
-  margin: 1.75rem 0 2.5rem;
-  padding: 1.1rem 2rem;
-  font-size: 1.15rem;
-  text-align: center;
-  border-radius: 8px;
-  box-shadow: var(--shadow-md);
-}
-
-.book-cta-lg::before {
-  content: "$ ";
-  opacity: 0.6;
-}
-
-.book-cta-lg:hover {
-  transform: translateY(-2px);
+.book-promo-alt {
+  font-family: var(--mono);
+  font-size: 0.82rem;
 }
 
 /* ---------------- Contact ---------------- */
@@ -508,6 +530,70 @@ h3::before {
   text-decoration: none;
 }
 
+.contact-note {
+  margin-top: 2rem;
+  padding: 1rem 1.25rem;
+  border-left: 3px solid var(--accent-color);
+  background: rgba(9, 105, 218, 0.04);
+  border-radius: 0 6px 6px 0;
+  font-size: 0.98rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+/* ---------------- Publications ---------------- */
+.pubs-intro {
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin-bottom: 1.75rem;
+  max-width: 68ch;
+}
+
+.pub-year {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary);
+  margin: 2rem 0 0.75rem;
+}
+
+.pub-year:first-of-type { margin-top: 0.5rem; }
+
+.publication-item.featured {
+  border-color: var(--accent-color);
+  background: rgba(9, 105, 218, 0.04);
+}
+
+.pub-label {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent-color);
+  margin-bottom: 0.3rem;
+}
+
+/* ---------------- Skip link ---------------- */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 9999;
+  padding: 0.5rem 1rem;
+  background: var(--accent-color);
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 0 0 4px 4px;
+  text-decoration: none;
+}
+
+.skip-link:focus { top: 0; }
+
 /* ---------------- Footer ---------------- */
 footer {
   border-top: 1px solid var(--border-color);
@@ -522,7 +608,27 @@ footer {
   max-width: 840px;
   margin: 0 auto;
   padding: 0 1.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  text-align: left;
 }
+
+.footer-content p { margin: 0; }
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-links a { color: var(--text-secondary); }
+.footer-links a:hover { color: var(--accent-color); text-decoration: none; }
 
 /* ---------------- Responsive ---------------- */
 @media (max-width: 768px) {
@@ -562,4 +668,20 @@ footer {
   .projects-grid {
     grid-template-columns: 1fr;
   }
+
+  .book-promo {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1.4rem;
+  }
+
+  .book-promo-actions { justify-content: center; }
+
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-links { justify-content: center; }
 }

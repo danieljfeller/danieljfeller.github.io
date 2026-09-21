@@ -1,0 +1,16 @@
+{%- assign book = site.data.book -%}
+<section class="book-promo" aria-labelledby="book-promo-title">
+  <a class="book-promo-cover" href="{{ '/book/' | relative_url }}" aria-hidden="true" tabindex="-1">
+    <img src="{{ '/images/book/cover.png' | relative_url }}" alt="" loading="lazy">
+  </a>
+  <div class="book-promo-body">
+    <p class="book-promo-kicker">Free online book</p>
+    <h3 id="book-promo-title"><a href="{{ '/book/' | relative_url }}">{{ book.title }}</a></h3>
+    <p class="book-promo-subtitle">{{ book.subtitle }}</p>
+    <p class="book-promo-text">{{ book.tagline }} Sixteen chapters covering claims, EHRs, imaging, clinical trials, genomics, wearables, patient-reported outcomes, and de-identification, written for data people entering healthcare and healthcare people expanding their range.</p>
+    <p class="book-promo-actions">
+      <a class="book-promo-cta" href="{{ '/book/' | relative_url }}">Read it free →</a>
+      <a class="book-promo-alt" href="{{ '/book/intro/core-concepts/' | relative_url }}">New to healthcare? Start with Core Concepts</a>
+    </p>
+  </div>
+</section>

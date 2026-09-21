@@ -1,17 +1,27 @@
 ---
 layout: default
 title: Research
+description: "Peer-reviewed research by Daniel Feller on clinical natural language processing, social determinants of health in the EHR, patient-generated data, and HIV care quality."
 permalink: /research/
 ---
 
 <h2>Research Publications</h2>
 
+<p class="pubs-intro">My research sits at the intersection of clinical informatics and public health: using natural language processing and machine learning on electronic health records to find patients at risk for HIV and other chronic conditions, documenting social and behavioral determinants of health, making patient-generated data usable by clinicians, and measuring the quality of HIV care in New York State. The practical side of that work, what health data actually looks like and where it comes from, became <a href="{{ '/book/' | relative_url }}"><em>{{ site.data.book.title }}</em></a>.</p>
+
+<div class="publication-item featured">
+  <span class="pub-label">PhD dissertation</span>
+  <p>Feller, Daniel J. "An Evaluation of Computational Methods to Support the Clinical Management of Chronic Disease Populations." Columbia University, Department of Biomedical Informatics, 2020. <a href="{{ '/pdfs/dissertation.pdf' | relative_url }}" class="pdf-link">pdf</a></p>
+</div>
+
+<span class="pub-year" role="heading" aria-level="3">2020</span>
+
 <div class="publication-item">
-  <p>Feller, Daniel J., et al. "Understanding the acceptability of subdermal implants as a possible new HIV prevention method: multi-stage mixed methods study." Journal of Medical Internet Research 22.7 (2020): e16904. <a href="pdfs/jmir_2020.pdf" class="pdf-link">pdf</a></p>
+  <p>Feller, Daniel J., et al. "Understanding the acceptability of subdermal implants as a possible new HIV prevention method: multi-stage mixed methods study." Journal of Medical Internet Research 22.7 (2020): e16904. <a href="{{ '/pdfs/jmir_2020.pdf' | relative_url }}" class="pdf-link">pdf</a></p>
 </div>
 
 <div class="publication-item">
-  <p>Burgermaster, M., et al. "A new approach to integrating patient-generated data with expert knowledge for personalized goal setting: A pilot study." International Journal of Medical Informatics 139 (2020): 104158. <a href="pdfs/int_j_med_inform_2020.pdf" class="pdf-link">pdf</a></p>
+  <p>Burgermaster, M., et al. "A new approach to integrating patient-generated data with expert knowledge for personalized goal setting: A pilot study." International Journal of Medical Informatics 139 (2020): 104158. <a href="{{ '/pdfs/int_j_med_inform_2020.pdf' | relative_url }}" class="pdf-link">pdf</a></p>
 </div>
 
 <div class="publication-item">
@@ -23,60 +33,74 @@ permalink: /research/
 </div>
 
 <div class="publication-item">
-  <p>Feller, Daniel J., et al. "Detecting social and behavioral determinants of health with structured and free-text clinical data." Applied Clinical Informatics 11.01 (2020): 172-181. <a href="pdfs/app_clin_info_2020.pdf" class="pdf-link">pdf</a></p>
+  <p>Feller, Daniel J., et al. "Detecting social and behavioral determinants of health with structured and free-text clinical data." Applied Clinical Informatics 11.01 (2020): 172-181. <a href="{{ '/pdfs/app_clin_info_2020.pdf' | relative_url }}" class="pdf-link">pdf</a></p>
+</div>
+
+<span class="pub-year" role="heading" aria-level="3">2018</span>
+
+<div class="publication-item">
+  <p>Rael, C.T., et al. "Understanding the Acceptability of Removable Implanted Medication Delivery Devices (RIMDDs) as a Possible New HIV Prevention Method." AIDS Research and Human Retroviruses 34 (2018): 366-366. <a href="{{ '/pdfs/rael_arhr_2018_rimdds.pdf' | relative_url }}" class="pdf-link">pdf</a></p>
 </div>
 
 <div class="publication-item">
-  <p>Rael, C.T., et al. "Understanding the Acceptability of Removable Implanted Medication Delivery Devices (RIMDDs) as a Possible New HIV Prevention Method." AIDS Research and Human Retroviruses 34 (2018): 366-366. <a href="pdfs/rael_arhr_2018_rimdds.pdf" class="pdf-link">pdf</a></p>
+  <p>Feller, Daniel J., et al. "A visual analytics approach for pattern-recognition in patient-generated data." Journal of the American Medical Informatics Association 25.10 (2018): 1366-1374. <a href="{{ '/pdfs/jamia_2018.pdf' | relative_url }}" class="pdf-link">pdf</a></p>
 </div>
 
 <div class="publication-item">
-  <p>Feller, Daniel J., et al. "A visual analytics approach for pattern-recognition in patient-generated data." Journal of the American Medical Informatics Association 25.10 (2018): 1366-1374. <a href="pdfs/jamia_2018.pdf" class="pdf-link">pdf</a></p>
+  <p>Zucker, J., et al. "Development and validation of an electronic medical record–based algorithm to identify patient milestones in the hepatitis C virus care cascade." Open Forum Infectious Diseases 5.7 (2018): ofy153. <a href="{{ '/pdfs/zucker_ofid_2018_hcv.pdf' | relative_url }}" class="pdf-link">pdf</a></p>
 </div>
 
 <div class="publication-item">
-  <p>Zucker, J., et al. "Development and validation of an electronic medical record–based algorithm to identify patient milestones in the hepatitis C virus care cascade." Open Forum Infectious Diseases 5.7 (2018): ofy153. <a href="pdfs/zucker_ofid_2018_hcv.pdf" class="pdf-link">pdf</a></p>
+  <p>Feller, Daniel J., et al. "Towards the Inference of Social and Behavioral Determinants of Sexual Health: Development of a Gold-Standard Corpus with Semi-Supervised Learning." AMIA Annual Symposium Proceedings. Vol. 2018. American Medical Informatics Association, 2018. <a href="{{ '/pdfs/amia_2019.pdf' | relative_url }}" class="pdf-link">pdf</a></p>
+</div>
+
+<span class="pub-year" role="heading" aria-level="3">2017</span>
+
+<div class="publication-item">
+  <p>Feller, Daniel, et al. "HIV Risk Assessment using Longitudinal Electronic Health Records." Open Forum Infectious Diseases 4 (2017): S419. <a href="{{ '/pdfs/feller_ofid_2017_hiv_risk.pdf' | relative_url }}" class="pdf-link">pdf</a></p>
 </div>
 
 <div class="publication-item">
-  <p>Feller, Daniel J., et al. "Towards the Inference of Social and Behavioral Determinants of Sexual Health: Development of a Gold-Standard Corpus with Semi-Supervised Learning." AMIA Annual Symposium Proceedings. Vol. 2018. American Medical Informatics Association, 2018. <a href="pdfs/amia_2019.pdf" class="pdf-link">pdf</a></p>
+  <p>Feller, Daniel J., et al. "Using Clinical Notes and Natural Language Processing for Automated HIV Risk Assessment." Journal of Acquired Immune Deficiency Syndromes (2017). <a href="{{ '/pdfs/jaids_2018.pdf' | relative_url }}" class="pdf-link">pdf</a></p>
 </div>
 
 <div class="publication-item">
-  <p>Feller, Daniel, et al. "HIV Risk Assessment using Longitudinal Electronic Health Records." Open Forum Infectious Diseases 4 (2017): S419. <a href="pdfs/feller_ofid_2017_hiv_risk.pdf" class="pdf-link">pdf</a></p>
+  <p>Feller, Daniel J., and Bruce D. Agins. "Understanding determinants of racial and ethnic disparities in viral load suppression: a data mining approach." Journal of the International Association of Providers of AIDS Care (JIAPAC) (2017). <a href="{{ '/pdfs/J_int_asc_prov_aids_care_2017.pdf' | relative_url }}" class="pdf-link">pdf</a></p>
+</div>
+
+<span class="pub-year" role="heading" aria-level="3">2016</span>
+
+<div class="publication-item">
+  <p>Zheng, L., et al. "Web-based real-time case finding for the population health management of patients with diabetes mellitus: a prospective validation of the natural language processing–based approach." JMIR Medical Informatics 4.4 (2016): e6328. <a href="{{ '/pdfs/jmir_med_info_2017.pdf' | relative_url }}" class="pdf-link">pdf</a></p>
 </div>
 
 <div class="publication-item">
-  <p>Feller, Daniel J., et al. "Using Clinical Notes and Natural Language Processing for Automated HIV Risk Assessment." Journal of Acquired Immune Deficiency Syndromes (2017). <a href="pdfs/jaids_2018.pdf" class="pdf-link">pdf</a></p>
+  <p>Feller, Daniel J., et al. "Readmissions in HIV-infected inpatients: a large cohort analysis." JAIDS Journal of Acquired Immune Deficiency Syndromes 71.4 (2016): 407-412. <a href="{{ '/pdfs/jaids_2016.pdf' | relative_url }}" class="pdf-link">pdf</a></p>
 </div>
 
 <div class="publication-item">
-  <p>Feller, Daniel J., and Bruce D. Agins. "Understanding determinants of racial and ethnic disparities in viral load suppression: a data mining approach." Journal of the International Association of Providers of AIDS Care (JIAPAC) (2017). <a href="pdfs/J_int_asc_prov_aids_care_2017.pdf" class="pdf-link">pdf</a></p>
+  <p>Feller, Daniel J., and Bruce D. Agins. "The dissociation between viral load suppression and retention in care." AIDS Patient Care and STDs 30.3 (2016): 103-105. <a href="{{ '/pdfs/AIDS_pt_care_2016.pdf' | relative_url }}" class="pdf-link">pdf</a></p>
 </div>
 
-<div class="publication-item">
-  <p>Zheng, L., et al. "Web-based real-time case finding for the population health management of patients with diabetes mellitus: a prospective validation of the natural language processing–based approach." JMIR Medical Informatics 4.4 (2016): e6328. <a href="pdfs/jmir_med_info_2017.pdf" class="pdf-link">pdf</a></p>
-</div>
+<span class="pub-year" role="heading" aria-level="3">2015</span>
 
 <div class="publication-item">
-  <p>Feller, Daniel J., et al. "Readmissions in HIV-infected inpatients: a large cohort analysis." JAIDS Journal of Acquired Immune Deficiency Syndromes 71.4 (2016): 407-412. <a href="pdfs/jaids_2016.pdf" class="pdf-link">pdf</a></p>
+  <p>O'Neill, M., et al. "The HIV workforce in New York State: does patient volume correlate with quality?" Clinical Infectious Diseases 61.12 (2015): 1871-1877. <a href="{{ '/pdfs/clininfectdiseas_2015.pdf' | relative_url }}" class="pdf-link">pdf</a></p>
 </div>
 
-<div class="publication-item">
-  <p>Feller, Daniel J., and Bruce D. Agins. "The dissociation between viral load suppression and retention in care." AIDS Patient Care and STDs 30.3 (2016): 103-105. <a href="pdfs/AIDS_pt_care_2016.pdf" class="pdf-link">pdf</a></p>
-</div>
+<span class="pub-year" role="heading" aria-level="3">2014</span>
 
 <div class="publication-item">
-  <p>O'Neill, M., et al. "The HIV workforce in New York State: does patient volume correlate with quality?" Clinical Infectious Diseases 61.12 (2015): 1871-1877. <a href="pdfs/clininfectdiseas_2015.pdf" class="pdf-link">pdf</a></p>
+  <p>Janowski, J.P.B., et al. "Management of sexually transmitted infections in New York State health care organizations: who is thinking about the quality of STI care?" Sexually Transmitted Diseases 41.9 (2014): 519-524. <a href="{{ '/pdfs/stds_2014.pdf' | relative_url }}" class="pdf-link">pdf</a></p>
 </div>
 
-<div class="publication-item">
-  <p>Janowski, J.P.B., et al. "Management of sexually transmitted infections in New York State health care organizations: who is thinking about the quality of STI care?" Sexually Transmitted Diseases 41.9 (2014): 519-524. <a href="stds_2014.pdf" class="pdf-link">pdf</a></p>
-</div>
+<span class="pub-year" role="heading" aria-level="3">2012</span>
 
 <div class="publication-item">
-  <p>Walter, S.D., et al. "Ganglion cell loss in relation to visual disability in multiple sclerosis." Ophthalmology 119.6 (2012): 1250-1257. <a href="pdfs/opthamology_2012.pdf" class="pdf-link">pdf</a></p>
+  <p>Walter, S.D., et al. "Ganglion cell loss in relation to visual disability in multiple sclerosis." Ophthalmology 119.6 (2012): 1250-1257. <a href="{{ '/pdfs/opthamology_2012.pdf' | relative_url }}" class="pdf-link">pdf</a></p>
 </div>
+
+<span class="pub-year" role="heading" aria-level="3">2011</span>
 
 <div class="publication-item">
   <p>Sakai, R.E., et al. "Vision in multiple sclerosis: the story, structure-function correlations, and models for neuroprotection." Journal of Neuro-ophthalmology 31.4 (2011): 362-373.</p>

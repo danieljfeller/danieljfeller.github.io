@@ -4,33 +4,42 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  {% seo title=false %}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+  <link rel="icon" href="{{ '/images/book/favicon.svg' | relative_url }}" type="image/svg+xml">
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
   <header>
     <div class="header-content">
       <a href="{{ '/' | relative_url }}" class="site-title">{{ site.title }}</a>
-      <nav>
+      <nav aria-label="Site">
         <ul>
-          <li><a href="{{ '/' | relative_url }}" {% if page.url == '/' %}class="active"{% endif %}>About</a></li>
-          <li><a href="{{ '/research/' | relative_url }}" {% if page.url == '/research/' %}class="active"{% endif %}>Research</a></li>
-          <li><a href="{{ '/book/' | relative_url }}" {% if page.url == '/book/' %}class="active"{% endif %}>Book</a></li>
-          <li><a href="{{ '/contact/' | relative_url }}" {% if page.url == '/contact/' %}class="active"{% endif %}>Contact</a></li>
+          <li><a href="{{ '/' | relative_url }}" {% if page.url == '/' %}class="active" aria-current="page"{% endif %}>About</a></li>
+          <li><a href="{{ '/research/' | relative_url }}" {% if page.url == '/research/' %}class="active" aria-current="page"{% endif %}>Research</a></li>
+          <li><a href="{{ '/book/' | relative_url }}" {% if page.url == '/book/' %}class="active" aria-current="page"{% endif %}>Book</a></li>
+          <li><a href="{{ '/contact/' | relative_url }}" {% if page.url == '/contact/' %}class="active" aria-current="page"{% endif %}>Contact</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <main>
+  <main id="main-content">
     {{ content }}
   </main>
 
   <footer>
     <div class="footer-content">
-      <p>&copy; {{ site.time | date: '%Y' }} {{ site.title }}. Built with Jekyll.</p>
+      <p>&copy; {{ site.time | date: '%Y' }} Daniel Feller, PhD</p>
+      <ul class="footer-links" aria-label="Elsewhere">
+        <li><a href="{{ '/book/' | relative_url }}">{{ site.data.book.title }}</a></li>
+        <li><a href="https://www.linkedin.com/in/daniel-feller-phd/" rel="me">LinkedIn</a></li>
+        <li><a href="https://github.com/danieljfeller" rel="me">GitHub</a></li>
+        <li><a href="mailto:{{ site.email }}">Email</a></li>
+      </ul>
     </div>
   </footer>
 </body>
