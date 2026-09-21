@@ -1,4 +1,4 @@
-# Palette — *Decoding Health Data* figures
+# Palette — *The Health Data Handbook* figures
 
 Colorblind-safe, site-anchored. These are the **only** colors a figure may use.
 Where a token overlaps the website, its value mirrors `assets/css/main.css`

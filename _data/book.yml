@@ -1,0 +1,122 @@
+# Single source of truth for the book's structure.
+# Drives: the sidebar in _layouts/book.html, the table of contents on
+# book/index.md, previous/next links at the bottom of every chapter, and the
+# front matter that book/_build/docx_to_chapters.py writes into each chapter.
+#
+# `source` is the chapter heading in the DOCX (used by the build script to
+# find the chapter's text). `blurb` is the part-level intro shown on the TOC.
+
+title: "The Health Data Handbook"
+subtitle: "A Practical Guide From Genomics to EHRs to Insurance Claims"
+author: "Daniel Feller, PhD"
+tagline: "A practical guide to the data types, standards, and formats behind modern health AI."
+
+parts:
+  - name: "Part I: Getting Started"
+    slug: intro
+    chapters:
+      - title: "Introduction"
+        url: /book/intro/introduction/
+        file: intro/introduction.md
+        source: "Introduction"
+        description: "What health data is, who this book is for, and how to read it."
+        redirect_from:
+          - /book/intro/who-should-read/
+          - /book/intro/how-to-read/
+      - title: "Core Concepts: Things You Need to Know"
+        url: /book/intro/core-concepts/
+        file: intro/core-concepts.md
+        source: "Chapter 1: Core Concepts"
+        description: "How healthcare is delivered, and why controlled vocabularies (ICD-10, CPT, LOINC, RxNorm, SNOMED) are the foundation of every health dataset."
+        redirect_from:
+          - /book/intro/healthcare-delivery/
+          - /book/intro/vocabularies/
+
+  - name: "Part II: Administrative Data"
+    slug: administrative
+    chapters:
+      - title: "Medical Claims"
+        url: /book/administrative/medical-claims/
+        file: administrative/medical-claims.md
+        source: "Medical Claims"
+        description: "The workhorse of healthcare analytics: what a claim contains, what a claims extract looks like, and why the diagnosis codes can't be trusted."
+      - title: "Pharmacy Claims"
+        url: /book/administrative/pharmacy-claims/
+        file: administrative/pharmacy-claims.md
+        source: "Pharmacy Claims"
+        description: "Real-time, standardized records of every prescription filled, and how they power adherence, market intelligence, and drug safety."
+
+  - name: "Part III: Clinical Data"
+    slug: clinical
+    blurb: "Clinical data is the backbone of modern medicine as well as the administration of healthcare delivery. At its core are Electronic Health Records (EHRs) which consolidate all of the data generated within hospitals and provider offices. Digitized medical imaging studies from X-ray, MRI, and other machines visualize patient anatomy, while laboratory tests provide insight into biochemical and molecular processes to aid diagnostics, monitor disease progression, and guide treatment decisions. Molecular sequencing data includes DNA, RNA, and protein sequences and is increasingly being acquired in clinical settings to support precision medicine approaches. Clinical trial data adds another dimension, capturing structured observations from controlled studies that test the safety and efficacy of new interventions. Together, these sources create a rich, multidimensional portrait of health and disease, enabling data-driven decision-making and advancing both patient care and medical research."
+    chapters:
+      - title: "Electronic Health Records"
+        url: /book/clinical/ehr/
+        file: clinical/ehr.md
+        source: "Electronic Health Records"
+        description: "A day in the life of a patient record, every structured, semi-structured, and unstructured data type in the EHR, and when to use FHIR versus OMOP."
+      - title: "Medical Imaging"
+        url: /book/clinical/medical-imaging/
+        file: clinical/medical-imaging.md
+        source: "Medical Imaging"
+        description: "DICOM, PACS, and the Patient→Study→Series→Instance hierarchy behind every X-ray, CT, and MRI."
+      - title: "Clinical Trial Data"
+        url: /book/clinical/clinical-trials/
+        file: clinical/clinical-trials.md
+        source: "Clinical Trial Data"
+        description: "Case report forms, EDC systems, and the CDISC pipeline (CDASH, SDTM, ADaM) that regulators require."
+      - title: "Molecular Sequencing"
+        url: /book/clinical/molecular-sequencing/
+        file: clinical/molecular-sequencing.md
+        source: "Molecular Sequencing"
+        description: "From raw reads to variants: FASTQ, BAM, CRAM, and VCF, and the pipeline that connects them."
+
+  - name: "Part IV: Patient-Generated Data"
+    slug: patient-generated
+    blurb: "In the 20th century, patient data was collected in the clinic. Vital signs were measured during office visits, symptoms were described by patients only in front of their physician, and lab values represented a single point in time. Between appointments, patients were medically invisible. That changed with consumer health devices. A new era of patient-generated data was ushered in by Fitbit’s release of their first ‘smartwatch’ in 2012. In 2017, Medicare began covering the cost of continuous glucose monitors and they quickly became widespread. More recently, the Center for Medicare and Medicaid (CMS) has begun reimbursing physicians for reviewing remote monitoring data. In 2025 the remote monitoring program likely exceeded 1 million enrollees, raising hopes that patient-generated data will become central to chronic disease care in the future. As of 2026, the challenge with patient monitoring data is that it is almost always siloed into manufacturer-specific applications and not available as part of a patient’s medical record."
+    chapters:
+      - title: "Vital Signs Monitoring"
+        url: /book/patient-generated/vital-signs/
+        file: patient-generated/vital-signs.md
+        source: "Vital Signs Monitoring"
+        description: "Blood pressure cuffs, continuous glucose monitors, pulse oximeters, smart scales, and cardiac implantable devices, and where their data actually goes."
+      - title: "Adherence Monitoring Technology"
+        url: /book/patient-generated/adherence/
+        file: patient-generated/adherence.md
+        source: "Adherence Monitoring Technology"
+        description: "Smart inhalers, digital pills, and connected pill bottles: the technology works, but the data rarely reaches the EHR."
+      - title: "Activity & Lifestyle"
+        url: /book/patient-generated/activity-lifestyle/
+        file: patient-generated/activity-lifestyle.md
+        source: "Activity & Lifestyle"
+        description: "How fitness trackers and sleep monitors turn accelerometer and heart-rate signals into steps and sleep stages, and how to get the data out."
+      - title: "Patient-Reported Outcomes"
+        url: /book/patient-generated/patient-reported-outcomes/
+        file: patient-generated/patient-reported-outcomes.md
+        source: "Patient-Reported Outcomes"
+        description: "PROMIS and the PHQ-9: the validated instruments that measure health from the patient's point of view."
+      - title: "Complex & Unstructured Data"
+        url: /book/patient-generated/complex-unstructured/
+        file: patient-generated/complex-unstructured.md
+        source: "Complex & Unstructured Data"
+        description: "Patient photos, vocal biomarkers, and digital phenotyping: the unvalidated, ethically fraught frontier of patient data."
+      - title: "The Patient-Generated Data of the Future"
+        url: /book/patient-generated/future/
+        file: patient-generated/future.md
+        source: "The Patient-Generated Data of the Future"
+        description: "Clinical-grade PPG, electrochemical sweat sensing, contactless monitoring, and electronic skin."
+
+  - name: "Working with Health Data"
+    slug: working-with-data
+    blurb: "I intentionally limited discussion of methods for working with health data in this book for two reasons. First, I believed there was a gap in the literature for a resource focused purely on understanding healthcare data itself. Second, the methods for analyzing and modeling health data are evolving so rapidly that any detailed methodological guidance would quickly become outdated. However, a few complementary topics warrant brief discussion."
+    chapters:
+      - title: "Methods to De-Identify Health Data"
+        url: /book/working-with-data/de-identification/
+        file: working-with-data/de-identification.md
+        source: "Methods to De-Identify Health Data"
+        description: "HIPAA Safe Harbor and Expert Determination, GDPR anonymization and pseudonymization, k-anonymity, and differential privacy."
+      - title: "Putting It All Together: Multimodal Data Streams"
+        url: /book/working-with-data/multimodal-streams/
+        file: working-with-data/multimodal-streams.md
+        source: "Putting It All Together"
+        description: "Two patients, twelve months, every data stream at once, and why record linkage is the quiet hard problem underneath it all."

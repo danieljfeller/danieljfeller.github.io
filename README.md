@@ -7,7 +7,7 @@ Personal portfolio site built with Jekyll, based on the Gradfolio theme with a d
 - **About** - Overview of expertise and background
 - **Projects** - Code projects and technical work
 - **Research** - Published papers with PDF links
-- **Book** - Information about healthcare data standards book
+- **Book** - *The Health Data Handbook*, published chapter-by-chapter under `/book/` (see `book/CLAUDE.md` for how chapters are rebuilt from the DOCX manuscript)
 - **Contact** - Ways to get in touch
 
 ## Quick Start
@@ -71,7 +71,7 @@ Visit `http://localhost:4000`
    - Customize the About section in `index.md`
    - Update project descriptions in `projects.md`
    - Verify publication list in `research.md`
-   - Edit book details in `book.md`
+   - Book chapters are generated: drop a new `book/ebook.md.docx` and run `python3 book/_build/docx_to_chapters.py book/ebook.md.docx`
 
 ### Adding PDFs
 
@@ -111,7 +111,8 @@ Edit `assets/css/main.css` and modify the `:root` variables:
 ├── index.md              # About page
 ├── projects.md           # Projects page
 ├── research.md           # Research publications
-├── book.md               # Book information
+├── book/                 # The Health Data Handbook (chapters generated from the DOCX)
+├── _data/book.yml        # Book structure: drives sidebar, TOC, prev/next, front matter
 ├── contact.md            # Contact page
 ├── Gemfile               # Ruby dependencies
 └── README.md             # This file

@@ -3,12 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% if page.title %}{{ page.title }} — {% endif %}Decoding Health Data</title>
+  {%- assign book = site.data.book -%}
+  {%- comment -%} Flatten the chapter list once; used for the sidebar and prev/next links. {%- endcomment -%}
+  {%- assign chapters = "" | split: "" -%}
+  {%- for part in book.parts -%}{%- for ch in part.chapters -%}{%- assign chapters = chapters | push: ch -%}{%- endfor -%}{%- endfor -%}
+  {%- assign idx = -1 -%}
+  {%- for ch in chapters -%}{%- if ch.url == page.url -%}{%- assign idx = forloop.index0 -%}{%- endif -%}{%- endfor -%}
+  <title>{% if page.url == '/book/' %}{{ book.title }} — {{ book.author }}{% else %}{{ page.title }} — {{ book.title }}{% endif %}</title>
+  {% seo title=false %}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
   <link rel="stylesheet" href="{{ '/assets/css/book.css' | relative_url }}">
+  <link rel="icon" href="{{ '/images/book/favicon.svg' | relative_url }}" type="image/svg+xml">
 </head>
 <body class="book-body">
 
@@ -30,68 +38,53 @@
 
   <div class="book-shell">
 
-    <!-- Sidebar -->
+    <!-- Sidebar: generated from _data/book.yml -->
     <nav class="book-nav" id="book-nav" aria-label="Book chapters">
       <div class="book-nav-header">
-        <a href="{{ '/book/' | relative_url }}" class="book-nav-title"{% if page.url == '/book/' %} aria-current="page"{% endif %}>Decoding Health Data</a>
-        <p class="book-nav-description">A practical guide to the data types, standards, and formats behind modern health AI.</p>
+        <a href="{{ '/book/' | relative_url }}" class="book-nav-title"{% if page.url == '/book/' %} aria-current="page"{% endif %}>{{ book.title }}</a>
+        <p class="book-nav-description">{{ book.tagline }}</p>
       </div>
-
+      {% for part in book.parts %}
       <div class="book-nav-section">
-        <span class="book-nav-part" role="heading" aria-level="2">Part I: Getting Started</span>
+        <span class="book-nav-part" role="heading" aria-level="2">{{ part.name }}</span>
         <ul>
-          <li><a href="{{ '/book/intro/who-should-read/' | relative_url }}"{% if page.url == '/book/intro/who-should-read/' %} class="active" aria-current="page"{% endif %}>Who Should Read This Book</a></li>
-          <li><a href="{{ '/book/intro/how-to-read/' | relative_url }}"{% if page.url == '/book/intro/how-to-read/' %} class="active" aria-current="page"{% endif %}>How to Read This Book</a></li>
-          <li><a href="{{ '/book/intro/healthcare-delivery/' | relative_url }}"{% if page.url == '/book/intro/healthcare-delivery/' %} class="active" aria-current="page"{% endif %}>How Healthcare Is Delivered</a></li>
-          <li><a href="{{ '/book/intro/vocabularies/' | relative_url }}"{% if page.url == '/book/intro/vocabularies/' %} class="active" aria-current="page"{% endif %}>A Primer on Healthcare Vocabularies</a></li>
+          {% for ch in part.chapters -%}
+          <li><a href="{{ ch.url | relative_url }}"{% if page.url == ch.url %} class="active" aria-current="page"{% endif %}>{{ ch.short | default: ch.title }}</a></li>
+          {% endfor -%}
         </ul>
       </div>
-
-      <div class="book-nav-section">
-        <span class="book-nav-part" role="heading" aria-level="2">Part II: Administrative Data</span>
-        <ul>
-          <li><a href="{{ '/book/administrative/medical-claims/' | relative_url }}"{% if page.url == '/book/administrative/medical-claims/' %} class="active" aria-current="page"{% endif %}>Medical Claims</a></li>
-          <li><a href="{{ '/book/administrative/pharmacy-claims/' | relative_url }}"{% if page.url == '/book/administrative/pharmacy-claims/' %} class="active" aria-current="page"{% endif %}>Pharmacy Claims</a></li>
-        </ul>
-      </div>
-
-      <div class="book-nav-section">
-        <span class="book-nav-part" role="heading" aria-level="2">Part III: Clinical Data</span>
-        <ul>
-          <li><a href="{{ '/book/clinical/ehr/' | relative_url }}"{% if page.url == '/book/clinical/ehr/' %} class="active" aria-current="page"{% endif %}>Electronic Health Records</a></li>
-          <li><a href="{{ '/book/clinical/medical-imaging/' | relative_url }}"{% if page.url == '/book/clinical/medical-imaging/' %} class="active" aria-current="page"{% endif %}>Medical Imaging</a></li>
-          <li><a href="{{ '/book/clinical/clinical-trials/' | relative_url }}"{% if page.url == '/book/clinical/clinical-trials/' %} class="active" aria-current="page"{% endif %}>Clinical Trial Data</a></li>
-          <li><a href="{{ '/book/clinical/molecular-sequencing/' | relative_url }}"{% if page.url == '/book/clinical/molecular-sequencing/' %} class="active" aria-current="page"{% endif %}>Molecular Sequencing</a></li>
-        </ul>
-      </div>
-
-      <div class="book-nav-section">
-        <span class="book-nav-part" role="heading" aria-level="2">Part IV: Patient-Generated Data</span>
-        <ul>
-          <li><a href="{{ '/book/patient-generated/vital-signs/' | relative_url }}"{% if page.url == '/book/patient-generated/vital-signs/' %} class="active" aria-current="page"{% endif %}>Vital Signs Monitoring</a></li>
-          <li><a href="{{ '/book/patient-generated/adherence/' | relative_url }}"{% if page.url == '/book/patient-generated/adherence/' %} class="active" aria-current="page"{% endif %}>Adherence Monitoring Technology</a></li>
-          <li><a href="{{ '/book/patient-generated/activity-lifestyle/' | relative_url }}"{% if page.url == '/book/patient-generated/activity-lifestyle/' %} class="active" aria-current="page"{% endif %}>Activity &amp; Lifestyle</a></li>
-          <li><a href="{{ '/book/patient-generated/patient-reported-outcomes/' | relative_url }}"{% if page.url == '/book/patient-generated/patient-reported-outcomes/' %} class="active" aria-current="page"{% endif %}>Patient-Reported Outcomes</a></li>
-          <li><a href="{{ '/book/patient-generated/complex-unstructured/' | relative_url }}"{% if page.url == '/book/patient-generated/complex-unstructured/' %} class="active" aria-current="page"{% endif %}>Complex &amp; Unstructured Data</a></li>
-          <li><a href="{{ '/book/patient-generated/future/' | relative_url }}"{% if page.url == '/book/patient-generated/future/' %} class="active" aria-current="page"{% endif %}>The Patient-Generated Data of the Future</a></li>
-        </ul>
-      </div>
-
-      <div class="book-nav-section">
-        <span class="book-nav-part" role="heading" aria-level="2">Working with Health Data</span>
-        <ul>
-          <li><a href="{{ '/book/working-with-data/de-identification/' | relative_url }}"{% if page.url == '/book/working-with-data/de-identification/' %} class="active" aria-current="page"{% endif %}>Methods to De-Identify Health Data</a></li>
-          <li><a href="{{ '/book/working-with-data/multimodal-streams/' | relative_url }}"{% if page.url == '/book/working-with-data/multimodal-streams/' %} class="active" aria-current="page"{% endif %}>Putting It All Together: Multimodal Data Streams</a></li>
-        </ul>
-      </div>
+      {% endfor %}
     </nav>
 
     <!-- Chapter content -->
     <main class="book-main" id="main-content">
       <button class="book-nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="book-nav">☰</button>
+      {% if page.url != '/book/' %}
+      <div class="book-chapter-header">
+        {%- for part in book.parts -%}{%- for ch in part.chapters -%}{%- if ch.url == page.url -%}
+        <p class="book-chapter-part">{{ part.name }}</p>
+        {%- endif -%}{%- endfor -%}{%- endfor %}
+        <h1>{{ page.title }}</h1>
+        {% if page.description %}<p class="book-chapter-lede">{{ page.description }}</p>{% endif %}
+      </div>
+      {% endif %}
       {{ content }}
+      {% if idx >= 0 %}
+      {%- assign prev_idx = idx | minus: 1 -%}
+      {%- assign next_idx = idx | plus: 1 -%}
+      <nav class="book-pager" aria-label="Chapter navigation">
+        {% if idx > 0 %}{% assign prev = chapters[prev_idx] %}
+        <a class="book-pager-prev" href="{{ prev.url | relative_url }}" rel="prev"><span class="book-pager-label">Previous</span><span class="book-pager-title">{{ prev.short | default: prev.title }}</span></a>
+        {% else %}
+        <a class="book-pager-prev" href="{{ '/book/' | relative_url }}"><span class="book-pager-label">Back to</span><span class="book-pager-title">Table of contents</span></a>
+        {% endif %}
+        {% if next_idx < chapters.size %}{% assign next = chapters[next_idx] %}
+        <a class="book-pager-next" href="{{ next.url | relative_url }}" rel="next"><span class="book-pager-label">Next</span><span class="book-pager-title">{{ next.short | default: next.title }}</span></a>
+        {% endif %}
+      </nav>
+      {% endif %}
       <footer class="book-chapter-footer">
-        <p>© {{ site.time | date: '%Y' }} Daniel Feller. Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>. Free for educational and non-commercial use with attribution. Cite as: Feller, D. <em>Decoding Health Data</em>. <a href="https://danieljfeller.github.io/book/">danieljfeller.github.io/book</a>. For commercial licensing, contact <a href="mailto:danieljfeller@gmail.com">danieljfeller@gmail.com</a>.</p>
+        <p>© {{ site.time | date: '%Y' }} Daniel Feller. Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>. Free for educational and non-commercial use with attribution. Cite as: Feller, D. <em>{{ book.title }}</em>. <a href="https://danieljfeller.github.io/book/">danieljfeller.github.io/book</a>. For commercial licensing, contact <a href="mailto:danieljfeller@gmail.com">danieljfeller@gmail.com</a>.</p>
       </footer>
     </main>
 

@@ -1,7 +1,7 @@
 ---
 name: health-data-figure
 description: >-
-  Create or regenerate figures for the book "Decoding Health Data" (book/ in this
+  Create or regenerate figures for the book "The Health Data Handbook" (book/ in this
   repo) as Nature-style SVGs to the project's visual standard. Use whenever making
   a book figure, health-data diagram, or illustration of how health data is
   generated/structured — file-format layouts (FASTQ, SAM/BAM, VCF, CRAM, claims,
@@ -13,7 +13,7 @@ description: >-
 
 # Health-data figure
 
-Produce figures for *Decoding Health Data* that read as one publication, styled
+Produce figures for *The Health Data Handbook* that read as one publication, styled
 like *Nature* graphics but tinted to the book's website. Output is always **SVG**
 saved to `images/book/<slug>.svg` and referenced from a chapter's `<figure>`.
 

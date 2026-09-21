@@ -1,6 +1,7 @@
 ---
 layout: book
 title: "The Patient-Generated Data of the Future"
+description: "Clinical-grade PPG, electrochemical sweat sensing, contactless monitoring, and electronic skin."
 permalink: /book/patient-generated/future/
 ---
 
@@ -8,15 +9,15 @@ Recent advancements in battery and sensor technology have enabled collecting man
 
 <figure>
   <img src="{{ '/images/book/patient-generated-data-types.svg' | relative_url }}" alt="Overview diagram of seven categories of patient-generated data: wearable data, self-reported outcomes, home monitoring devices, connected medical devices, social and lifestyle data, environmental data, and social network and media data, each with illustrative examples">
-  <figcaption>The landscape of patient-generated health data. Seven broad categories — wearables, self-reported outcomes, home monitoring devices, connected medical devices, social and lifestyle data, environmental sensors, and social network data — collectively represent a comprehensive picture of a patient's health outside the clinic.</figcaption>
+  <figcaption>The landscape of patient-generated health data. Seven broad categories, wearables, self-reported outcomes, home monitoring devices, connected medical devices, social and lifestyle data, environmental sensors, and social network data, collectively represent a comprehensive picture of a patient's health outside the clinic.</figcaption>
 </figure>
 
 Key technological advances driving this shift include:
 
-Clinical-Grade Photoplethysmography (PPG) & ECG: Modern consumer sensors have moved beyond simple heart rate tracking to FDA-cleared arrhythmia detection (AFib), blood oxygen saturation ($SpO_2$), and respiratory rate variability. Multi-wavelength PPG sensors now allow for deeper tissue penetration, improving accuracy across diverse skin tones and measuring novel metrics like blood pressure proxies.
+- Clinical-Grade Photoplethysmography (PPG) & ECG: Modern consumer sensors have moved beyond simple heart rate tracking to FDA-cleared arrhythmia detection (AFib), blood oxygen saturation (SpO<sub>2</sub>), and respiratory rate variability. Multi-wavelength PPG sensors now allow for deeper tissue penetration, improving accuracy across diverse skin tones and measuring novel metrics like blood pressure proxies.
 
-Electrochemical Sensing (Biochemical Profiling): The "Holy Grail" of non-invasive sensing has expanded beyond glucose. New microneedle arrays and sweat-sensing patches can now continuously monitor lactate (muscle fatigue), cortisol (stress), electrolytes, and hydration levels in real-time.
+- Electrochemical Sensing (Biochemical Profiling): The "Holy Grail" of non-invasive sensing has expanded beyond glucose. New microneedle arrays and sweat-sensing patches can now continuously monitor lactate (muscle fatigue), cortisol (stress), electrolytes, and hydration levels in real-time.
 
-Contactless & Ambient Sensing: Utilizing radio-frequency (RF) signals and Wi-Fi channel state information (CSI), new systems can passively monitor respiration rates, sleep stages, and gait speed without the patient wearing any device. This "zero-burden" monitoring is particularly transformative for elder care and frailty assessment.
+- Contactless & Ambient Sensing: Utilizing radio-frequency (RF) signals and Wi-Fi channel state information (CSI), new systems can passively monitor respiration rates, sleep stages, and gait speed without the patient wearing any device. This "zero-burden" monitoring is particularly transformative for elder care and frailty assessment.
 
-Flexible Hybrid Electronics (Electronic Skin): Ultrathin, stretchable circuits ("e-tattoos") using graphene or gold nanomesh can conform to the skin's microstructure. These devices minimize motion artifacts and enable high-fidelity recording of electromyography (EMG) and skin impedance.
+- Flexible Hybrid Electronics (Electronic Skin): Ultrathin, stretchable circuits ("e-tattoos") using graphene or gold nanomesh can conform to the skin's microstructure. These devices minimize motion artifacts and enable high-fidelity recording of electromyography (EMG) and skin impedance.

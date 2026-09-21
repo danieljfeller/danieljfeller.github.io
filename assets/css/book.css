@@ -416,5 +416,232 @@
 
   .book-main {
     padding: 1.75rem 1.25rem 3rem;
+    width: 100%;
+    max-width: none;
   }
 }
+
+/* ============================================================
+   Additions: chapter header, pager, landing-page TOC
+   ============================================================ */
+
+/* ---- Chapter header (title + part + lede from front matter) ---- */
+.book-chapter-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+  max-width: 68ch;
+}
+
+.book-chapter-part {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-color);
+  margin-bottom: 0.5rem !important;
+}
+
+.book-chapter-header h1 {
+  margin-bottom: 0.6rem;
+}
+
+.book-chapter-lede {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 0 !important;
+}
+
+/* ---- Footnotes ---- */
+.book-main .footnotes {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  max-width: 68ch;
+}
+
+.book-main .footnotes ol {
+  margin-left: 1.25rem;
+}
+
+.book-main .footnotes li {
+  line-height: 1.55;
+  margin-bottom: 0.5rem;
+  overflow-wrap: anywhere;
+}
+
+.book-main .footnotes p {
+  font-size: inherit;
+  color: inherit;
+  margin-bottom: 0;
+  display: inline;
+}
+
+.book-main sup[role="doc-noteref"] a,
+.book-main sup a {
+  font-family: var(--mono);
+  font-size: 0.7em;
+  padding: 0 0.15em;
+  text-decoration: none;
+}
+
+/* ---- Previous / next chapter pager ---- */
+.book-pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 3.5rem;
+  max-width: 68ch;
+}
+
+.book-pager a {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  text-decoration: none;
+  color: var(--text-color);
+  transition: border-color 0.12s, background 0.12s;
+}
+
+.book-pager a:hover {
+  border-color: var(--accent-color);
+  background: rgba(9, 105, 218, 0.04);
+  text-decoration: none;
+}
+
+.book-pager-next { text-align: right; margin-left: auto; }
+
+.book-pager-label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-secondary);
+}
+
+.book-pager-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+@media (max-width: 600px) {
+  .book-pager { flex-direction: column; }
+  .book-pager-next { text-align: left; }
+}
+
+/* ---- Landing page: calls to action and coverage chips ---- */
+.book-actions {
+  margin-top: 0.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+}
+
+.book-actions-primary {
+  display: inline-block;
+  padding: 0.55rem 1.1rem;
+  background: var(--accent-color);
+  color: #fff !important;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.92rem;
+  text-decoration: none !important;
+}
+
+.book-actions-primary:hover { background: var(--accent-hover); }
+
+.book-actions-secondary {
+  font-size: 0.85rem;
+  font-family: var(--mono);
+}
+
+.book-streams {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0 0 2rem;
+}
+
+.book-streams span {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  padding: 0.2rem 0.65rem;
+  background: var(--bg-secondary);
+}
+
+/* ---- Landing page: table of contents ---- */
+.book-toc-part {
+  margin-bottom: 2rem;
+}
+
+.book-toc-part h3 {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-secondary);
+  margin-top: 1.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.book-toc-blurb {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.book-toc-list {
+  list-style: none;
+  margin: 0;
+  max-width: 68ch;
+  counter-reset: chapter;
+}
+
+.book-toc-list li {
+  position: relative;
+  padding: 0.55rem 0 0.55rem 2.2rem;
+  border-top: 1px solid var(--border-color);
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+
+.book-toc-list li::before {
+  counter-increment: chapter;
+  content: counter(chapter, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 0.65rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+}
+
+.book-toc-list li a {
+  font-weight: 600;
+  font-size: 0.98rem;
+}
+
+.book-toc-desc {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+/* Code blocks in chapters: keep long sample lines scrollable, not wrapped */
+.book-main pre code { white-space: pre; }

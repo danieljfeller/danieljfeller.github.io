@@ -1,4 +1,4 @@
-# Visual standard — *Decoding Health Data* figures
+# Visual standard — *The Health Data Handbook* figures
 
 This is the single source of truth for how every figure in the book looks. The
 goal: a reader flipping between the medical-claims chapter and the genomics

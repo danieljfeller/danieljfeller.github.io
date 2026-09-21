@@ -1,66 +1,67 @@
 ---
 layout: book
 title: "Molecular Sequencing"
+description: "From raw reads to variants: FASTQ, BAM, CRAM, and VCF, and the pipeline that connects them."
 permalink: /book/clinical/molecular-sequencing/
 ---
 
+## Why Molecular Sequencing Is The Present - and Future - of Healthcare
 
-### Why Molecular Sequencing Is The Present - and Future - of Healthcare
+Molecular sequencing represents a complete or partial reading of an organism's DNA to identify genetic variations, mutations, and sequences. In healthcare, this data has become indispensable as precision medicine accelerates and clinical outcomes increasingly depend on understanding a patient's genetic profile. Genomic sequencing drives drug development by pinpointing disease-causing mutations like BRCA (increase risk of breast cancer) and EGFR (increases risk of lung cancer) that can be targeted with novel therapeutics, while enabling rare-disease diagnosis through whole-genome sequencing to catch mutations that targeted tests miss.[^1] Perhaps most impactfully, integrating genomic data with patient clinical records enables treatment response prediction—studies show this integration can achieve up to 75% accuracy in predicting how well cancer patients respond to specific therapies.[^2]  As the field matures, the critical challenge ahead is systematically linking genomic sequencing results with clinical outcomes data to unlock the full potential of personalized treatment strategies.
 
-Molecular sequencing represents a complete or partial reading of an organism's DNA to identify genetic variations, mutations, and sequences. In healthcare, this data has become indispensable as precision medicine accelerates and clinical outcomes increasingly depend on understanding a patient's genetic profile. Genomic sequencing drives drug development by pinpointing disease-causing mutations like BRCA (increase risk of breast cancer) and EGFR (increases risk of lung cancer) that can be targeted with novel therapeutics, while enabling rare-disease diagnosis through whole-genome sequencing to catch mutations that targeted tests miss. Perhaps most impactfully, integrating genomic data with patient clinical records enables treatment response prediction—studies show this integration can achieve up to 75% accuracy in predicting how well cancer patients respond to specific therapies.  As the field matures, the critical challenge ahead is systematically linking genomic sequencing results with clinical outcomes data to unlock the full potential of personalized treatment strategies.
+Sequencing data is stored and analyzed by organizations performing research and major medical centers for treatment.  All global biopharmaceutical companies rely on genomic  data to accelerate drug discovery, validate therapeutic targets, and improve clinical trial design. On the delivery side, adoption is concentrated where genetic results change what a clinician does next. NCI-designated cancer centers and academic medical centers run molecular tumor boards that match tumor sequencing to targeted therapies and trials; large integrated health systems increasingly sequence for hereditary cancer risk and pharmacogenomics; and specialized reference laboratories such as Foundation Medicine, Tempus, Caris, and Guardant perform much of the clinical sequencing that community oncologists order but could never run in-house. Outside oncology, sequencing shows up in prenatal screening, rare-disease diagnosis at pediatric referral centers, and a slowly growing set of pharmacogenomic programs.
 
-Sequencing data is stored and analyzed by organizations performing research and major medical centers for treatment.  All global biopharmaceutical companies rely on genomic  data to accelerate drug discovery, validate therapeutic targets, and improve clinical trial design. <Which healthcare providers are using it?>
-
-
-### What Does Molecular Sequencing Data Actually Look Like?
+## What Does Molecular Sequencing Data Actually Look Like?
 
 In its most basic form, molecular sequencing data typically contains sequences of amino acids - adenine (A), thymine (T), guanine (G), and cytosine (C). This gives you six possible base pair combinations: A-T, T-A, G-C, C-G, plus A-A, T-T, G-G, C-C. RNA uses uracil (U) instead of thymine, so its bases are A, U, G, C. RNA is typically single-stranded, so you don't get the same strict pairing rules as DNA.
 
-Generating this data from biological molecules is performed by a few different technologies. Short read sequencing is the most common clinical DNA sequencing method and scans tiny DNA fragments one letter at a time across millions of samples simultaneously—it's fast, cheap, and accurate but misses large deletions. Long-read sequencing reads entire longer DNA sections at once, catching big structural changes but slower and less accurate. RNA sequencing uses the same core sequencing platforms as DNA but are first converted to complementary DNA (cDNA) before sequencing since the machines are designed to read only DNA. Protein sequencing uses a completely different method based on weighing protein fragments rather than reading genetic letters.
+Generating this data from biological molecules is performed by a few different technologies. Short read sequencing is the most common clinical DNA sequencing method and scans tiny DNA fragments one letter at a time across millions of samples simultaneously—it's fast, cheap, and accurate but misses large deletions (see the figures below). Long-read sequencing reads entire longer DNA sections at once, catching big structural changes but slower and less accurate. RNA sequencing uses the same core sequencing platforms as DNA but are first converted to complementary DNA (cDNA) before sequencing since the machines are designed to read only DNA. Protein sequencing uses a completely different method based on weighing protein fragments rather than reading genetic letters.
 
 <figure>
   <img src="{{ '/images/book/short-vs-long-read.svg' | relative_url }}" alt="Two-panel schematic comparing short and long reads tiling a genome region with two identical repeat copies: many short reads that cannot be placed uniquely within a repeat, versus few long reads that span the repeat with unique flanking sequence">
-  <figcaption>Short read vs. long read sequencing across a region containing two identical repeat copies. Short reads (left) tile the region densely and accurately, but a read falling entirely within a repeat cannot be placed uniquely. Long reads (right) span the repeat with unique flanking sequence, anchoring it unambiguously — which is why long reads better resolve large structural variants, at the cost of per-base accuracy. Illustrative schematic.</figcaption>
+  <figcaption>Short read vs. long read sequencing across a region containing two identical repeat copies. Short reads (left) tile the region densely and accurately, but a read falling entirely within a repeat cannot be placed uniquely. Long reads (right) span the repeat with unique flanking sequence, anchoring it unambiguously, which is why long reads better resolve large structural variants, at the cost of per-base accuracy. Illustrative schematic.</figcaption>
 </figure>
 
 <figure>
-  <img src="{{ '/images/book/illumina-sequencing-workflow.svg' | relative_url }}" alt="Three-panel diagram of Illumina sequencing workflow: A) cluster generation on a flow cell, B) high-throughput sequencing with fluorescent reversible terminators, C) demultiplexing and read mapping from BCL to FASTQ to mapped reads">
+  <img src="{{ '/images/book/illumina-sequencing-workflow.svg' | relative_url }}" alt="Three-panel diagram of Illumina sequencing workflow: a) cluster generation on a flow cell, b) high-throughput sequencing with fluorescent reversible terminators, c) demultiplexing and read mapping from BCL to FASTQ to mapped reads">
   <figcaption>The Illumina sequencing workflow. (a) A DNA fragment binds the flow cell and is amplified by bridge amplification into a dense clonal cluster. (b) Fluorescently labeled nucleotides are incorporated one base at a time and imaged, each base read on its own channel. (c) Raw BCL output is demultiplexed into per-sample FASTQ files, quality-trimmed, and aligned to a reference genome to produce mapped reads. Illustrative schematic.</figcaption>
 </figure>
 
 However, most files containing molecular sequencing data contain additional data elements that provide context around the sequenced amino acids. These include the following:
 
-Variant Calls — Spots where a patient's DNA differs from a typical reference DNA sequence.
+- Variant Calls — Spots where a patient's DNA differs from a typical reference DNA sequence.
 
-Sequencing Depth — The number of times the machine reads each position in the DNA; more reads mean more confidence in the result.
+- Sequencing Depth — The number of times the machine reads each position in the DNA; more reads mean more confidence in the result.
 
-Quality Scores — A confidence level for each base the machine reads, showing how likely it got the letter right.
+- Quality Scores — A confidence level for each base the machine reads, showing how likely it got the letter right.
 
-Chromosome Location — Which chromosome and what position on that chromosome the variant is found.
+- Chromosome Location — Which chromosome and what position on that chromosome the variant is found.
 
-Variant Type — What kind of change happened—a single letter swap, extra letters added, or letters deleted.
+- Variant Type — What kind of change happened—a single letter swap, extra letters added, or letters deleted.
 
-Allele Frequency — How common a particular DNA change is in the general population; rare changes are more likely to cause disease than common ones.
+- Allele Frequency — How common a particular DNA change is in the general population; rare changes are more likely to cause disease than common ones.
 
-
-### Standard Formats for Molecular Sequencing Data
+## Standard Formats for Molecular Sequencing Data
 
 While there are lots of different standards for storing molecular sequencing data, we will only focus on the relatively few standard that you ‘need to know’.
 
+### FASTQ
 
-#### FASTQ
-
-The basic form of molecular sequencing data with minimal metadata are FASTQ files. FASTQ is the de facto standard for storing unaligned sequencing reads with quality scores. All commercial sequencing platforms (Illumina, PacBio, Oxford Nanopore) generate FASTQ files. An example of the structure of FASTQ file can be seen below:
+The basic form of molecular sequencing data with minimal metadata are [FASTQ](https://en.wikipedia.org/wiki/FASTQ_format) files. FASTQ is the de facto standard for storing *unaligned sequencing reads* with quality scores. All commercial sequencing platforms (Illumina, PacBio, Oxford Nanopore) generate FASTQ files. An example of the structure of FASTQ file can be seen below:
 
 <figure>
-  <img src="{{ '/images/book/fastq-format.svg' | relative_url }}" alt="Annotated FASTQ read record showing four labeled lines — identifier, nucleotide sequence, plus-sign separator, and per-base quality string — with a note on Phred quality encoding">
+  <img src="{{ '/images/book/fastq-format.svg' | relative_url }}" alt="Annotated FASTQ read record showing four labeled lines: identifier, nucleotide sequence, plus-sign separator, and per-base quality string, with a note on Phred quality encoding">
   <figcaption>FASTQ file format. Each sequencing read occupies four lines: (1) an identifier beginning with @ that encodes the instrument, run, and position; (2) the nucleotide sequence; (3) a + separator; and (4) quality scores encoded as ASCII characters, where each character maps to a Phred confidence score for the corresponding base.</figcaption>
 </figure>
 
 Quality scores in FASTQ files are confidence levels for each individual base the sequencer reads, indicating how likely the machine got that letter correct. They're encoded as ASCII characters and converted to Phred scores (typically 0-60), where higher scores mean higher confidence—a score of 30 means 99.9% accuracy, while a score of 20 means 99% accuracy.
 
+### BAM
 
-#### BAM
+<figure>
+  <img src="{{ '/images/book/read-alignment-puzzle.svg' | relative_url }}" alt="Schematic showing a pile of unaligned short reads on the left, an arrow labeled align to reference, and on the right the same reads stacked at their mapped positions beneath a reference genome, like puzzle pieces placed into a completed puzzle">
+  <figcaption>From reads to alignments. A FASTQ file is a pile of puzzle pieces: reads in arbitrary order with no positional information (left). Alignment matches each read to its position on the reference genome, producing the ordered pileup stored in a SAM/BAM file (right). Overlapping reads at each position provide the sequencing depth that later gives variant calls their confidence. Illustrative schematic.</figcaption>
+</figure>
 
 As mentioned previously, FASTQ files contain unaligned ‘reads’—raw sequences directly from the sequencer with quality scores, but no information about where they map to the genome. Each FASTQ file can be thought of as a puzzle piece, and those puzzle pieces must be assembled into a completed puzzle.
 
@@ -69,31 +70,29 @@ As mentioned previously, FASTQ files contain unaligned ‘reads’—raw sequenc
   <figcaption>SAM (Sequence Alignment Map) file format. The header section defines the reference genome and sorting order. Each alignment row encodes the read name, bitwise flag (encoding paired/aligned status), reference chromosome, position, mapping quality, CIGAR string (describing insertions/deletions), and the base sequence with per-base quality scores.</figcaption>
 </figure>
 
-The Binary Alignment Map (BAM) format is the industry standard for compressing aligned sequence reads.
+The [Binary Alignment Map](https://en.wikipedia.org/wiki/BAM_(file_format)) (BAM) format is the industry standard for compressing aligned sequence reads.
 
-FASTQ files are converted to BAM or CRAM through a two-step process, typically using an open-source bioinformatics software like samtools.  First, an alignment module reads each raw DNA sequence from the FASTQ file and matches it to the correct position in a reference genome. Once all reads are aligned and their positions identified, compression software packages them into the more compact BAM or CRAM format, discarding redundant information and adding helpful labels about where each read came from and how confident the alignment is. The sequence reads from the machine (typically manufactured by PacBio or Illumina) are never 100% accurate, and thus there are additional software programs to identify and correct misread base-pairs.
+FASTQ files are converted to BAM or CRAM through a two-step process, typically using an open-source bioinformatics software like [samtools](https://www.htslib.org/workflow/fastq.html).  First, an alignment module reads each raw DNA sequence from the FASTQ file and matches it to the correct position in a reference genome. Once all reads are aligned and their positions identified, compression software packages them into the more compact BAM or CRAM format, discarding redundant information and adding helpful labels about where each read came from and how confident the alignment is. The sequence reads from the machine (typically manufactured by PacBio or Illumina) are never 100% accurate, and thus there are additional software programs to identify and correct misread base-pairs.
 
-
-#### CRAM
+### CRAM
 
 <figure>
   <img src="{{ '/images/book/cram-block-layout.svg' | relative_url }}" alt="CRAM block layout diagram showing containers with header slices and data blocks for read name, query score, base flags, and other fields, with skipped containers shown in gray">
   <figcaption>CRAM file structure. Data is organized into containers, each containing a slice header and a series of data blocks. CRAM achieves compression by storing only differences from a reference genome rather than full sequences. Blocks for fields like original quality scores (OQ:Z) can be omitted entirely to save space.</figcaption>
 </figure>
 
-Compressed Reference-oriented Alignment Map (CRAM)  is a more heavily compressed alternative to BAM and is increasingly preferred for long-term storage due to significant file size savings; major academic consortia and biopharmaceutical companies now recommend or require CRAM. Variant Call Format (VCF) is the standard for storing identified genetic variants extracted from aligned reads. For RNA-seq data, the same FASTQ → BAM/CRAM → VCF pipeline applies since RNA is converted to cDNA before sequencing. Protein sequencing data lacks a single dominant standard; mass spectrometry output is typically stored in formats like mzML or mzXML, and protein identification results are often in tab-delimited or proprietary formats. Popular bioinformatics packages can convert between these formats, and most major research consortia and pharmaceutical companies now store sequence reads predominantly in CRAM for cost and efficiency. Multiple high-profile consortia either recommend or require CRAM. It is important to note that most major academic bioinformatics consortia store sequence reads, and predominantly in CRAM.
+Compressed Reference-oriented Alignment Map ([CRAM](https://en.wikipedia.org/wiki/CRAM_(file_format)#:~:text=CRAM%20was%20designed%20to%20be,reference%20sequence%2C%20reducing%20storage%20costs.))  is a more heavily compressed alternative to BAM and is increasingly preferred for long-term storage due to significant file size savings; major academic consortia and biopharmaceutical companies now recommend or require CRAM. Variant Call Format (VCF) is the standard for storing identified genetic variants extracted from aligned reads. For RNA-seq data, the same FASTQ → BAM/CRAM → VCF pipeline applies since RNA is converted to cDNA before sequencing. Protein sequencing data lacks a single dominant standard; mass spectrometry output is typically stored in formats like mzML or mzXML, and protein identification results are often in tab-delimited or proprietary formats. Popular bioinformatics packages can convert between these formats, and most major research consortia and pharmaceutical companies now store sequence reads predominantly in CRAM for cost and efficiency. Multiple high-profile consortia either recommend or require CRAM. It is important to note that most major academic bioinformatics consortia store sequence reads, and predominantly in CRAM.
 
-
-#### VCF (Variant Call Format)
+### VCF (Variant Call Format)
 
 VCF is the standard format for storing genetic variants identified from aligned sequencing reads. Where BAM and CRAM store every read across the entire genome, VCF is much more compact—it records only the positions where a sample's DNA differs from the reference, along with metadata describing the nature of each variant.
-
-A VCF file contains a header section that defines the reference genome, the calling software used, and the meaning of each data field. Each subsequent data row represents a single variant and includes the chromosome, position, reference base(s), alternate base(s), a quality score for the call, filter status (e.g., whether it passed quality thresholds), and an INFO field containing annotations like allele frequency, depth, and variant type.
 
 <figure>
   <img src="{{ '/images/book/vcf-format.svg' | relative_url }}" alt="Annotated VCF file example showing mandatory header lines, optional meta-information lines, and body rows with columns labeled for reference alleles, alternate alleles, quality scores, filter status, and sample genotypes">
   <figcaption>VCF (Variant Call Format) file structure. The ## header lines define the reference genome, format version, and column definitions. Each body row encodes one variant: chromosome (CHROM), position (POS), reference base (REF), alternate base(s) (ALT), quality score (QUAL), filter status (FILTER), and per-sample genotype fields (FORMAT/SAMPLE).</figcaption>
 </figure>
+
+A VCF file contains a header section that defines the reference genome, the calling software used, and the meaning of each data field. Each subsequent data row represents a single variant and includes the chromosome, position, reference base(s), alternate base(s), a quality score for the call, filter status (e.g., whether it passed quality thresholds), and an INFO field containing annotations like allele frequency, depth, and variant type.
 
 Producing a clean VCF from raw reads is computationally intensive. The standard pipeline takes FASTQ reads through alignment, sorting, duplicate marking, and variant calling—a multi-step process that can take many hours per sample and requires careful coordination of multiple open-source tools. Each step introduces choices about quality thresholds, reference genomes, and filtering logic that affect which variants ultimately appear in the output VCF. This means that VCF files generated by different pipelines or institutions are not always directly comparable, which is a practical consideration when working with variant data across multiple sites.
 
@@ -105,3 +104,6 @@ Regardless of the pipeline used, VCF is the practical endpoint of the sequencing
   <img src="{{ '/images/book/sequencing-pipeline.svg' | relative_url }}" alt="Bioinformatics pipeline flowchart from BCL sequencer output through FASTQ generation and demultiplexing, mapping and aligning, position sorting, duplicate marking, and variant calling to produce VCF/gVCF files containing SNVs, indels, CNVs, and structural variants">
   <figcaption>Standard short-read sequencing bioinformatics pipeline. Raw BCL files from the sequencer are demultiplexed into per-sample FASTQ files, aligned to a reference genome (BAM/CRAM), sorted, and deduplicated before variant calling produces the final VCF/gVCF output containing SNVs, copy number variants (CNVs), structural variants (SVs), and targeted caller results.</figcaption>
 </figure>
+
+[^1]: Li, Han, et al. “Whole Genome Sequencing for Rare Diseases: From Clinical Implementation to Research Discovery.” *European Journal of Human Genetics*, vol. 31, no. 3, 2023, pp. 295–306. *Nature*, [https://www.nature.com/articles/s41431-022-01113-x](https://www.nature.com/articles/s41431-022-01113-x).
+[^2]: Kline, Adrienne, et al. "Multimodal Machine Learning in Precision Health: A Scoping Review." *npj Digital Medicine*, vol. 5, no. 1, 7 Nov. 2022, p. 171, doi:10.1038/s41746-022-00712-8.

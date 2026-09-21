@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430"
+     role="img" text-rendering="geometricPrecision"
+     font-family="'Inter', Arial, Helvetica, sans-serif">
+  <title>Anatomy of an electronic case report form</title>
+  <desc>A mock-up of a laboratory results form in an electronic data capture system. The form
+    has a form label, two group labels (renal and hepatic), item labels with unit hints, entry
+    fields holding values, a yes/no toggle, and a red validation message beneath an out-of-range
+    value. Callouts on the right name each component: form, group, item label, hint, field,
+    value, choice, and edit check. Values are synthetic.</desc>
+
+  <!-- form panel -->
+  <rect x="40" y="24" width="470" height="382" rx="6" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+  <text x="64" y="56" font-size="15" font-weight="700" fill="#1f2328">Lab Results</text>
+  <text x="64" y="72" font-size="10" fill="#59636e">Visit 2 · Day 28 · Subject 0107</text>
+
+  <!-- group: Renal -->
+  <text x="64" y="104" font-size="12" font-weight="600" fill="#1f2328">Renal</text>
+  <rect x="64" y="112" width="422" height="82" rx="4" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
+  <text x="76" y="134" font-size="12" fill="#1f2328">Serum creatinine</text>
+  <text x="76" y="148" font-size="10" fill="#59636e">Enter in mg/dL</text>
+  <rect x="400" y="124" width="72" height="24" rx="3" fill="#ffffff" stroke="#59636e" stroke-width="0.75"/>
+  <text x="436" y="140" font-size="11" fill="#1f2328" text-anchor="middle" font-family="ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace">0.9</text>
+  <line x1="76" y1="156" x2="474" y2="156" stroke="#d0d7de" stroke-width="0.75"/>
+  <text x="76" y="174" font-size="12" fill="#1f2328">Serum albumin</text>
+  <text x="76" y="188" font-size="10" fill="#59636e">Enter in g/dL</text>
+  <rect x="400" y="164" width="72" height="24" rx="3" fill="#ffffff" stroke="#59636e" stroke-width="0.75"/>
+  <text x="436" y="180" font-size="11" fill="#1f2328" text-anchor="middle" font-family="ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace">4.2</text>
+
+  <!-- group: Hepatic -->
+  <text x="64" y="224" font-size="12" font-weight="600" fill="#1f2328">Hepatic</text>
+  <rect x="64" y="232" width="422" height="158" rx="4" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
+  <text x="76" y="254" font-size="12" fill="#1f2328">Alanine transaminase (ALT)</text>
+  <text x="76" y="268" font-size="10" fill="#59636e">Enter in U/L</text>
+  <rect x="400" y="244" width="72" height="24" rx="3" fill="#ffffff" stroke="#59636e" stroke-width="0.75"/>
+  <text x="436" y="260" font-size="11" fill="#1f2328" text-anchor="middle" font-family="ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace">12</text>
+  <line x1="76" y1="276" x2="474" y2="276" stroke="#d0d7de" stroke-width="0.75"/>
+  <text x="76" y="296" font-size="12" fill="#1f2328">Was alkaline phosphatase (ALP) measured?</text>
+  <!-- toggle -->
+  <rect x="432" y="284" width="40" height="20" rx="10" fill="#0969da"/>
+  <circle cx="462" cy="294" r="8" fill="#ffffff"/>
+  <text x="404" y="298" font-size="10" fill="#59636e" text-anchor="end">Yes</text>
+  <line x1="76" y1="310" x2="474" y2="310" stroke="#d0d7de" stroke-width="0.75"/>
+  <text x="76" y="330" font-size="12" fill="#1f2328">Alkaline phosphatase (ALP)</text>
+  <text x="76" y="344" font-size="10" fill="#59636e">Enter in U/L</text>
+  <rect x="400" y="320" width="72" height="24" rx="3" fill="#ffffff" stroke="#d55e00" stroke-width="1.25"/>
+  <text x="436" y="336" font-size="11" fill="#1f2328" text-anchor="middle" font-family="ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace">214</text>
+  <text x="76" y="364" font-size="10" fill="#d55e00">Value is outside the expected range (44–147 U/L). Confirm the entry;</text>
+  <text x="76" y="377" font-size="10" fill="#d55e00">a query will remain open until the site resolves it.</text>
+
+  <!-- callout leaders (hairlines) -->
+  <g stroke="#d0d7de" stroke-width="0.75" fill="none">
+    <path d="M 152 52 L 560 52"/>
+    <path d="M 100 100 L 560 100"/>
+    <path d="M 180 130 L 560 130"/>
+    <path d="M 150 145 L 560 158"/>
+    <path d="M 474 176 L 560 190"/>
+    <path d="M 474 256 L 560 240"/>
+    <path d="M 474 294 L 560 294"/>
+    <path d="M 474 332 L 560 342"/>
+  </g>
+
+  <!-- callout labels -->
+  <g font-size="12">
+    <text x="568" y="48" font-weight="600" fill="#1f2328">Form</text>
+    <text x="568" y="62" font-size="11" fill="#59636e">one CRF page; often built from an SDTM domain (here, LB)</text>
+
+    <text x="568" y="96" font-weight="600" fill="#1f2328">Group</text>
+    <text x="568" y="110" font-size="11" fill="#59636e">related items collected together</text>
+
+    <text x="568" y="126" font-weight="600" fill="#1f2328">Item label</text>
+    <text x="568" y="140" font-size="11" fill="#59636e">the variable being collected; maps to a CDASH / SDTM variable</text>
+
+    <text x="568" y="158" font-weight="600" fill="#1f2328">Hint</text>
+    <text x="568" y="172" font-size="11" fill="#59636e">expected units and format, so sites enter comparable values</text>
+
+    <text x="568" y="190" font-weight="600" fill="#1f2328">Field and value</text>
+    <text x="568" y="204" font-size="11" fill="#59636e">typed by the coordinator, or fed directly from the site’s</text>
+    <text x="568" y="218" font-size="11" fill="#59636e">lab system when an integration exists</text>
+
+    <text x="568" y="240" font-weight="600" fill="#1f2328">Coded choice</text>
+    <text x="568" y="254" font-size="11" fill="#59636e">yes / no and pick-lists use CDISC controlled terminology</text>
+
+    <text x="568" y="294" font-weight="600" fill="#1f2328">Conditional item</text>
+    <text x="568" y="308" font-size="11" fill="#59636e">the ALP field only appears when the toggle is set</text>
+
+    <text x="568" y="342" font-weight="600" fill="#1f2328">Edit check</text>
+    <text x="568" y="356" font-size="11" fill="#59636e">range and logic rules run as data is entered; a failure</text>
+    <text x="568" y="370" font-size="11" fill="#59636e">opens a query that a monitor must close before database lock</text>
+  </g>
+</svg>

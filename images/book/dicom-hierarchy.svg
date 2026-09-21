@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360"
+     role="img" text-rendering="geometricPrecision"
+     font-family="'Inter', Arial, Helvetica, sans-serif">
+  <title>The DICOM Patient, Study, Series, Instance hierarchy</title>
+  <desc>A tree with one patient at the top, two studies beneath it, three series beneath the
+    first study, and a stack of image instances beneath the first series. Each level is
+    labelled with the DICOM tag and unique identifier that names it: Patient ID, Study
+    Instance UID, Series Instance UID, and SOP Instance UID. Identifiers are illustrative.</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#59636e"/>
+    </marker>
+  </defs>
+
+  <!-- level labels (left margin) -->
+  <g font-size="11" fill="#59636e">
+    <text x="24" y="44" font-weight="600" fill="#1f2328">Patient</text>
+    <text x="24" y="59">(0010,0020) Patient ID</text>
+    <text x="24" y="128" font-weight="600" fill="#1f2328">Study</text>
+    <text x="24" y="143">(0020,000D) Study Instance UID</text>
+    <text x="24" y="158">one imaging exam</text>
+    <text x="24" y="222" font-weight="600" fill="#1f2328">Series</text>
+    <text x="24" y="237">(0020,000E) Series Instance UID</text>
+    <text x="24" y="252">images acquired together</text>
+    <text x="24" y="306" font-weight="600" fill="#1f2328">Instance</text>
+    <text x="24" y="321">(0008,0018) SOP Instance UID</text>
+    <text x="24" y="336">one image / slice</text>
+  </g>
+
+  <!-- patient -->
+  <rect x="380" y="26" width="240" height="44" rx="4" fill="#0969da" fill-opacity="0.12" stroke="#0969da" stroke-width="1"/>
+  <text x="500" y="44" text-anchor="middle" font-size="13" font-weight="500" fill="#1f2328">Patient</text>
+  <text x="500" y="61" text-anchor="middle" font-size="11" fill="#59636e" font-family="ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace">MRN00483921</text>
+
+  <!-- connectors patient -> studies -->
+  <g stroke="#59636e" stroke-width="1.5" fill="none">
+    <path d="M 500 70 L 500 90 L 360 90 L 360 106" marker-end="url(#arrow)"/>
+    <path d="M 500 90 L 660 90 L 660 106" marker-end="url(#arrow)"/>
+  </g>
+
+  <!-- studies -->
+  <rect x="240" y="108" width="240" height="56" rx="4" fill="#009e73" fill-opacity="0.12" stroke="#009e73" stroke-width="1"/>
+  <text x="360" y="128" text-anchor="middle" font-size="13" font-weight="500" fill="#1f2328">Study: CT chest with contrast</text>
+  <text x="360" y="145" text-anchor="middle" font-size="11" fill="#59636e">Study Date 20260214 · Modality CT</text>
+  <text x="360" y="158" text-anchor="middle" font-size="10" fill="#59636e" font-family="ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace">1.2.840.113619.2.55.3.4821…</text>
+
+  <rect x="540" y="108" width="240" height="56" rx="4" fill="#009e73" fill-opacity="0.12" stroke="#009e73" stroke-width="1"/>
+  <text x="660" y="128" text-anchor="middle" font-size="13" font-weight="500" fill="#1f2328">Study: MRI brain without contrast</text>
+  <text x="660" y="145" text-anchor="middle" font-size="11" fill="#59636e">Study Date 20250903 · Modality MR</text>
+  <text x="660" y="158" text-anchor="middle" font-size="10" fill="#59636e" font-family="ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace">1.2.840.113619.2.55.3.1177…</text>
+
+  <!-- connectors study -> series -->
+  <g stroke="#59636e" stroke-width="1.5" fill="none">
+    <path d="M 360 164 L 360 184 L 292 184 L 292 200" marker-end="url(#arrow)"/>
+    <path d="M 360 184 L 408 184 L 408 200" marker-end="url(#arrow)"/>
+    <path d="M 360 184 L 524 184 L 524 200" marker-end="url(#arrow)"/>
+    <path d="M 660 164 L 660 210" stroke-dasharray="3 3"/>
+  </g>
+  <text x="660" y="228" text-anchor="middle" font-size="11" fill="#59636e">series …</text>
+
+  <!-- series -->
+  <rect x="240" y="202" width="104" height="50" rx="4" fill="#7d55c7" fill-opacity="0.12" stroke="#7d55c7" stroke-width="1"/>
+  <text x="292" y="222" text-anchor="middle" font-size="12" font-weight="500" fill="#1f2328">Series 1</text>
+  <text x="292" y="238" text-anchor="middle" font-size="10" fill="#59636e">axial, 1.25 mm</text>
+
+  <rect x="356" y="202" width="104" height="50" rx="4" fill="#7d55c7" fill-opacity="0.12" stroke="#7d55c7" stroke-width="1"/>
+  <text x="408" y="222" text-anchor="middle" font-size="12" font-weight="500" fill="#1f2328">Series 2</text>
+  <text x="408" y="238" text-anchor="middle" font-size="10" fill="#59636e">coronal recon</text>
+
+  <rect x="472" y="202" width="104" height="50" rx="4" fill="#7d55c7" fill-opacity="0.12" stroke="#7d55c7" stroke-width="1"/>
+  <text x="524" y="222" text-anchor="middle" font-size="12" font-weight="500" fill="#1f2328">Series 3</text>
+  <text x="524" y="238" text-anchor="middle" font-size="10" fill="#59636e">scout</text>
+
+  <!-- connector series 1 -> instances -->
+  <path d="M 292 252 L 292 282" stroke="#59636e" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- instances: a stack of slices -->
+  <g fill="#e69f00" fill-opacity="0.12" stroke="#e69f00" stroke-width="1">
+    <rect x="262" y="298" width="60" height="40" rx="3"/>
+    <rect x="256" y="292" width="60" height="40" rx="3"/>
+    <rect x="250" y="286" width="60" height="40" rx="3"/>
+  </g>
+  <text x="280" y="310" text-anchor="middle" font-size="11" font-weight="500" fill="#1f2328">Instances</text>
+  <text x="280" y="322" text-anchor="middle" font-size="10" fill="#59636e">1 … 312</text>
+  <text x="336" y="304" font-size="11" fill="#59636e">one file per slice; each carries its</text>
+  <text x="336" y="318" font-size="11" fill="#59636e">own SOP Instance UID plus the pixel data</text>
+  <text x="336" y="334" font-size="10" fill="#59636e" font-family="ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace">1.2.840.113619.2.55.3.4821.1.87…</text>
+
+  <!-- side note -->
+  <g font-size="11" fill="#59636e">
+    <text x="560" y="286" font-weight="600" fill="#1f2328">Why the UIDs matter</text>
+    <text x="560" y="302">A CT chest is hundreds of separate files. The</text>
+    <text x="560" y="316">Study and Series UIDs inside each file are what</text>
+    <text x="560" y="330">reassemble them into the right exam for the</text>
+    <text x="560" y="344">right patient, in the right order.</text>
+  </g>
+</svg>

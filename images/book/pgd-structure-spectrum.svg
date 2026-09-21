@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 290"
+     role="img" text-rendering="geometricPrecision"
+     font-family="'Inter', Arial, Helvetica, sans-serif">
+  <title>Patient-generated data from structured and validated to unstructured and unvalidated</title>
+  <desc>A horizontal axis runs from structured and validated on the left to unstructured and
+    unvalidated on the right. Data types sit along it: laboratory results and validated
+    patient-reported outcomes at the left; continuous glucose, home blood pressure, wearable
+    steps and heart rate, and sleep stages in the middle; patient photos, voice recordings,
+    and digital exhaust such as typing, GPS, and app usage at the right. A bracket beneath
+    shows that the left portion is generally covered by HIPAA while the right portion often
+    falls outside it. Placement is illustrative.</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#59636e"/>
+    </marker>
+  </defs>
+
+  <!-- axis -->
+  <line x1="70" y1="150" x2="830" y2="150" stroke="#59636e" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <text x="70" y="36" font-size="13" font-weight="600" fill="#1f2328">Structured &amp; validated</text>
+  <text x="70" y="52" font-size="11" fill="#59636e">numbers on a clock, with a unit and a known meaning</text>
+  <text x="830" y="36" font-size="13" font-weight="600" fill="#1f2328" text-anchor="end">Unstructured &amp; unvalidated</text>
+  <text x="830" y="52" font-size="11" fill="#59636e" text-anchor="end">signal-rich, interpretation-poor, ethically fraught</text>
+
+  <!-- items: dot on the axis, leader, label (alternating above / below) -->
+  <g stroke="#d0d7de" stroke-width="0.75">
+    <line x1="92"  y1="150" x2="92"  y2="104"/>
+    <line x1="168" y1="150" x2="168" y2="196"/>
+    <line x1="262" y1="150" x2="262" y2="104"/>
+    <line x1="330" y1="150" x2="330" y2="196"/>
+    <line x1="412" y1="150" x2="412" y2="104"/>
+    <line x1="486" y1="150" x2="486" y2="196"/>
+    <line x1="586" y1="150" x2="586" y2="104"/>
+    <line x1="676" y1="150" x2="676" y2="196"/>
+    <line x1="790" y1="150" x2="790" y2="104"/>
+  </g>
+  <g fill="#0969da">
+    <circle cx="92"  cy="150" r="5"/>
+    <circle cx="168" cy="150" r="5"/>
+    <circle cx="262" cy="150" r="5"/>
+    <circle cx="330" cy="150" r="5"/>
+    <circle cx="412" cy="150" r="5"/>
+    <circle cx="486" cy="150" r="5"/>
+    <circle cx="586" cy="150" r="5"/>
+    <circle cx="676" cy="150" r="5"/>
+    <circle cx="790" cy="150" r="5"/>
+  </g>
+  <g font-size="12" font-weight="500" fill="#1f2328" text-anchor="middle">
+    <text x="92"  y="86">Lab results</text>
+    <text x="168" y="216">PHQ-9 / PROMIS</text>
+    <text x="262" y="86">CGM glucose</text>
+    <text x="330" y="216">Home blood pressure</text>
+    <text x="412" y="86">Wearable steps &amp; HR</text>
+    <text x="486" y="216">Sleep stages</text>
+    <text x="586" y="86">Patient photos</text>
+    <text x="676" y="216">Voice recordings</text>
+    <text x="790" y="86">Digital exhaust</text>
+  </g>
+  <g font-size="10" fill="#59636e" text-anchor="middle">
+    <text x="92"  y="99">LOINC-coded, machine-read</text>
+    <text x="168" y="229">validated instruments, scored</text>
+    <text x="262" y="99">every 5 min, mg/dL</text>
+    <text x="330" y="229">patient-initiated, hand-entered</text>
+    <text x="412" y="99">proprietary algorithms</text>
+    <text x="486" y="229">60–70% agreement with PSG</text>
+    <text x="586" y="99">uncalibrated, variable framing</text>
+    <text x="676" y="229">vocal biomarkers, research-grade</text>
+    <text x="790" y="99">typing, GPS, app use, purchases</text>
+  </g>
+
+  <!-- HIPAA coverage bracket -->
+  <g stroke="#59636e" stroke-width="1" fill="none">
+    <path d="M 70 250 L 70 258 L 540 258 L 540 250"/>
+    <path d="M 556 250 L 556 258 L 830 258 L 830 250"/>
+  </g>
+  <text x="305" y="276" font-size="11" fill="#59636e" text-anchor="middle">Generally protected health information once it reaches a clinic or payer (HIPAA)</text>
+  <text x="693" y="276" font-size="11" fill="#d55e00" font-weight="600" text-anchor="middle">Often outside HIPAA entirely (consumer apps, data brokers)</text>
+</svg>

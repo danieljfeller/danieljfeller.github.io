@@ -1,22 +1,46 @@
 # Site settings
 title: Daniel Feller, PhD
 description: Healthcare Data Scientist | Federated Learning | Solutions Engineer
-url: "https://danieljfeller.github.io/"
+url: "https://danieljfeller.github.io"
 baseurl: ""
+author:
+  name: Daniel Feller
+  url: https://www.linkedin.com/in/danieljfeller
+# Default social-share image for pages that don't set their own (jekyll-seo-tag)
+logo: /images/book/social-card.png
 
 # About/contact
 email: danieljfeller@gmail.com
-github_username: yourusername
+github_username: danieljfeller
 linkedin_username: danieljfeller
 
 # Build settings
 markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+  syntax_highlighter: rouge
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-redirect-from
+
+# Every page under book/ gets the book layout and the book's share card,
+# so a chapter link pasted into LinkedIn renders a title, blurb, and image.
+defaults:
+  - scope:
+      path: "book"
+    values:
+      layout: book
+      image: /images/book/social-card.png
 
 # Exclude from build
 exclude:
   - Gemfile
   - Gemfile.lock
   - README.md
+  - convert_notebook.py
+  - "book/*.docx"
+  - "**/CLAUDE.md"
+  - vendor
