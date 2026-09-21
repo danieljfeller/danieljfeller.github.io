@@ -30,18 +30,15 @@ permalink: /book/
 
 ## Table of contents
 
+<div class="book-toc">
 {% for part in book.parts %}
 <section class="book-toc-part">
   <h3>{{ part.name }}</h3>
-  {% if part.blurb %}<p class="book-toc-blurb">{{ part.blurb }}</p>{% endif %}
   <ol class="book-toc-list">
     {% for ch in part.chapters -%}
-    <li><a href="{{ ch.url | relative_url }}">{{ ch.title }}</a>{% if ch.description %}<span class="book-toc-desc">{{ ch.description }}</span>{% endif %}</li>
+    <li><a href="{{ ch.url | relative_url }}">{{ ch.title }}</a></li>
     {% endfor -%}
   </ol>
 </section>
 {% endfor %}
-
----
-
-<small>© Daniel Feller. Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>. Free for educational and non-commercial use with attribution. Cite as: Feller, D. <em>{{ book.title }}</em>. danieljfeller.github.io/book. For commercial licensing, contact <a href="mailto:danieljfeller@gmail.com">danieljfeller@gmail.com</a>.</small>
+</div>

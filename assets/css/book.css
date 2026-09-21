@@ -598,18 +598,12 @@
   margin-bottom: 0.6rem;
 }
 
-.book-toc-blurb {
-  font-size: 0.92rem;
-  line-height: 1.7;
-  color: var(--text-secondary);
-  margin-bottom: 1rem;
-}
+.book-toc { counter-reset: chapter; }
 
 .book-toc-list {
   list-style: none;
   margin: 0;
   max-width: 68ch;
-  counter-reset: chapter;
 }
 
 .book-toc-list li {
@@ -634,13 +628,6 @@
 .book-toc-list li a {
   font-weight: 600;
   font-size: 0.98rem;
-}
-
-.book-toc-desc {
-  display: block;
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  line-height: 1.55;
 }
 
 /* Code blocks in chapters: keep long sample lines scrollable, not wrapped */

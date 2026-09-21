@@ -4,7 +4,8 @@
 # front matter that book/_build/docx_to_chapters.py writes into each chapter.
 #
 # `source` is the chapter heading in the DOCX (used by the build script to
-# find the chapter's text). `blurb` is the part-level intro shown on the TOC.
+# find the chapter's text). `blurb` holds the part-level intro paragraph from the
+# manuscript; it is kept as data but not rendered on the TOC, which lists titles only.
 
 title: "The Health Data Handbook"
 subtitle: "A Practical Guide From Genomics to EHRs to Insurance Claims"
