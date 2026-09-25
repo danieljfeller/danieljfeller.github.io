@@ -10,7 +10,7 @@
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2316303f'/%3E%3Cpath d='M10 82 L38 30 L52 52 L62 40 L90 82 Z' fill='%23f6f9fc'/%3E%3Cpath d='M38 30 L46 44 L52 52 L58 46 L62 40 L56 30 L48 40 Z' fill='%23c9d6e6'/%3E%3C/svg%3E">
 <style>
 :root {
@@ -22,8 +22,8 @@
   --ink-soft: #5b6b7c;
   --pine: #1f4d2e;
   --pine-soft: #2e6b41;
-  --lift: #c8102e;
-  --gold: #d9a441;
+  --lift: #d7263d;
+  --gold: #f2c14e;
   --accent: #2b6cb0;
   --accent-soft: #e3eefa;
   --green: #1f9d55;
@@ -31,53 +31,29 @@
   --black: #111418;
   --serif: "Fraunces", Georgia, serif;
   --sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --cond: "Barlow Condensed", "Arial Narrow", sans-serif;
   --radius: 10px;
   --shadow: 0 1px 2px rgba(20,40,60,.06), 0 8px 24px rgba(20,40,60,.08);
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { height: 100%; }
-body {
-  font-family: var(--sans);
-  color: var(--ink);
-  background: var(--ice);
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  overflow: hidden;
-}
+body { font-family: var(--sans); color: var(--ink); background: var(--ice); display: flex; flex-direction: column; min-height: 100vh; overflow: hidden; }
 button, input, select { font: inherit; color: inherit; }
 button { cursor: pointer; }
 
 /* ---------- Header ---------- */
-.top {
-  display: flex; align-items: center; gap: 14px;
-  padding: 10px 16px;
-  background: var(--panel);
-  border-bottom: 1px solid var(--line);
-  flex-wrap: wrap;
-}
+.top { display: flex; align-items: center; gap: 14px; padding: 10px 16px; background: var(--panel); border-bottom: 1px solid var(--line); flex-wrap: wrap; }
 .brand { display: flex; align-items: center; gap: 10px; }
 .brand svg { width: 30px; height: 30px; }
 .brand .word { font-family: var(--serif); font-weight: 700; font-size: 20px; letter-spacing: -.01em; }
 .brand .sub { font-size: 11px; color: var(--ink-soft); display: block; margin-top: -2px; }
-.name-input {
-  flex: 1 1 200px; min-width: 160px; max-width: 360px;
-  font-family: var(--serif); font-size: 18px; font-weight: 600;
-  border: 1px solid transparent; border-radius: 8px; padding: 6px 10px;
-  background: var(--ice);
-}
+.name-input { flex: 1 1 200px; min-width: 160px; max-width: 360px; font-family: var(--serif); font-size: 18px; font-weight: 600; border: 1px solid transparent; border-radius: 8px; padding: 6px 10px; background: var(--ice); }
 .name-input:hover, .name-input:focus { border-color: var(--line); outline: none; background: #fff; }
 .tabs { display: flex; background: var(--ice); border-radius: 999px; padding: 3px; }
-.tabs button {
-  border: 0; background: transparent; padding: 7px 16px; border-radius: 999px;
-  font-weight: 600; font-size: 14px; color: var(--ink-soft);
-}
+.tabs button { border: 0; background: transparent; padding: 7px 16px; border-radius: 999px; font-weight: 600; font-size: 14px; color: var(--ink-soft); }
 .tabs button.active { background: var(--ink); color: #fff; }
 .actions { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
-.btn {
-  border: 1px solid var(--line); background: #fff; border-radius: 8px;
-  padding: 7px 12px; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;
-}
+.btn { border: 1px solid var(--line); background: #fff; border-radius: 8px; padding: 7px 12px; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
 .btn:hover { background: var(--ice); }
 .btn:disabled { opacity: .45; cursor: default; }
 .btn.primary { background: var(--pine); border-color: var(--pine); color: #fff; }
@@ -89,60 +65,42 @@ button { cursor: pointer; }
 main { flex: 1; min-height: 0; display: flex; }
 .view { display: none; flex: 1; min-height: 0; }
 .view.active { display: flex; }
-.tools {
-  width: 84px; background: var(--panel); border-right: 1px solid var(--line);
-  padding: 10px 8px; display: flex; flex-direction: column; gap: 4px; overflow-y: auto;
-}
+.tools { width: 84px; background: var(--panel); border-right: 1px solid var(--line); padding: 10px 8px; display: flex; flex-direction: column; gap: 4px; overflow-y: auto; }
 .tools .group { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); padding: 8px 4px 2px; }
-.tool {
-  display: flex; flex-direction: column; align-items: center; gap: 3px;
-  border: 1px solid transparent; background: transparent; border-radius: 8px;
-  padding: 7px 2px; font-size: 11px; font-weight: 500; color: var(--ink);
-}
+.tool { display: flex; flex-direction: column; align-items: center; gap: 3px; border: 1px solid transparent; background: transparent; border-radius: 8px; padding: 7px 2px; font-size: 11px; font-weight: 500; color: var(--ink); }
 .tool svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .tool:hover { background: var(--ice); }
 .tool.active { background: var(--accent-soft); border-color: #bcd3ee; color: var(--accent); }
 .tool kbd { font-size: 9px; color: var(--ink-soft); font-family: var(--sans); }
 
-.canvas-wrap {
-  flex: 1; min-width: 0; position: relative; background: var(--ice-deep);
-  overflow: hidden;
-}
-.canvas-wrap canvas { display: block; width: 100%; height: 100%; cursor: crosshair; touch-action: none; }
-.hud {
-  position: absolute; left: 12px; bottom: 12px;
-  font-size: 12px; color: var(--ink-soft); background: rgba(255,255,255,.85);
-  padding: 6px 10px; border-radius: 8px; pointer-events: none; backdrop-filter: blur(4px);
-  display: flex; gap: 14px;
-}
+.canvas-wrap { flex: 1; min-width: 0; position: relative; background: #7fa4cf; overflow: hidden; }
+.canvas-wrap canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+#overlay { cursor: crosshair; }
+.hud { position: absolute; left: 12px; bottom: 12px; font-size: 12px; color: var(--ink-soft); background: rgba(255,255,255,.88); padding: 6px 10px; border-radius: 8px; pointer-events: none; backdrop-filter: blur(4px); display: flex; gap: 14px; }
 .hud b { color: var(--ink); font-weight: 600; }
-.hint {
-  position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
-  font-size: 12px; background: rgba(28,42,58,.88); color: #fff; padding: 6px 12px; border-radius: 999px;
-  pointer-events: none; white-space: nowrap; opacity: 0; transition: opacity .2s;
-}
+.hint { position: absolute; top: 56px; left: 50%; transform: translateX(-50%); font-size: 12px; background: rgba(28,42,58,.88); color: #fff; padding: 6px 12px; border-radius: 999px; pointer-events: none; white-space: nowrap; opacity: 0; transition: opacity .2s; }
 .hint.show { opacity: 1; }
 .zoom-ctl { position: absolute; right: 12px; bottom: 12px; display: flex; gap: 4px; }
-.zoom-ctl button { width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--line); background: rgba(255,255,255,.9); font-weight: 600; }
+.zoom-ctl button { width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--line); background: rgba(255,255,255,.92); font-weight: 600; }
+.floatbar { position: absolute; top: 10px; left: 10px; right: 10px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; pointer-events: none; }
+.floatbar > * { pointer-events: auto; }
+.chip { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,.92); border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px; font-size: 12px; backdrop-filter: blur(4px); }
+.chip label { color: var(--ink-soft); }
+.chip input[type=range] { width: 110px; accent-color: var(--accent); }
+.chip input[type=checkbox] { accent-color: var(--pine); }
+.chip .seg { border-radius: 999px; }
+.chip .seg button { padding: 3px 9px; font-size: 12px; }
 
-.panel {
-  width: 300px; background: var(--panel); border-left: 1px solid var(--line);
-  overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 14px;
-}
+.panel { width: 300px; background: var(--panel); border-left: 1px solid var(--line); overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 14px; }
 .card { border: 1px solid var(--line); border-radius: var(--radius); padding: 12px; }
-.card h3 {
-  font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft);
-  font-weight: 600; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;
-}
+.card h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); font-weight: 600; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; }
 .card h3 .small { text-transform: none; letter-spacing: 0; font-weight: 500; }
 .row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
 .row:last-child { margin-bottom: 0; }
 .row label { font-size: 12px; color: var(--ink-soft); flex: 0 0 96px; }
 .row .val { font-size: 12px; color: var(--ink); min-width: 44px; text-align: right; font-variant-numeric: tabular-nums; }
 .row input[type=range] { flex: 1 1 0; min-width: 0; accent-color: var(--accent); }
-.row select, .row input[type=text], .row input[type=number] {
-  flex: 1; border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px; font-size: 13px; background: #fff; min-width: 0;
-}
+.row select, .row input[type=text], .row input[type=number] { flex: 1; border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px; font-size: 13px; background: #fff; min-width: 0; }
 .row input[type=checkbox] { accent-color: var(--pine); width: 16px; height: 16px; }
 .row .btn { padding: 5px 10px; font-size: 12px; }
 .seg { display: flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; flex: 1; }
@@ -154,10 +112,7 @@ main { flex: 1; min-height: 0; display: flex; }
 .stats div b { display: block; color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
 .warn { font-size: 12px; color: #a15c07; background: #fdf3e1; padding: 6px 8px; border-radius: 6px; margin-top: 8px; }
 .list { display: flex; flex-direction: column; gap: 2px; max-height: 260px; overflow-y: auto; }
-.list button {
-  display: flex; align-items: center; gap: 8px; border: 0; background: transparent; text-align: left;
-  padding: 5px 6px; border-radius: 6px; font-size: 13px; width: 100%;
-}
+.list button { display: flex; align-items: center; gap: 8px; border: 0; background: transparent; text-align: left; padding: 5px 6px; border-radius: 6px; font-size: 13px; width: 100%; }
 .list button:hover { background: var(--ice); }
 .list button.sel { background: var(--accent-soft); }
 .list .meta { margin-left: auto; font-size: 11px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
@@ -173,25 +128,12 @@ main { flex: 1; min-height: 0; display: flex; }
 .help kbd { font-family: var(--sans); font-size: 11px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 0 4px; background: #fff; }
 
 /* ---------- Map view ---------- */
-.map-wrap {
-  flex: 1; min-width: 0; display: flex; align-items: center; justify-content: center;
-  background: #cfd8e3; position: relative; padding: 20px; overflow: auto;
-}
-.map-wrap canvas {
-  max-width: 100%; max-height: 100%; box-shadow: 0 10px 40px rgba(20,40,60,.25); background: #fff;
-}
-#mapStatus {
-  position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
-  background: rgba(28,42,58,.88); color: #fff; font-size: 12px; padding: 6px 12px; border-radius: 999px;
-  opacity: 0; transition: opacity .15s; pointer-events: none;
-}
+.map-wrap { flex: 1; min-width: 0; display: flex; align-items: center; justify-content: center; background: #3f4b5c; position: relative; padding: 20px; overflow: auto; }
+.map-wrap canvas { max-width: 100%; max-height: 100%; box-shadow: 0 10px 40px rgba(0,0,0,.35); background: #fff; }
+#mapStatus { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); background: rgba(28,42,58,.88); color: #fff; font-size: 12px; padding: 6px 12px; border-radius: 999px; opacity: 0; transition: opacity .15s; pointer-events: none; }
 #mapStatus.show { opacity: 1; }
 
-#toast {
-  position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(20px);
-  background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 10px; font-size: 13px;
-  opacity: 0; transition: all .25s; pointer-events: none; max-width: 90vw; text-align: center; z-index: 50;
-}
+#toast { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 10px; font-size: 13px; opacity: 0; transition: all .25s; pointer-events: none; max-width: 90vw; text-align: center; z-index: 50; }
 #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
 .modal-bg { position: fixed; inset: 0; background: rgba(20,30,40,.45); display: none; align-items: center; justify-content: center; z-index: 40; }
@@ -209,7 +151,7 @@ main { flex: 1; min-height: 0; display: flex; }
   .tools { width: auto; flex: none; flex-direction: row; flex-wrap: wrap; overflow: visible; border-right: 0; border-bottom: 1px solid var(--line); }
   .tool { flex: 0 0 64px; }
   .tools .group { width: 100%; padding: 4px; }
-  .canvas-wrap { min-height: 60vh; }
+  .canvas-wrap { min-height: 62vh; }
   .panel { width: auto; border-left: 0; border-top: 1px solid var(--line); }
   .actions { margin-left: 0; }
 }
@@ -257,19 +199,21 @@ main { flex: 1; min-height: 0; display: flex; }
     </aside>
 
     <div class="canvas-wrap" id="canvasWrap">
-      <canvas id="editor"></canvas>
+      <canvas id="buildCanvas"></canvas>
+      <canvas id="overlay"></canvas>
+      <div class="floatbar">
+        <div class="chip"><label>View from</label><div class="seg" id="camSeg"><button data-v="S">S</button><button data-v="E">E</button><button data-v="N">N</button><button data-v="W">W</button></div></div>
+        <div class="chip"><label>Camera</label><input type="range" id="camPitch" min="24" max="90" step="1" value="40" title="Overhead ↔ oblique"><span id="camPitchVal" style="min-width:52px;color:var(--ink-soft)"></span></div>
+        <div class="chip"><label><input type="checkbox" id="camContours"> Contours</label></div>
+        <div class="chip"><label><input type="checkbox" id="camLabels" checked> Labels</label></div>
+      </div>
       <div class="hint" id="hint"></div>
       <div class="hud" id="hud"></div>
       <div class="zoom-ctl"><button id="zoomOut" title="Zoom out">−</button><button id="zoomFit" title="Fit">⤢</button><button id="zoomIn" title="Zoom in">+</button></div>
     </div>
 
     <aside class="panel">
-      <div class="card" id="brushCard">
-        <h3>Brush</h3>
-        <div class="row"><label>Size</label><input type="range" id="brushSize" min="2" max="30" step="1" value="9"><span class="val" id="brushSizeVal"></span></div>
-        <div class="row"><label>Strength</label><input type="range" id="brushStrength" min="0.1" max="1" step="0.05" value="0.5"><span class="val" id="brushStrengthVal"></span></div>
-      </div>
-
+      <div class="card" id="brushCard"></div>
       <div class="card" id="inspector" style="display:none"></div>
 
       <div class="card">
@@ -287,6 +231,7 @@ main { flex: 1; min-height: 0; display: flex; }
         <div class="row"><label>Base elev.</label><input type="number" id="baseElev" step="100"><span class="val" id="unitLabel1"></span></div>
         <div class="row"><label>Vertical rise</label><input type="number" id="rise" step="100"><span class="val" id="unitLabel2"></span></div>
         <div class="row"><label>Units</label><div class="seg" id="unitsSeg"><button data-u="ft">feet</button><button data-u="m">meters</button></div></div>
+        <div class="row"><label>Forest</label><div class="seg" id="forestSeg"><button data-f="mixed">Hardwood mix</button><button data-f="evergreen">Evergreen</button></div></div>
         <div class="row"><label></label><button class="btn primary" id="regenBtn">Regenerate terrain</button></div>
         <div class="help" style="margin-top:8px">Regenerating keeps your lifts, runs, and lodges but replaces the terrain and forest.</div>
       </div>
@@ -303,7 +248,7 @@ main { flex: 1; min-height: 0; display: flex; }
       <div class="card">
         <h3>How to play</h3>
         <div class="help">
-          The map looks <b>north</b>: the base is at the bottom, the summit at the top. Sculpt with the terrain brushes, plant or clear forest, then string <b>lifts</b> (bottom terminal first) and draw <b>runs</b> from top to bottom. Difficulty is rated from the pitch automatically. Groom runs for corduroy, or leave them as moguls. Switch to <b>Trail Map</b> when you want to see the painting.<br><br>
+          You build directly on the painting. Sculpt with the terrain brushes, plant or clear forest, then string <b>lifts</b> (bottom terminal first) and draw <b>runs</b> from top to bottom: they are cut through the forest and rated from their pitch. Rotate the view to reach the back side, or slide the camera to overhead for precision. Switch to <b>Trail Map</b> for the finished poster.<br><br>
           <kbd>scroll</kbd> zoom · <kbd>space</kbd>+drag pan · <kbd>[</kbd> <kbd>]</kbd> brush size · <kbd>⌘Z</kbd> undo · <kbd>⌫</kbd> delete selection · <kbd>esc</kbd> cancel
         </div>
       </div>
@@ -321,13 +266,14 @@ main { flex: 1; min-height: 0; display: flex; }
         <h3>Trail map</h3>
         <div class="row"><label>View from</label><div class="seg" id="viewSeg"><button data-v="S">South</button><button data-v="E">East</button><button data-v="N">North</button><button data-v="W">West</button></div></div>
         <div class="row"><label>Sun</label><div class="seg" id="sunSeg"><button data-s="left">Left</button><button data-s="right">Right</button></div></div>
-        <div class="row"><label>Relief</label><input type="range" id="exag" min="1" max="3.5" step="0.1" value="2.2"><span class="val" id="exagVal"></span></div>
+        <div class="row"><label>Camera</label><input type="range" id="mapPitch" min="24" max="60" step="1" value="32"><span class="val" id="mapPitchVal"></span></div>
+        <div class="row"><label>Relief</label><input type="range" id="exag" min="1" max="3.5" step="0.1" value="2"><span class="val" id="exagVal"></span></div>
         <div class="row"><label>Detail</label><input type="range" id="detail" min="1" max="4" step="1" value="3"><span class="val" id="detailVal"></span></div>
         <div class="row"><label>Labels</label><input type="checkbox" id="optLabels" checked></div>
         <div class="row"><label>Legend</label><input type="checkbox" id="optLegend" checked></div>
         <div class="row"><label>Haze</label><input type="checkbox" id="optHaze" checked></div>
-        <div class="row"><label>Paper</label><input type="checkbox" id="optPaper" checked></div>
         <div class="row"><label>Distant peaks</label><input type="checkbox" id="optRange" checked></div>
+        <div class="row"><label>Clouds</label><input type="checkbox" id="optClouds" checked></div>
       </div>
       <div class="card">
         <h3>Export</h3>
@@ -482,11 +428,12 @@ function generateBase(seed, preset, treeline) {
       const hx = (h[Math.min(x + 1, W - 1) + y * W] - h[Math.max(x - 1, 0) + y * W]) * 0.5 * SLOPE_SCALE;
       const hy = (h[x + Math.min(y + 1, H - 1) * W] - h[x + Math.max(y - 1, 0) * W]) * 0.5 * SLOPE_SCALE;
       const slope = Math.hypot(hx, hy); // rise/run
-      const dens = fbm(x / 13, y / 13, seed + 777, 3);
-      let d = clamp((dens - 0.40) * 2.8, 0, 1);
+      const dens = fbm(x / 11, y / 11, seed + 777, 3);
+      let d = clamp(0.62 + (dens - 0.5) * 1.6, 0, 1);          // mostly forest, with the odd meadow
+      if (dens < 0.36) d *= smoothstep(0.28, 0.36, dens);      // small natural clearings
       d *= 1 - smoothstep(treeline - 0.10, treeline + 0.02, h[i] + (vnoise(x / 6, y / 6, seed + 42) - 0.5) * 0.06);
-      d *= 1 - smoothstep(0.9, 1.5, slope);
-      if (v > 0.93) d *= 0.25;
+      d *= 1 - smoothstep(1.0, 1.6, slope);
+      if (v > 0.94) d *= 0.35;
       t[i] = Math.round(d * 255);
     }
   }
@@ -511,7 +458,7 @@ function newState(seed, preset) {
     height: null, trees: null,
     runs: [], lifts: [], lodges: [],
     nextId: 1,
-    map: { view: 'S', sun: 'left', exag: 2.2, detail: 3, labels: true, legend: true, haze: true, paper: true, range: true },
+    map: { view: 'S', sun: 'left', pitch: 32, exag: 2.0, detail: 3, labels: true, legend: true, haze: true, range: true, clouds: true, forest: 'mixed' },
   };
   const base = getBase(seed, preset, st.treeline);
   st.height = new Float32Array(base.h);
@@ -534,6 +481,12 @@ function hAt(x, y) { // bilinear sample of the heightmap at fractional grid coor
   return lerp(lerp(hh[y0 * W + x0], hh[y0 * W + x1], fx), lerp(hh[y1 * W + x0], hh[y1 * W + x1], fx), fy);
 }
 const elevM = (x, y) => S.baseElev + hAt(x, y) * S.rise;
+function tAt(x, y) { // bilinear forest density 0..255
+  x = clamp(x, 0, W - 1); y = clamp(y, 0, H - 1);
+  const x0 = Math.floor(x), y0 = Math.floor(y), x1 = Math.min(x0 + 1, W - 1), y1 = Math.min(y0 + 1, H - 1);
+  const fx = x - x0, fy = y - y0, tt = S.trees;
+  return lerp(lerp(tt[y0 * W + x0], tt[y0 * W + x1], fx), lerp(tt[y1 * W + x0], tt[y1 * W + x1], fx), fy);
+}
 const toUnit = m => S.units === 'ft' ? m * 3.28084 : m;
 const unitLabel = () => S.units === 'ft' ? 'ft' : 'm';
 const fmtElev = m => fmt(toUnit(m)) + ' ' + unitLabel();
@@ -766,178 +719,35 @@ async function decodeShare(hash) {
   return st;
 }
 
+
 /* =====================================================================
-   EDITOR — top-down topo view
+   SCENE — the painting. Shared by the build view and the trail map.
+   The heightmap is projected as a 2.5-D mesh drawn back to front. A
+   front-to-back pass first records, for every screen column, the highest
+   terrain silhouette nearer than each row; anything on the surface (trees,
+   trails, lift cables, buildings) is only drawn where it rises above that
+   silhouette. Forest is a dark tint on the ground plus a carpet of small
+   tree sprites; trails are simply gaps cut through it.
    ===================================================================== */
-const editor = $('editor'), ectx = editor.getContext('2d');
-const wrap = $('canvasWrap');
-const LAYER_UP = 4;                                   // terrain layer pixels per cell
-const layer = document.createElement('canvas'); layer.width = W * LAYER_UP; layer.height = H * LAYER_UP;
-const lctx = layer.getContext('2d');
-let layerImg = lctx.createImageData(layer.width, layer.height);
-const elevBuf = new Float32Array(layer.width * layer.height);
+const SNOW_LIT = [254, 253, 250], SNOW_MID = [222, 230, 242], SNOW_SHADE = [124, 146, 196];
+const ROCK_LIT = [152, 142, 130], ROCK_SHADE = [72, 66, 62];
+const HAZE = [186, 200, 226], SKYH = [230, 238, 247], VALLEY = [226, 232, 240];
+const EVERGREEN = [26, 62, 50], HARDWOOD = [118, 102, 124];
+const LIFT_RED = '#d7263d';
 
-const view = { scale: 5, ox: 0, oy: 0, fit: 5 };
-let dpr = 1, cw = 0, ch = 0;
-let terrainDirty = true, renderQueued = false;
-
-// UI state for tools
-let tool = 'raise';
-let brush = { size: 9, strength: 0.5 };
-let runOpts = { width: 1.5, groomed: true, glade: false };
-let liftType = 'chair';
-let cursor = null;               // [gx, gy] under the pointer, or null
-let painting = false, flattenTarget = 0, lastPaint = null;
-let pendingLift = null;          // first terminal while placing a lift
-let pendingRun = null;           // points while drawing a run
-let selection = null;            // { type: 'run'|'lift'|'lodge', id }
-let drag = null;                 // active handle drag
-let spaceDown = false, panning = null;
-
-function resizeEditor() {
-  dpr = Math.min(window.devicePixelRatio || 1, 2);
-  cw = wrap.clientWidth; ch = wrap.clientHeight;
-  editor.width = Math.round(cw * dpr); editor.height = Math.round(ch * dpr);
-  ectx.setTransform(dpr, 0, 0, dpr, 0, 0);
+function makeRotation(dir) {
+  // Rotated coords: rx runs left→right on screen, ry runs far (0) → near.
+  let RW = W, RH = H, toR, fromR;
+  if (dir === 'N') { toR = (x, y) => [W - 1 - x, H - 1 - y]; fromR = (rx, ry) => [W - 1 - rx, H - 1 - ry]; }
+  else if (dir === 'E') { RW = H; RH = W; toR = (x, y) => [H - 1 - y, x]; fromR = (rx, ry) => [ry, H - 1 - rx]; }
+  else if (dir === 'W') { RW = H; RH = W; toR = (x, y) => [y, W - 1 - x]; fromR = (rx, ry) => [W - 1 - ry, rx]; }
+  else { toR = (x, y) => [x, y]; fromR = (rx, ry) => [rx, ry]; }
+  return { RW, RH, toR, fromR, hR: (rx, ry) => { const [x, y] = fromR(rx, ry); return hAt(x, y); } };
 }
-function fitView() {
-  resizeEditor();
-  view.fit = Math.min((cw - 30) / W, (ch - 30) / H);
-  view.scale = view.fit;
-  view.ox = (cw - W * view.scale) / 2 + view.scale / 2;
-  view.oy = (ch - H * view.scale) / 2 + view.scale / 2;
-  requestRender();
-}
-function zoomAt(sx, sy, factor) {
-  const ns = clamp(view.scale * factor, view.fit * 0.6, view.fit * 8);
-  const k = ns / view.scale;
-  view.ox = sx - (sx - view.ox) * k; view.oy = sy - (sy - view.oy) * k; view.scale = ns;
-  requestRender();
-}
-const toScreen = (gx, gy) => [view.ox + gx * view.scale, view.oy + gy * view.scale];
-const toGrid = (sx, sy) => [(sx - view.ox) / view.scale, (sy - view.oy) / view.scale];
-
-// ---------- Terrain layer ----------
-const TINT = [[0, [176, 192, 160]], [0.22, [206, 205, 178]], [0.48, [228, 224, 210]], [0.72, [238, 240, 243]], [1, [253, 253, 255]]];
-function tint(h) {
-  for (let i = 1; i < TINT.length; i++) if (h <= TINT[i][0]) {
-    const t = (h - TINT[i - 1][0]) / (TINT[i][0] - TINT[i - 1][0]), a = TINT[i - 1][1], b = TINT[i][1];
-    return [lerp(a[0], b[0], t), lerp(a[1], b[1], t), lerp(a[2], b[2], t)];
-  }
-  return TINT[TINT.length - 1][1];
-}
-function renderLayer() {
-  const LW = layer.width, LH = layer.height, hh = S.height;
-  // Pass 1: bilinear elevation (0..1) for every layer pixel.
-  const xs0 = new Int32Array(LW), xs1 = new Int32Array(LW), xf = new Float32Array(LW);
-  for (let px = 0; px < LW; px++) {
-    const gx = clamp(-0.5 + (px + 0.5) / LAYER_UP, 0, W - 1);
-    xs0[px] = Math.floor(gx); xs1[px] = Math.min(xs0[px] + 1, W - 1); xf[px] = gx - xs0[px];
-  }
-  for (let py = 0; py < LH; py++) {
-    const gy = clamp(-0.5 + (py + 0.5) / LAYER_UP, 0, H - 1);
-    const y0 = Math.floor(gy), y1 = Math.min(y0 + 1, H - 1), fy = gy - y0, r0 = y0 * W, r1 = y1 * W, row = py * LW;
-    for (let px = 0; px < LW; px++) {
-      const a = hh[r0 + xs0[px]], b = hh[r0 + xs1[px]], c = hh[r1 + xs0[px]], d = hh[r1 + xs1[px]], fx = xf[px];
-      elevBuf[row + px] = (a + (b - a) * fx) * (1 - fy) + (c + (d - c) * fx) * fy;
-    }
-  }
-  // Pass 2: hillshade + hypsometric tint + contours.
-  const data = layerImg.data;
-  const zs = S.rise / (CELL_M / LAYER_UP);      // vertical exaggeration for the gradient (m per layer px)
-  const lx = -0.55, ly = -0.55, lz = 0.63;      // light from the north-west
-  const intervalM = S.units === 'ft' ? 60.96 : 50;
-  const contourScale = S.rise / intervalM;      // contours per unit h
-  const treelineH = S.treeline;
-  for (let py = 0; py < LH; py++) {
-    const row = py * LW, rowU = Math.max(py - 1, 0) * LW, rowD = Math.min(py + 1, LH - 1) * LW;
-    for (let px = 0; px < LW; px++) {
-      const i = row + px;
-      const h = elevBuf[i];
-      const dhx = (elevBuf[row + Math.min(px + 1, LW - 1)] - elevBuf[row + Math.max(px - 1, 0)]) * 0.5 * zs;
-      const dhy = (elevBuf[rowD + px] - elevBuf[rowU + px]) * 0.5 * zs;
-      const nl = 1 / Math.sqrt(dhx * dhx + dhy * dhy + 1);
-      const lam = (-dhx * lx - dhy * ly + lz) * nl;
-      const shade = 0.62 + 0.55 * clamp(lam, -0.2, 1);
-      let [r, g, b] = tint(h);
-      const slope = Math.hypot(dhx, dhy);
-      if (slope > 0.9 && h > treelineH - 0.15) { const k = smoothstep(0.9, 1.6, slope) * 0.75; r = lerp(r, 141, k); g = lerp(g, 133, k); b = lerp(b, 124, k); }
-      r *= shade; g *= shade; b *= shade;
-      // Contours: compare the contour index with the right and lower neighbour.
-      const c0 = Math.floor((S.baseElev / intervalM) + h * contourScale);
-      const c1 = Math.floor((S.baseElev / intervalM) + elevBuf[row + Math.min(px + 1, LW - 1)] * contourScale);
-      const c2 = Math.floor((S.baseElev / intervalM) + elevBuf[rowD + px] * contourScale);
-      if (c0 !== c1 || c0 !== c2) {
-        const idx = Math.max(c0, c1, c2) % 5 === 0 ? 0.55 : 0.78;
-        r *= idx; g *= idx; b *= idx;
-      }
-      const o = i * 4; data[o] = r; data[o + 1] = g; data[o + 2] = b; data[o + 3] = 255;
-    }
-  }
-  // Pass 3: forest stipple, skipping trees cleared by runs.
-  const tt = S.trees;
-  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
-    const d = tt[y * W + x]; if (!d) continue;
-    const n = Math.ceil(d / 255 * 5);
-    for (let k = 0; k < n; k++) {
-      const gx = x - 0.5 + hash3(x, y, k, 1), gy = y - 0.5 + hash3(x, y, k, 2);
-      if (!treeKeep(gx, gy, hash3(x, y, k, 3))) continue;
-      const px = Math.round((gx + 0.5) * LAYER_UP), py = Math.round((gy + 0.5) * LAYER_UP);
-      const v = hash3(x, y, k, 4);
-      const r = 34 + v * 30, g = 84 + v * 40, b = 50 + v * 25;
-      for (let dy = 0; dy < 2; dy++) for (let dx = 0; dx < 2; dx++) {
-        const qx = px + dx - 1, qy = py + dy - 1; if (qx < 0 || qy < 0 || qx >= LW || qy >= LH) continue;
-        const o = (qy * LW + qx) * 4; data[o] = r; data[o + 1] = g; data[o + 2] = b;
-      }
-    }
-  }
-  lctx.putImageData(layerImg, 0, 0);
-  terrainDirty = false;
-}
-
-// ---------- Overlay drawing ----------
-function requestRender() { if (renderQueued) return; renderQueued = true; requestAnimationFrame(renderEditor); }
-function renderEditor() {
-  renderQueued = false;
-  if (!S) return;
-  if (terrainDirty) renderLayer();
-  const c = ectx;
-  c.save(); c.setTransform(dpr, 0, 0, dpr, 0, 0);
-  c.fillStyle = '#dfe7f0'; c.fillRect(0, 0, cw, ch);
-  const [x0, y0] = toScreen(-0.5, -0.5), sw = W * view.scale, sh = H * view.scale;
-  c.imageSmoothingEnabled = true;
-  c.drawImage(layer, x0, y0, sw, sh);
-  c.strokeStyle = 'rgba(28,42,58,.35)'; c.lineWidth = 1; c.strokeRect(x0 + 0.5, y0 + 0.5, sw, sh);
-  // North arrow
-  c.fillStyle = 'rgba(28,42,58,.6)'; c.font = '600 11px Inter, sans-serif'; c.textAlign = 'left'; c.fillText('N ↑  summit side', x0 + 6, y0 - 6);
-  c.fillText('base side', x0 + 6, y0 + sh + 14);
-
-  for (const run of S.runs) drawRunEditor(c, run, selection && selection.type === 'run' && selection.id === run.id);
-  for (const lift of S.lifts) drawLiftEditor(c, lift, selection && selection.type === 'lift' && selection.id === lift.id);
-  for (const lodge of S.lodges) drawLodgeEditor(c, lodge, selection && selection.type === 'lodge' && selection.id === lodge.id);
-
-  // Tool previews
-  if (pendingRun && cursor) {
-    const pts = [...pendingRun, cursor];
-    c.setLineDash([6, 4]); c.strokeStyle = '#2b6cb0'; c.lineWidth = Math.max(2, runOpts.width * view.scale);
-    c.globalAlpha = 0.5; strokePath(c, smoothPath(pts, 6).map(p => toScreen(p[0], p[1]))); c.globalAlpha = 1; c.setLineDash([]);
-    for (const p of pendingRun) { const [sx, sy] = toScreen(p[0], p[1]); c.fillStyle = '#2b6cb0'; c.beginPath(); c.arc(sx, sy, 4, 0, 7); c.fill(); }
-  }
-  if (pendingLift && cursor) {
-    const [ax, ay] = toScreen(pendingLift[0], pendingLift[1]), [bx, by] = toScreen(cursor[0], cursor[1]);
-    c.setLineDash([6, 4]); c.strokeStyle = '#c8102e'; c.lineWidth = 2; c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx, by); c.stroke(); c.setLineDash([]);
-    c.fillStyle = '#c8102e'; c.beginPath(); c.arc(ax, ay, 4, 0, 7); c.fill();
-  }
-  if (cursor && isBrushTool(tool)) {
-    const [sx, sy] = toScreen(cursor[0], cursor[1]);
-    c.strokeStyle = 'rgba(28,42,58,.7)'; c.lineWidth = 1.2; c.setLineDash([4, 3]);
-    c.beginPath(); c.arc(sx, sy, brush.size * view.scale, 0, 7); c.stroke(); c.setLineDash([]);
-  }
-  c.restore();
-  updateHud();
-}
+function rgb(r, g, b) { return `rgb(${r | 0},${g | 0},${b | 0})`; }
+function mix3(a, b, t) { return [lerp(a[0], b[0], t), lerp(a[1], b[1], t), lerp(a[2], b[2], t)]; }
 function strokePath(c, pts) { if (pts.length < 2) return; c.beginPath(); c.moveTo(pts[0][0], pts[0][1]); for (let i = 1; i < pts.length; i++) c.lineTo(pts[i][0], pts[i][1]); c.stroke(); }
-function offsetPath(pts, off) { // parallel offset of a dense screen-space path
+function offsetPath(pts, off) {
   const out = [];
   for (let i = 0; i < pts.length; i++) {
     const p = pts[Math.max(i - 1, 0)], q = pts[Math.min(i + 1, pts.length - 1)];
@@ -946,90 +756,567 @@ function offsetPath(pts, off) { // parallel offset of a dense screen-space path
   }
   return out;
 }
+// Forest presence at a fractional grid point given the run field: 0 cleared, 0.35 glade, 1 keep.
+function treeKeepF(gx, gy) {
+  const fx = clamp(Math.floor(gx * FIELD_UP), 0, FW - 1), fy = clamp(Math.floor(gy * FIELD_UP), 0, FH - 1), k = fy * FW + fx;
+  if (distTrail[k] < 0) return 0;
+  if (distGlade[k] < 0) return 0.35;
+  return 1;
+}
+function hardwoodFrac(gx, gy, h, mixed) {
+  if (!mixed) return 0;
+  return clamp(1 - smoothstep(0.26, 0.62, h) + (vnoise(gx / 9, gy / 9, S.seed + 61) - 0.5) * 0.55, 0, 1);
+}
 function drawSymbol(c, diff, x, y, s) {
   c.save(); c.translate(x, y);
-  c.fillStyle = DIFF[diff].color; c.strokeStyle = 'rgba(255,255,255,.9)'; c.lineWidth = Math.max(1, s * 0.18);
+  c.fillStyle = DIFF[diff].color; c.strokeStyle = 'rgba(255,255,255,.95)'; c.lineWidth = Math.max(1, s * 0.16);
   if (diff === 'green') { c.beginPath(); c.arc(0, 0, s * 0.5, 0, 7); c.fill(); c.stroke(); }
   else if (diff === 'blue') { c.beginPath(); c.rect(-s * 0.45, -s * 0.45, s * 0.9, s * 0.9); c.fill(); c.stroke(); }
   else {
-    const dia = (ox) => { c.beginPath(); c.moveTo(ox, -s * 0.55); c.lineTo(ox + s * 0.45, 0); c.lineTo(ox, s * 0.55); c.lineTo(ox - s * 0.45, 0); c.closePath(); c.fill(); c.stroke(); };
+    const dia = ox => { c.beginPath(); c.moveTo(ox, -s * 0.55); c.lineTo(ox + s * 0.45, 0); c.lineTo(ox, s * 0.55); c.lineTo(ox - s * 0.45, 0); c.closePath(); c.fill(); c.stroke(); };
     if (diff === 'black') dia(0); else { dia(-s * 0.32); dia(s * 0.32); }
   }
   c.restore();
 }
-function drawRunEditor(c, run, sel) {
-  const pts = runPath(run).map(p => toScreen(p[0], p[1]));
-  const diff = runDifficulty(run), w = Math.max(2, run.width * view.scale);
-  c.lineCap = 'round'; c.lineJoin = 'round';
-  if (sel) { c.strokeStyle = '#d9a441'; c.lineWidth = w + 8; c.globalAlpha = 0.6; strokePath(c, pts); c.globalAlpha = 1; }
-  c.strokeStyle = DIFF[diff].color; c.lineWidth = w + Math.max(1.5, view.scale * 0.35); strokePath(c, pts);
-  c.strokeStyle = run.glade ? '#e6efe4' : '#fbfdff'; c.lineWidth = w; strokePath(c, pts);
-  if (run.groomed && w >= 5) {
-    c.strokeStyle = 'rgba(160,178,200,.55)'; c.lineWidth = 1;
-    for (const off of [-w * 0.3, 0, w * 0.3]) strokePath(c, offsetPath(pts, off));
-  } else if (!run.groomed && w >= 5) {
-    c.strokeStyle = 'rgba(160,178,200,.7)'; c.lineWidth = w * 0.28; c.setLineDash([0.1, w * 0.7]); strokePath(c, pts); c.setLineDash([]);
-  }
-  // Top marker + label
-  const s = pts[0];
-  if (view.scale >= 3) {
-    const m = pts[Math.floor(pts.length / 2)], m2 = pts[Math.min(pts.length - 1, Math.floor(pts.length / 2) + 2)];
-    let ang = Math.atan2(m2[1] - m[1], m2[0] - m[0]); if (Math.cos(ang) < 0) ang += Math.PI;
-    c.save(); c.translate(m[0], m[1]); c.rotate(ang);
-    c.font = `600 ${clamp(view.scale * 2.1, 10, 14)}px Inter, sans-serif`; c.textAlign = 'left'; c.textBaseline = 'middle';
-    c.lineWidth = 3; c.strokeStyle = 'rgba(255,255,255,.9)'; c.strokeText(run.name, 8, -w / 2 - 6); c.fillStyle = '#1c2a3a'; c.fillText(run.name, 8, -w / 2 - 6);
-    drawSymbol(c, diff, 0, -w / 2 - 6, 9);
-    c.restore();
-  }
-  c.fillStyle = DIFF[diff].color; c.beginPath(); c.arc(s[0], s[1], Math.max(3, w * 0.35), 0, 7); c.fill();
-  if (sel) for (const p of run.points) { const [sx, sy] = toScreen(p[0], p[1]); c.fillStyle = '#fff'; c.strokeStyle = '#d9a441'; c.lineWidth = 2; c.beginPath(); c.arc(sx, sy, 5, 0, 7); c.fill(); c.stroke(); }
+
+// ---------- Tree sprites ----------
+const spriteCache = {};
+function getSprites(sunLeft) {
+  const key = sunLeft ? 'L' : 'R'; if (spriteCache[key]) return spriteCache[key];
+  const mk = (w, h, draw) => { const cv = document.createElement('canvas'); cv.width = w; cv.height = h; draw(cv.getContext('2d'), w, h); return cv; };
+  const conifer = (dark, lit, snow) => mk(22, 34, (x, w, h) => {
+    const cx = w / 2;
+    for (let tier = 0; tier < 3; tier++) {
+      const top = 1 + tier * 8.5, bottom = top + 14, half = 4.5 + tier * 2.6;
+      x.fillStyle = dark; x.beginPath(); x.moveTo(cx, top); x.lineTo(cx + half, bottom); x.lineTo(cx - half, bottom); x.closePath(); x.fill();
+      x.fillStyle = lit; x.beginPath(); x.moveTo(cx, top); x.lineTo(cx + (sunLeft ? -half : half), bottom); x.lineTo(cx, bottom); x.closePath(); x.fill();
+      x.strokeStyle = snow; x.lineWidth = 1.4; x.beginPath(); x.moveTo(cx, top + 1); x.lineTo(cx + (sunLeft ? -half : half) * 0.85, bottom - 1.5); x.stroke();
+    }
+    x.fillStyle = '#3a2a1e'; x.fillRect(cx - 1, h - 4, 2, 4);
+  });
+  const hardwood = (dark, lit, snow) => mk(22, 30, (x, w, h) => {
+    const cx = w / 2, cy = 12;
+    x.fillStyle = dark; x.beginPath(); x.ellipse(cx, cy, 8.5, 10.5, 0, 0, 7); x.fill();
+    x.fillStyle = lit; x.beginPath(); x.ellipse(cx + (sunLeft ? -2.5 : 2.5), cy - 1.5, 5.5, 7.5, 0, 0, 7); x.fill();
+    x.fillStyle = snow; x.beginPath(); x.ellipse(cx + (sunLeft ? -2.5 : 2.5), cy - 6, 4, 2.4, 0, 0, 7); x.fill();
+    x.strokeStyle = '#4a3a3a'; x.lineWidth = 1.5; x.beginPath(); x.moveTo(cx, cy + 6); x.lineTo(cx, h); x.stroke();
+  });
+  spriteCache[key] = {
+    conifer: [conifer('#173f34', '#4a8566', '#dfe9ee'), conifer('#1a4a3c', '#3f7a60', '#e4ecf0'), conifer('#20503a', '#5b9670', '#e8eef2'), conifer('#153a36', '#3b7062', '#dde8ee')],
+    hardwood: [hardwood('#6e5f7c', '#a494ae', '#e8e4ec'), hardwood('#7a6672', '#b09aa8', '#ede7eb'), hardwood('#5f5a7a', '#9a94b6', '#e6e6f0'), hardwood('#7c6a66', '#b39c92', '#efe9e6')],
+  };
+  return spriteCache[key];
 }
-function drawLiftEditor(c, lift, sel) {
-  const [ax, ay] = toScreen(lift.a[0], lift.a[1]), [bx, by] = toScreen(lift.b[0], lift.b[1]);
+
+// ---------- View: rotation + projection + mesh + visibility ----------
+function makeView(o) {
+  const R = makeRotation(o.dir), UP = Math.max(1, o.detail | 0);
+  const RWU = (R.RW - 1) * UP + 1, RHU = (R.RH - 1) * UP + 1;
+  const pitch = clamp(o.pitch, 20, 90), th = pitch * Math.PI / 180, sinT = Math.sin(th), cosT = Math.cos(th);
+  const persp = clamp((90 - pitch) / 60, 0, 1), fs = lerp(1, 0.78, persp), norm = fs + (1 - fs) / 2;
+  let cellPx = (o.W - 2 * o.marginX) / (R.RW - 1), depth = (R.RH - 1) * cellPx * sinT, vert = S.rise / CELL_M * cellPx * cosT * o.exag, groundTop = 0;
+  const rowY = t => groundTop + depth * (fs * t + (1 - fs) * t * t / 2) / norm;
+  const base = (rx, ry, h) => { const t = ry / (R.RH - 1), s = lerp(fs, 1, t); return [o.W / 2 + (rx - (R.RW - 1) / 2) * cellPx * s, rowY(t) - h * vert * s, s]; };
+  let minY = Infinity;
+  for (let ry = 0; ry < R.RH; ry += 2) for (let rx = 0; rx < R.RW; rx += 2) { const y = base(rx, ry, R.hR(rx, ry))[1]; if (y < minY) minY = y; }
+  groundTop = o.topMargin - minY;
+  const over = groundTop + depth - (o.H - o.bottomMargin);
+  if (over > 0) { const f = (o.H - o.bottomMargin - o.topMargin) / (groundTop + depth - o.topMargin); cellPx *= f; depth *= f; vert *= f; groundTop = o.topMargin + (groundTop - o.topMargin) * f; }
+  else groundTop += -over / 2; // centre vertically when there is slack
+  const cx = o.W / 2, cy = o.H / 2, zoom = o.zoom || 1, panX = o.panX || 0, panY = o.panY || 0;
+  const project = (rx, ry, h) => { const b = base(rx, ry, h); return [cx + (b[0] - cx) * zoom + panX, cy + (b[1] - cy) * zoom + panY, b[2] * zoom]; };
+  const n = RWU * RHU, vx = new Float32Array(n), vy = new Float32Array(n), vh = new Float32Array(n);
+  for (let j = 0; j < RHU; j++) { const ry = j / UP; for (let i = 0; i < RWU; i++) { const rx = i / UP, h = R.hR(rx, ry), p = project(rx, ry, h), k = j * RWU + i; vx[k] = p[0]; vy[k] = p[1]; vh[k] = h; } }
+  const MW = o.W | 0, yBuf = new Float32Array(MW).fill(1e9), yNear = new Float32Array(RHU * MW);
+  for (let j = RHU - 1; j >= 0; j--) {
+    yNear.set(yBuf, j * MW);
+    for (let i = 0; i < RWU - 1; i++) {
+      const k = j * RWU + i, ax = vx[k], ay = vy[k], bx = vx[k + 1], by = vy[k + 1];
+      const x0 = Math.max(0, Math.ceil(Math.min(ax, bx))), x1 = Math.min(MW - 1, Math.floor(Math.max(ax, bx)));
+      for (let x = x0; x <= x1; x++) { const t = bx === ax ? 0 : (x - ax) / (bx - ax), y = ay + (by - ay) * t; if (y < yBuf[x]) yBuf[x] = y; }
+    }
+  }
+  const visible = (ry, sx, sy, tol = 1.5) => { const j = clamp(Math.round(ry * UP), 0, RHU - 1), x = clamp(Math.round(sx), 0, MW - 1); return sy < yNear[j * MW + x] + tol; };
+  let nearEdgeY = -Infinity; for (let i = 0; i < RWU; i++) nearEdgeY = Math.max(nearEdgeY, vy[(RHU - 1) * RWU + i]);
+  let nearTopY = Infinity; for (let i = 0; i < RWU; i++) nearTopY = Math.min(nearTopY, vy[(RHU - 1) * RWU + i]);
+  const horizonY = project((R.RW - 1) / 2, 0, 0)[1];
+  // Screen → rotated grid coords: walk mesh rows from near to far and stop at the
+  // first surface that lies above the pointer. Exact, and occlusion comes free.
+  const unproject = (sx, sy) => {
+    const bx = cx + (sx - cx - panX) / zoom, by = cy + (sy - cy - panY) / zoom;
+    let prevY = null;
+    for (let j = RHU - 1; j >= 0; j--) {
+      const ry = j / UP, t = ry / (R.RH - 1), s = lerp(fs, 1, t);
+      const rx = (bx - o.W / 2) / (cellPx * s) + (R.RW - 1) / 2;
+      if (rx < -0.5 || rx > R.RW - 0.5) { prevY = null; continue; }
+      const y = rowY(t) - R.hR(clamp(rx, 0, R.RW - 1), ry) * vert * s;
+      if (y <= by) {
+        if (prevY === null) return (by - y) <= cellPx * 1.5 ? [clamp(rx, 0, R.RW - 1), ry] : null;
+        const f = clamp((by - y) / (prevY - y), 0, 1), ryh = (j + f) / UP, sh = lerp(fs, 1, ryh / (R.RH - 1));
+        return [clamp((bx - o.W / 2) / (cellPx * sh) + (R.RW - 1) / 2, 0, R.RW - 1), ryh];
+      }
+      prevY = y;
+    }
+    return null;
+  };
+  return { R, UP, RWU, RHU, vx, vy, vh, project, unproject, visible, cellPx: cellPx * zoom, W: o.W, H: o.H, nearEdgeY, nearTopY, horizonY, sunLeft: o.sun !== 'right', pitch, fs, zoom };
+}
+
+// ---------- The painting ----------
+function paintScene(c, V, opt) {
+  const MW = V.W, MH = V.H, R = V.R, UP = V.UP, RWU = V.RWU, RHU = V.RHU, vx = V.vx, vy = V.vy, vh = V.vh;
+  const sunLeft = V.sunLeft, seed = S.seed, mixed = opt.forest !== 'evergreen';
+  const L = (() => { const v = [sunLeft ? -0.62 : 0.62, 0.48, 0.62], n = Math.hypot(...v); return v.map(a => a / n); })();
+  const slopeK = S.rise * UP / CELL_M;           // rise/run per mesh step at Δh = 1
+  const px = V.cellPx / 10.4;                    // line widths and type sizes relative to the poster
+  const labelBoxes = [], labelJobs = [];
+  const font = (wt, size) => `${wt} ${size}px "Barlow Condensed", "Arial Narrow", sans-serif`;
+  c.setTransform(1, 0, 0, 1, 0, 0); c.globalAlpha = 1; c.globalCompositeOperation = 'source-over'; c.setLineDash([]);
+
+  // ---- 1. Sky, valley floor, clouds, distant ranges ----
+  const horizonY = clamp(V.horizonY, 40, MH - 40);
+  const sky = c.createLinearGradient(0, 0, 0, horizonY);
+  sky.addColorStop(0, '#5a8ac4'); sky.addColorStop(0.45, '#9dbde0'); sky.addColorStop(1, rgb(...SKYH));
+  c.fillStyle = sky; c.fillRect(0, 0, MW, horizonY + 1);
+  const valley = c.createLinearGradient(0, horizonY, 0, MH);
+  valley.addColorStop(0, rgb(...SKYH)); valley.addColorStop(0.4, rgb(...VALLEY)); valley.addColorStop(1, '#d9dfe8');
+  c.fillStyle = valley; c.fillRect(0, horizonY, MW, MH - horizonY);
+  if (opt.clouds) {
+    for (let k = 0; k < 7; k++) {
+      const cxp = (hash2(k, 3, seed + 5) * 1.2 - 0.1) * MW, cyp = horizonY * (0.35 + hash2(k, 4, seed + 5) * 0.5);
+      const rw = MW * (0.08 + hash2(k, 5, seed + 5) * 0.12), rh = rw * 0.28;
+      const g = c.createRadialGradient(cxp, cyp, 0, cxp, cyp, rw); g.addColorStop(0, 'rgba(255,255,255,0.85)'); g.addColorStop(0.55, 'rgba(255,255,255,0.35)'); g.addColorStop(1, 'rgba(255,255,255,0)');
+      c.save(); c.translate(cxp, cyp); c.scale(1, rh / rw); c.translate(-cxp, -cyp); c.fillStyle = g; c.beginPath(); c.arc(cxp, cyp, rw, 0, 7); c.fill(); c.restore();
+    }
+  }
+  if (opt.range) {
+    const cols = ['#b6c3dc', '#a2b2d0', '#8e9fc2'];
+    for (let l = 0; l < 3; l++) {
+      const amp = (110 - l * 26) * (MH / 1200), base = horizonY + 4 + l * 12 * (MH / 1200), freq = (280 - l * 55) * (MW / 1800);
+      c.beginPath(); c.moveTo(0, MH);
+      for (let x = 0; x <= MW; x += 5) { const n = ridged(x / freq + l * 13.7 + seed * 0.01, l * 3.1, seed + 900 + l, 3); c.lineTo(x, base - amp * Math.pow(n, 1.5) - 9 * fbm(x / 60, l, seed + 40, 2)); }
+      c.lineTo(MW, MH); c.closePath(); c.fillStyle = cols[l]; c.fill();
+      // snow light along the crest
+      c.strokeStyle = 'rgba(255,255,255,0.35)'; c.lineWidth = 2; c.beginPath();
+      for (let x = 0; x <= MW; x += 5) { const n = ridged(x / freq + l * 13.7 + seed * 0.01, l * 3.1, seed + 900 + l, 3); const y = base - amp * Math.pow(n, 1.5) - 9 * fbm(x / 60, l, seed + 40, 2); x === 0 ? c.moveTo(x, y) : c.lineTo(x, y); }
+      c.stroke();
+    }
+    const mist = c.createLinearGradient(0, horizonY - 30, 0, horizonY + 60); mist.addColorStop(0, 'rgba(240,245,250,0)'); mist.addColorStop(0.5, 'rgba(240,245,250,0.55)'); mist.addColorStop(1, 'rgba(240,245,250,0)');
+    c.fillStyle = mist; c.fillRect(0, horizonY - 30, MW, 90);
+  }
+
+  // ---- 2. Ground: snow, rock, and the forest tint, back to front ----
+  const treelineH = S.treeline;
+  c.lineWidth = 0.8; c.lineJoin = 'round';
+  for (let j = 0; j < RHU - 1; j++) {
+    const t = (j + 0.5) / (RHU - 1), hazeK = opt.haze ? 0.42 * Math.pow(1 - t, 1.6) : 0;
+    const farK = 1 - smoothstep(0, 0.11, t), EDGE = mix3(SKYH, VALLEY, smoothstep(0, 0.6, t));
+    const ry = (j + 0.5) / UP, ryEdge = smoothstep(0, 0.11, t);
+    for (let i = 0; i < RWU - 1; i++) {
+      const k00 = j * RWU + i, k01 = k00 + 1, k10 = k00 + RWU, k11 = k10 + 1;
+      const h00 = vh[k00], h01 = vh[k01], h10 = vh[k10], h11 = vh[k11];
+      const gxs = ((h01 + h11) - (h00 + h10)) * 0.5 * slopeK, gys = ((h10 + h11) - (h00 + h01)) * 0.5 * slopeK;
+      const nl = 1 / Math.sqrt(gxs * gxs + gys * gys + 1);
+      const lam = clamp((-gxs * L[0] - gys * L[1] + L[2]) * nl, 0, 1);
+      const hm = (h00 + h01 + h10 + h11) * 0.25, slope = Math.hypot(gxs, gys);
+      let col = lam > 0.55 ? mix3(SNOW_MID, SNOW_LIT, (lam - 0.55) / 0.45) : mix3(SNOW_SHADE, SNOW_MID, lam / 0.55);
+      const rockK = smoothstep(0.85, 1.5, slope) * smoothstep(treelineH - 0.25, treelineH + 0.05, hm) * 0.9;
+      if (rockK > 0.01) col = mix3(col, mix3(ROCK_SHADE, ROCK_LIT, lam), rockK);
+      const edgeK = 1 - smoothstep(0, 0.10, Math.min(i, RWU - 2 - i) / (RWU - 2));
+      const rx = (i + 0.5) / UP, g = R.fromR(rx, ry);
+      let dens = tAt(g[0], g[1]) / 255;
+      if (dens > 0.02) dens *= treeKeepF(g[0], g[1]) * (1 - edgeK) * ryEdge;
+      if (dens > 0.02) {
+        const fb = mix3(EVERGREEN, HARDWOOD, hardwoodFrac(g[0], g[1], hm, mixed));
+        const fcol = mix3([fb[0] * 0.48, fb[1] * 0.5, fb[2] * 0.58], [Math.min(255, fb[0] * 1.3), Math.min(255, fb[1] * 1.28), Math.min(255, fb[2] * 1.25)], lam);
+        col = mix3(col, fcol, Math.min(1, dens * 0.92));
+      }
+      const paint = 1 + (fbm(i / 6.5, j / 6.5, seed + 31, 2) - 0.5) * 0.12 + (hash2(i, j, seed + 3) - 0.5) * 0.04;
+      col = [col[0] * paint, col[1] * paint, col[2] * paint];
+      if (hazeK) col = mix3(col, HAZE, hazeK);
+      const fade = Math.max(edgeK, farK); if (fade) col = mix3(col, EDGE, Math.pow(fade, 2.2));
+      const cs = rgb(col[0], col[1], col[2]);
+      c.fillStyle = cs; c.strokeStyle = cs;
+      c.beginPath(); c.moveTo(vx[k00], vy[k00]); c.lineTo(vx[k01], vy[k01]); c.lineTo(vx[k11], vy[k11]); c.lineTo(vx[k10], vy[k10]); c.closePath(); c.fill(); c.stroke();
+    }
+  }
+
+  // ---- 3. Trails on the snow surface (gaps in the forest, lightly lit) ----
+  const runScreen = [];
+  for (const run of S.runs) {
+    const dense = resample(runPath(run), 0.35);
+    const pts = dense.map(p => { const [rx, ry] = R.toR(p[0], p[1]); const h = hAt(p[0], p[1]); const [sx, sy, s] = V.project(rx, ry, h); return { sx, sy, s, vis: V.visible(ry, sx, sy, 2) }; });
+    const subs = []; let cur = [];
+    for (let i = 0; i < pts.length; i++) {
+      if (pts[i].vis || (i > 0 && i < pts.length - 1 && pts[i - 1].vis && pts[i + 1].vis)) cur.push(pts[i]);
+      else { if (cur.length >= 3) subs.push(cur); cur = []; }
+    }
+    if (cur.length >= 3) subs.push(cur);
+    runScreen.push({ run, subs });
+    c.lineCap = 'round'; c.lineJoin = 'round';
+    for (const sub of subs) {
+      const sAvg = sub.reduce((a, p) => a + p.s, 0) / sub.length, w = Math.max(2, run.width * V.cellPx * sAvg);
+      const sp = sub.map(p => [p.sx, p.sy]);
+      c.strokeStyle = 'rgba(60,80,130,0.28)'; c.lineWidth = w * 0.8; strokePath(c, offsetPath(sp, (sunLeft ? 1 : -1) * w * 0.38));
+      c.strokeStyle = run.glade ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.6)'; c.lineWidth = w; strokePath(c, sp);
+      c.strokeStyle = 'rgba(110,135,185,0.35)'; c.lineWidth = Math.max(0.8, 1.1 * px); strokePath(c, offsetPath(sp, w / 2)); strokePath(c, offsetPath(sp, -w / 2));
+      if (w >= 7 * px) {
+        if (run.groomed) { c.strokeStyle = 'rgba(150,170,205,0.32)'; c.lineWidth = Math.max(0.6, 0.7 * px); for (const off of [-w * 0.28, 0, w * 0.28]) strokePath(c, offsetPath(sp, off)); }
+        else { c.strokeStyle = 'rgba(140,160,200,0.35)'; c.lineWidth = w * 0.16; c.setLineDash([0.1, w * 0.45]); strokePath(c, offsetPath(sp, -w * 0.2)); c.lineDashOffset = w * 0.22; strokePath(c, offsetPath(sp, w * 0.2)); c.setLineDash([]); c.lineDashOffset = 0; }
+      }
+    }
+  }
+
+  // ---- 4. Road and parking at the village ----
+  const projG = (gx, gy, dh = 0) => { const [rx, ry] = R.toR(gx, gy); const p = V.project(rx, ry, hAt(gx, gy) + dh); return [p[0], p[1], p[2], V.visible(ry, p[0], p[1], 2)]; };
+  let village = null;
+  if (S.lodges.length) {
+    village = S.lodges.reduce((a, l) => elevM(l.x, l.y) < elevM(a.x, a.y) ? l : a);
+    const lx = village.x, ly = village.y, dy = (H - 1) - ly;
+    if (dy > 3) {
+      const road = resample(smoothPath([[lx, ly], [lx + 3, ly + dy * 0.35], [lx - 2.5, ly + dy * 0.7], [lx + 1.5, H - 1]], 8), 0.4).map(p => projG(p[0], p[1]));
+      c.lineCap = 'round'; c.strokeStyle = 'rgba(120,112,104,0.85)'; c.lineWidth = 2.6 * px;
+      let seg = []; for (const p of road) { if (p[3]) seg.push([p[0], p[1]]); else { strokePath(c, seg); seg = []; } } strokePath(c, seg);
+      c.strokeStyle = 'rgba(235,232,226,0.5)'; c.lineWidth = Math.max(0.5, 0.5 * px); c.setLineDash([4 * px, 4 * px]); seg = []; for (const p of road) { if (p[3]) seg.push([p[0], p[1]]); else { strokePath(c, seg); seg = []; } } strokePath(c, seg); c.setLineDash([]);
+    }
+    const lot = [[lx + 2.2, ly + 0.6], [lx + 6.2, ly + 0.6], [lx + 6.2, ly + 3.0], [lx + 2.2, ly + 3.0]].map(p => projG(p[0], p[1]));
+    if (lot.every(p => p[3])) { c.fillStyle = 'rgba(160,158,154,0.9)'; c.beginPath(); c.moveTo(lot[0][0], lot[0][1]); for (let i = 1; i < 4; i++) c.lineTo(lot[i][0], lot[i][1]); c.closePath(); c.fill(); }
+  }
+
+  // ---- 5. Forest carpet ----
+  const drawForest = fc => {
+    const spr = getSprites(sunLeft), perCell = 5.5 * (opt.forestDensity ?? 1);
+    fc.globalAlpha = 1;
+    for (let ry = 0; ry < R.RH; ry++) {
+      const t = ry / (R.RH - 1), rowAlpha = opt.haze ? 1 - 0.45 * Math.pow(1 - t, 1.7) : 1, ryEdge = smoothstep(0, 0.11, t);
+      fc.globalAlpha = rowAlpha;
+      for (let rx = 0; rx < R.RW; rx++) {
+        const [gx, gy] = R.fromR(rx, ry); const d = S.trees[gy * W + gx]; if (d < 40) continue;
+        const edgeKeep = smoothstep(0, 0.10, Math.min(rx, R.RW - 1 - rx) / (R.RW - 1)) * ryEdge;
+        const clump = 0.55 + 0.9 * vnoise(gx / 3.5, gy / 3.5, seed + 88);
+        const nf = d / 255 * perCell * edgeKeep * clump, n = Math.floor(nf) + (hash3(gx, gy, 9, 1) < nf - Math.floor(nf) ? 1 : 0);
+        for (let k = 0; k < n; k++) {
+          const ox = hash3(gx, gy, k, 1) - 0.5, oy = hash3(gx, gy, k, 2) - 0.5;
+          const keep = treeKeepF(gx + ox, gy + oy); if (keep < 1 && hash3(gx, gy, k, 3) > keep) continue;
+          const [trx, try_] = R.toR(gx + ox, gy + oy), h = hAt(gx + ox, gy + oy), p = V.project(trx, try_, h);
+          if (!V.visible(try_, p[0], p[1], 1)) continue;
+          const v = hash3(gx, gy, k, 4), hard = hash3(gx, gy, k, 6) < hardwoodFrac(gx + ox, gy + oy, h, mixed);
+          const set = hard ? spr.hardwood : spr.conifer, img = set[Math.floor(v * set.length) % set.length];
+          const size = V.cellPx * p[2] * (hard ? 0.7 + v * 0.7 : 0.85 + v * 1.0), w = size * img.width / img.height;
+          fc.drawImage(img, p[0] - w / 2, p[1] - size, w, size);
+        }
+      }
+    }
+    fc.globalAlpha = 1;
+  };
+  if (opt.forestLayer) {
+    if (!opt.reuseForest) { const fc = opt.forestLayer.getContext('2d'); fc.setTransform(1, 0, 0, 1, 0, 0); fc.clearRect(0, 0, MW, MH); drawForest(fc); }
+    c.drawImage(opt.forestLayer, 0, 0);
+  } else drawForest(c);
+
+  // ---- 6. Lifts ----
+  S.lifts.forEach((lift, li) => {
+    const n = Math.max(2, Math.ceil(dist(lift.a[0], lift.a[1], lift.b[0], lift.b[1]) / 0.5)), pts = [];
+    for (let i = 0; i <= n; i++) {
+      const t = i / n, x = lerp(lift.a[0], lift.b[0], t), y = lerp(lift.a[1], lift.b[1], t), hg = hAt(x, y), hc = hg + 11 / S.rise;
+      const [rx, ry] = R.toR(x, y), g = V.project(rx, ry, hg), p = V.project(rx, ry, hc);
+      pts.push({ sx: p[0], sy: p[1], gsx: g[0], gsy: g[1], s: p[2], vis: V.visible(ry, p[0], p[1], 2) });
+    }
+    for (let i = 1; i < n; i++) {
+      const p = pts[i]; if (!p.vis) continue;
+      if (i % 12 === 0) { c.strokeStyle = '#2f2724'; c.lineWidth = Math.max(0.8, 1.4 * px * p.s); c.beginPath(); c.moveTo(p.gsx, p.gsy); c.lineTo(p.sx, p.sy); c.stroke(); }
+      if (lift.type === 'chair' && i % 5 === 2) { c.strokeStyle = '#3b1a22'; c.lineWidth = Math.max(0.7, 1.1 * px); c.beginPath(); c.moveTo(p.sx, p.sy); c.lineTo(p.sx, p.sy + 4 * px * p.s); c.stroke(); c.fillStyle = '#3b1a22'; c.fillRect(p.sx - 1.8 * px * p.s, p.sy + 4 * px * p.s, 3.6 * px * p.s, 2 * px * p.s); }
+      if (lift.type === 'gondola' && i % 9 === 4) { c.fillStyle = '#8a1020'; c.beginPath(); c.roundRect(p.sx - 2.6 * px * p.s, p.sy + 1.5 * px * p.s, 5.2 * px * p.s, 6 * px * p.s, 1.5); c.fill(); }
+    }
+    let cur = [];
+    const flush = () => { if (cur.length >= 2) { c.strokeStyle = LIFT_RED; c.lineWidth = (lift.type === 'gondola' ? 3.2 : 2.1) * px * cur[0].s; if (lift.type === 'surface') c.setLineDash([6 * px, 4 * px]); strokePath(c, cur.map(p => [p.sx, p.sy])); c.setLineDash([]); } cur = []; };
+    for (const p of pts) { if (p.vis) cur.push(p); else flush(); } flush();
+    const A = pts[0], B = pts[n], letter = String.fromCharCode(65 + (li % 26));
+    if (B.vis) { c.fillStyle = '#8a1020'; c.fillRect(B.gsx - 4 * px * B.s, B.gsy - 6 * px * B.s, 8 * px * B.s, 6 * px * B.s); }
+    if (A.vis) {
+      const r = 7.5 * px * A.s;
+      c.fillStyle = '#fff'; c.strokeStyle = LIFT_RED; c.lineWidth = Math.max(1, 1.6 * px * A.s); c.beginPath(); c.arc(A.gsx, A.gsy - r * 0.6, r, 0, 7); c.fill(); c.stroke();
+      c.fillStyle = '#111'; c.font = font(700, Math.max(8, 10.5 * px * A.s)); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(letter, A.gsx, A.gsy - r * 0.6 + 0.5);
+      labelBoxes.push([A.gsx - r, A.gsy - r * 1.6, r * 2, r * 2]);
+    }
+    if (opt.labels) {
+      const vis = pts.filter(p => p.vis); if (vis.length < 4) return;
+      const m = vis[Math.floor(vis.length * 0.55)], q = vis[Math.min(vis.length - 1, Math.floor(vis.length * 0.55) + 3)], o = vis[Math.max(0, Math.floor(vis.length * 0.55) - 3)];
+      let ang = Math.atan2(q.sy - o.sy, q.sx - o.sx); if (Math.cos(ang) < -0.05) ang += Math.PI;
+      const size = clamp(11.5 * px * m.s, 8, 16), text = lift.name.toUpperCase();
+      c.save(); c.translate(m.sx, m.sy); c.rotate(ang); c.font = font(700, size); c.textAlign = 'center'; c.textBaseline = 'bottom';
+      c.lineWidth = Math.max(2, 3 * px); c.strokeStyle = 'rgba(255,255,255,0.92)'; c.strokeText(text, 0, -3 * px); c.fillStyle = LIFT_RED; c.fillText(text, 0, -3 * px); c.restore();
+      const tw = c.measureText(text).width; labelBoxes.push([m.sx - tw / 2, m.sy - size - 4, tw, size + 4]);
+    }
+  });
+
+  // ---- 7. Lodges and village ----
+  for (const lodge of S.lodges) {
+    const isVillage = lodge === village, houses = isVillage ? 9 : 3;
+    const spots = [];
+    for (let k = 0; k < houses; k++) {
+      const ang = hash3(lodge.id, k, 1, 7) * Math.PI * 2, rad = (isVillage ? 1.2 : 0.9) + hash3(lodge.id, k, 2, 7) * (isVillage ? 2.4 : 1.0);
+      spots.push({ x: lodge.x + Math.cos(ang) * rad * 1.3, y: lodge.y + Math.sin(ang) * rad * 0.8, sc: 0.45 + hash3(lodge.id, k, 3, 7) * 0.35, k });
+    }
+    spots.push({ x: lodge.x, y: lodge.y, sc: 1, k: -1 });
+    spots.sort((a, b) => a.y - b.y);
+    for (const sp of spots) {
+      const p = projG(sp.x, sp.y); if (!p[3]) continue;
+      const w = 24 * px * p[2] * sp.sc, hh = 12 * px * p[2] * sp.sc, sx = p[0], sy = p[1];
+      const wall = sp.k === -1 ? '#6e4a2e' : ['#7d6a5a', '#8a5a48', '#6c6470', '#845f4c'][(sp.k + 4) % 4];
+      c.fillStyle = 'rgba(40,60,95,0.25)'; c.beginPath(); c.ellipse(sx, sy + 1, w * 0.7, hh * 0.25, 0, 0, 7); c.fill();
+      c.fillStyle = wall; c.fillRect(sx - w / 2, sy - hh, w, hh);
+      c.fillStyle = 'rgba(255,255,255,0.18)'; c.fillRect(sx - w / 2, sy - hh, w * 0.5, hh);
+      c.fillStyle = '#fbfbf8'; c.beginPath(); c.moveTo(sx - w / 2 - 1.5, sy - hh); c.lineTo(sx, sy - hh - hh * 0.75); c.lineTo(sx + w / 2 + 1.5, sy - hh); c.closePath(); c.fill();
+      c.fillStyle = '#f2c766'; const nw = sp.k === -1 ? 3 : 2; for (let i = 0; i < nw; i++) c.fillRect(sx - w / 2 + w * (0.18 + i * (0.64 / nw)), sy - hh * 0.65, w * 0.1, hh * 0.3);
+    }
+    const p = projG(lodge.x, lodge.y);
+    if (opt.labels && p[3]) {
+      const size = clamp(11 * px * p[2], 8, 15), text = lodge.name.toUpperCase();
+      c.font = font(700, size); c.textAlign = 'center'; c.textBaseline = 'top';
+      c.lineWidth = Math.max(2, 3 * px); c.strokeStyle = 'rgba(255,255,255,0.92)'; c.strokeText(text, p[0], p[1] + 3 * px); c.fillStyle = '#2a1e16'; c.fillText(text, p[0], p[1] + 3 * px);
+      const tw = c.measureText(text).width; labelBoxes.push([p[0] - tw / 2, p[1], tw, size + 6]);
+    }
+  }
+
+  // ---- 8. Trail labels: bold condensed caps along the trail, symbol first ----
+  if (opt.labels) {
+    for (const { run, subs } of runScreen) {
+      if (!subs.length) continue;
+      const longest = subs.reduce((a, b) => b.length > a.length ? b : a);
+      labelJobs.push({ text: run.name.toUpperCase(), diff: runDifficulty(run), path: longest, size: clamp(13 * px * longest[Math.floor(longest.length / 2)].s, 9, 18) });
+    }
+    const overlaps = b => labelBoxes.some(o => b[0] < o[0] + o[2] && b[0] + b[2] > o[0] && b[1] < o[1] + o[3] && b[1] + b[3] > o[1]);
+    for (const job of labelJobs) {
+      c.font = font(700, job.size); const tw = c.measureText(job.text).width + job.size * 1.3;
+      let placed = null;
+      for (const frac of [0.5, 0.35, 0.65, 0.22, 0.78]) {
+        const idx = Math.floor(job.path.length * frac), p = job.path[idx], q = job.path[Math.min(job.path.length - 1, idx + 4)], o = job.path[Math.max(0, idx - 4)];
+        let ang = Math.atan2(q.sy - o.sy, q.sx - o.sx); if (Math.cos(ang) < -0.05) ang += Math.PI;
+        const box = [p.sx - tw / 2 - 3, p.sy - job.size, tw + 6, job.size * 2];
+        if (!overlaps(box)) { placed = { p, ang, box }; break; }
+        if (!placed) placed = { p, ang, box };
+      }
+      labelBoxes.push(placed.box);
+      c.save(); c.translate(placed.p.sx, placed.p.sy); c.rotate(placed.ang);
+      c.textAlign = 'left'; c.textBaseline = 'middle';
+      drawSymbol(c, job.diff, -tw / 2 + job.size * 0.4, 0, job.size * 0.8);
+      c.lineWidth = Math.max(2, 3 * px); c.strokeStyle = 'rgba(255,255,255,0.9)'; c.strokeText(job.text, -tw / 2 + job.size * 1.1, 0.5);
+      c.fillStyle = '#111418'; c.fillText(job.text, -tw / 2 + job.size * 1.1, 0.5);
+      c.restore();
+    }
+  }
+
+  // ---- 9. Edges: soft fades into the valley and the sky ----
+  for (const side of [0, 1]) {
+    const g = c.createLinearGradient(side ? MW : 0, 0, side ? MW - 140 * (MW / 1800) : 140 * (MW / 1800), 0);
+    g.addColorStop(0, 'rgba(226,232,240,0.75)'); g.addColorStop(1, 'rgba(226,232,240,0)');
+    c.fillStyle = g; c.fillRect(side ? MW - 140 * (MW / 1800) : 0, horizonY, 140 * (MW / 1800), MH - horizonY);
+  }
+  const nb = Math.min(MH, V.nearTopY + 40 * (MH / 1200)), nt = V.nearTopY - 70 * (MH / 1200);
+  const bottomG = c.createLinearGradient(0, nb, 0, nt); bottomG.addColorStop(0, rgb(...VALLEY)); bottomG.addColorStop(0.5, 'rgba(226,232,240,0.55)'); bottomG.addColorStop(1, 'rgba(226,232,240,0)');
+  c.fillStyle = bottomG; c.fillRect(0, nt, MW, MH - nt);
+
+  // ---- 10. Poster furniture ----
+  if (opt.title) drawTitle(c, MW, MH);
+  if (opt.legend) drawLegend(c, MW, MH);
+}
+
+function summitStats() {
+  let mx = 0; for (let i = 0; i < S.height.length; i++) if (S.height[i] > mx) mx = S.height[i];
+  const summit = S.baseElev + mx * S.rise;
+  return { summit, base: S.baseElev, vertical: summit - S.baseElev };
+}
+function drawTitle(c, MW, MH) {
+  const st = summitStats();
+  c.textAlign = 'left'; c.textBaseline = 'alphabetic';
+  c.save(); c.shadowColor = 'rgba(15,35,70,0.55)'; c.shadowBlur = 10; c.shadowOffsetX = 2; c.shadowOffsetY = 3;
+  c.fillStyle = '#fff'; c.font = '700 66px Fraunces, Georgia, serif'; c.fillText(S.name || 'Untitled Mountain', 60, 92);
+  c.font = '700 22px "Barlow Condensed", "Arial Narrow", sans-serif';
+  const ls = 4; let x = 60; const line = `TRAIL MAP  ·  SUMMIT ${fmtElev(st.summit).toUpperCase()}  ·  VERTICAL ${fmtElev(st.vertical).toUpperCase()}  ·  ${S.runs.length} TRAILS  ·  ${S.lifts.length} LIFTS`;
+  for (const ch of line) { c.fillText(ch, x, 124); x += c.measureText(ch).width + (ch === ' ' ? 0 : ls); }
+  const dirs = { S: 'north', N: 'south', E: 'west', W: 'east' };
+  c.textAlign = 'right'; c.font = '600 18px "Barlow Condensed", "Arial Narrow", sans-serif';
+  c.fillText(`LOOKING ${(dirs[S.map.view] || 'north').toUpperCase()}  ·  NOT TO SCALE`, MW - 60, 68);
+  c.restore();
+}
+function drawLegend(c, MW, MH) {
+  const cond = (wt, s) => `${wt} ${s}px "Barlow Condensed", "Arial Narrow", sans-serif`;
+  const box = (x, y, w, h, title) => {
+    c.fillStyle = 'rgba(255,255,255,0.93)'; c.fillRect(x, y, w, h);
+    c.fillStyle = '#111418'; c.fillRect(x, y, w, 30);
+    c.fillStyle = '#fff'; c.font = cond(700, 18); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(title, x + w / 2, y + 16);
+    c.strokeStyle = '#111418'; c.lineWidth = 1.5; c.strokeRect(x + 0.5, y + 0.5, w - 1, h - 1);
+  };
+  const counts = { green: 0, blue: 0, black: 0, double: 0 }; for (const r of S.runs) counts[runDifficulty(r)]++;
+  const groomed = S.runs.filter(r => r.groomed).length;
+  // Trails box
+  const tw = 250, th = 30 + 4 * 26 + 3 * 24 + 26, tx = MW - 40 - tw, ty = MH - 40 - th;
+  box(tx, ty, tw, th, 'TRAILS');
+  c.textAlign = 'left'; c.textBaseline = 'middle'; let yy = ty + 30 + 15;
+  for (const d of DIFF_ORDER) { drawSymbol(c, d, tx + 20, yy, 14); c.fillStyle = '#111418'; c.font = cond(600, 16); c.fillText(DIFF[d].label.toUpperCase(), tx + 38, yy); c.textAlign = 'right'; c.fillStyle = '#5b6b7c'; c.fillText(String(counts[d]), tx + tw - 14, yy); c.textAlign = 'left'; yy += 26; }
+  const line = (label, width, dash) => { c.strokeStyle = LIFT_RED; c.lineWidth = width; c.setLineDash(dash || []); c.beginPath(); c.moveTo(tx + 12, yy); c.lineTo(tx + 30, yy); c.stroke(); c.setLineDash([]); c.fillStyle = '#111418'; c.font = cond(600, 15); c.fillText(label, tx + 38, yy); yy += 24; };
+  line('CHAIRLIFT', 2.2); line('GONDOLA', 3.4); line('SURFACE LIFT', 2, [5, 4]);
+  c.fillStyle = '#5b6b7c'; c.font = cond(600, 13); c.fillText(S.runs.length ? `${groomed} OF ${S.runs.length} TRAILS GROOMED NIGHTLY` : 'NO TRAILS CUT YET', tx + 12, yy + 2);
+  // Lifts box
+  if (S.lifts.length) {
+    const rows = S.lifts.slice(0, 7), lw = 330, lh = 30 + rows.length * 30 + 12, lx = tx - 16 - lw, ly = MH - 40 - lh;
+    box(lx, ly, lw, lh, 'LIFTS');
+    let y2 = ly + 30 + 18;
+    rows.forEach((l, i) => {
+      const st = liftStats(l), letter = String.fromCharCode(65 + (S.lifts.indexOf(l) % 26));
+      c.fillStyle = LIFT_RED; c.fillRect(lx + 12, y2 - 10, 20, 20); c.fillStyle = '#fff'; c.font = cond(700, 14); c.textAlign = 'center'; c.fillText(letter, lx + 22, y2 + 0.5);
+      c.textAlign = 'left'; c.fillStyle = '#111418'; c.font = cond(700, 16); c.fillText(l.name.toUpperCase(), lx + 42, y2 - 6);
+      c.fillStyle = '#5b6b7c'; c.font = cond(600, 12.5); c.fillText(`LENGTH ${fmtLen(st.lengthM).toUpperCase()}  ·  VERTICAL ${fmtElev(st.vertM).toUpperCase()}`, lx + 42, y2 + 9);
+      y2 += 30;
+    });
+  }
+}
+
+/* =====================================================================
+   EDITOR — you build directly on the painting.
+   A hidden "pick" canvas renders every mesh quad in a unique colour so a
+   pointer position can be turned back into grid coordinates. Brush drags
+   re-render at low detail with the forest layer reused; releasing the
+   pointer paints the full scene again.
+   ===================================================================== */
+const buildCanvas = $('buildCanvas'), bctx = buildCanvas.getContext('2d');
+const overlay = $('overlay'), octx = overlay.getContext('2d');
+const wrap = $('canvasWrap');
+const cam = { dir: 'S', pitch: 40, zoom: 1, panX: 0, panY: 0, contours: false, labels: true };
+let dpr = 1, cw = 0, ch = 0, V = null;
+let forestLayer = null, forestSig = '';
+let fastQueued = false, fullTimer = null, heightVer = 0, contourCache = null;
+
+let tool = 'raise';
+let brush = { size: 9, strength: 0.5 };
+let runOpts = { width: 1.5, groomed: true, glade: false };
+let liftType = 'chair';
+let cursor = null, painting = false, flattenTarget = 0, lastPaint = null;
+let pendingLift = null, pendingRun = null, selection = null, drag = null, spaceDown = false, panning = null;
+
+const isBrushTool = t => ['raise', 'lower', 'smooth', 'flatten', 'plant', 'clear'].includes(t);
+const isTreeTool = t => t === 'plant' || t === 'clear';
+
+function resizeBuild() {
+  dpr = Math.min(window.devicePixelRatio || 1, 2);
+  cw = wrap.clientWidth; ch = wrap.clientHeight;
+  for (const cv of [buildCanvas, overlay]) { cv.width = Math.max(1, Math.round(cw * dpr)); cv.height = Math.max(1, Math.round(ch * dpr)); }
+  forestLayer = document.createElement('canvas'); forestLayer.width = buildCanvas.width; forestLayer.height = buildCanvas.height; forestSig = '';
+}
+function viewOpts(quality) {
+  return { W: buildCanvas.width, H: buildCanvas.height, dir: cam.dir, pitch: cam.pitch, exag: S.map.exag, detail: quality === 'full' ? 2 : 1, zoom: cam.zoom, panX: cam.panX, panY: cam.panY, marginX: 24 * dpr, topMargin: 64 * dpr, bottomMargin: 40 * dpr, sun: S.map.sun };
+}
+function renderBuild(quality = 'full', reuseForest = false) {
+  if (!S || !cw) return;
+  V = makeView(viewOpts(quality));
+  const sig = [cam.dir, cam.pitch, cam.zoom, cam.panX, cam.panY, S.map.exag, S.map.sun, S.map.forest, buildCanvas.width, buildCanvas.height].join('|');
+  const reuse = reuseForest && forestSig === sig;
+  paintScene(bctx, V, { labels: cam.labels && quality === 'full', title: false, legend: false, haze: S.map.haze, range: S.map.range, clouds: S.map.clouds, forest: S.map.forest, forestDensity: quality === 'full' ? 1 : 0.3, forestLayer, reuseForest: reuse });
+  forestSig = sig;
+  drawOverlay();
+  updateHud();
+}
+function requestFast(reuseForest) { if (fastQueued) return; fastQueued = true; requestAnimationFrame(() => { fastQueued = false; renderBuild('fast', reuseForest); }); }
+function requestFull(delay = 40) { clearTimeout(fullTimer); fullTimer = setTimeout(() => renderBuild('full'), delay); }
+
+// ---------- Picking ----------
+// Screen (backing pixels) → grid coords, or null when the pointer is off the terrain.
+function pick(sx, sy) {
+  if (!V) return null;
+  const r = V.unproject(sx, sy); if (!r) return null;
+  const [gx, gy] = V.R.fromR(r[0], r[1]);
+  return [clamp(gx, 0, W - 1), clamp(gy, 0, H - 1)];
+}
+function projG(gx, gy, dh = 0) { const [rx, ry] = V.R.toR(gx, gy); const p = V.project(rx, ry, hAt(gx, gy) + dh); return [p[0], p[1], p[2], V.visible(ry, p[0], p[1], 2)]; }
+
+// ---------- Overlay: cursors, selection, previews, contours ----------
+function drawOverlay() {
+  const c = octx; c.setTransform(1, 0, 0, 1, 0, 0); c.clearRect(0, 0, overlay.width, overlay.height);
+  if (!V) return;
+  const k = dpr;
+  if (cam.contours) drawContours(c);
+  const projPath = pts => { const out = []; let cur = []; for (const p of pts) { const q = projG(p[0], p[1]); if (q[3]) cur.push([q[0], q[1]]); else { if (cur.length > 1) out.push(cur); cur = []; } } if (cur.length > 1) out.push(cur); return out; };
+  const handle = (gx, gy, r) => { const p = projG(gx, gy); if (!p[3]) return; c.fillStyle = '#fff'; c.strokeStyle = '#f2c14e'; c.lineWidth = 2 * k; c.beginPath(); c.arc(p[0], p[1], r * k, 0, 7); c.fill(); c.stroke(); };
+  const sel = getSelected();
+  if (sel) {
+    c.lineCap = 'round'; c.lineJoin = 'round';
+    if (selection.type === 'run') {
+      c.strokeStyle = 'rgba(242,193,78,0.8)'; c.lineWidth = sel.width * V.cellPx + 8 * k;
+      for (const seg of projPath(resample(runPath(sel), 0.5))) strokePath(c, seg);
+      for (const p of sel.points) handle(p[0], p[1], 5);
+    } else if (selection.type === 'lift') {
+      c.strokeStyle = 'rgba(242,193,78,0.85)'; c.lineWidth = 8 * k;
+      const n = 40, pts = []; for (let i = 0; i <= n; i++) pts.push([lerp(sel.a[0], sel.b[0], i / n), lerp(sel.a[1], sel.b[1], i / n)]);
+      for (const seg of projPath(pts)) strokePath(c, seg);
+      handle(sel.a[0], sel.a[1], 6); handle(sel.b[0], sel.b[1], 6);
+    } else {
+      const p = projG(sel.x, sel.y); if (p[3]) { c.strokeStyle = '#f2c14e'; c.lineWidth = 3 * k; c.strokeRect(p[0] - 16 * k, p[1] - 22 * k, 32 * k, 30 * k); }
+    }
+  }
+  if (pendingRun && cursor) {
+    const pts = resample(smoothPath([...pendingRun, cursor], 6), 0.5);
+    c.setLineDash([6 * k, 4 * k]); c.strokeStyle = '#2b6cb0'; c.lineWidth = Math.max(3 * k, runOpts.width * V.cellPx); c.globalAlpha = 0.55; c.lineCap = 'round';
+    for (const seg of projPath(pts)) strokePath(c, seg); c.globalAlpha = 1; c.setLineDash([]);
+    for (const p of pendingRun) { const q = projG(p[0], p[1]); c.fillStyle = '#2b6cb0'; c.beginPath(); c.arc(q[0], q[1], 4 * k, 0, 7); c.fill(); }
+  }
+  if (pendingLift && cursor) {
+    const n = 40, pts = []; for (let i = 0; i <= n; i++) pts.push([lerp(pendingLift[0], cursor[0], i / n), lerp(pendingLift[1], cursor[1], i / n)]);
+    c.setLineDash([6 * k, 4 * k]); c.strokeStyle = LIFT_RED; c.lineWidth = 2.5 * k; for (const seg of projPath(pts)) strokePath(c, seg); c.setLineDash([]);
+    const a = projG(pendingLift[0], pendingLift[1]); c.fillStyle = LIFT_RED; c.beginPath(); c.arc(a[0], a[1], 4.5 * k, 0, 7); c.fill();
+  }
+  if (cursor && isBrushTool(tool)) {
+    const ring = []; for (let i = 0; i <= 36; i++) { const a = i / 36 * Math.PI * 2; ring.push([clamp(cursor[0] + Math.cos(a) * brush.size, 0, W - 1), clamp(cursor[1] + Math.sin(a) * brush.size, 0, H - 1)]); }
+    const segs = projPath(ring);
+    c.lineCap = 'round'; c.strokeStyle = 'rgba(255,255,255,0.9)'; c.lineWidth = 3 * k; for (const s of segs) strokePath(c, s);
+    c.strokeStyle = 'rgba(28,42,58,0.9)'; c.lineWidth = 1.2 * k; c.setLineDash([5 * k, 4 * k]); for (const s of segs) strokePath(c, s); c.setLineDash([]);
+  }
+}
+function contourSegments() {
+  if (contourCache && contourCache.ver === heightVer && contourCache.units === S.units) return contourCache.segs;
+  const intervalM = S.units === 'ft' ? 60.96 : 50, step = intervalM / S.rise, hh = S.height, segs = [];
+  const e0 = S.baseElev / intervalM;
+  for (let y = 0; y < H - 1; y++) for (let x = 0; x < W - 1; x++) {
+    const a = hh[y * W + x], b = hh[y * W + x + 1], cc = hh[(y + 1) * W + x + 1], d = hh[(y + 1) * W + x];
+    const lo = Math.min(a, b, cc, d), hi = Math.max(a, b, cc, d);
+    for (let n = Math.ceil(lo / step); n * step <= hi; n++) {
+      const lv = n * step, pts = [];
+      const cross = (v0, v1, x0, y0, x1, y1) => { if ((v0 < lv) !== (v1 < lv)) { const t = (lv - v0) / (v1 - v0); pts.push([x0 + (x1 - x0) * t, y0 + (y1 - y0) * t]); } };
+      cross(a, b, x, y, x + 1, y); cross(b, cc, x + 1, y, x + 1, y + 1); cross(cc, d, x + 1, y + 1, x, y + 1); cross(d, a, x, y + 1, x, y);
+      if (pts.length >= 2) segs.push([pts[0], pts[1], (Math.round(e0 + n) % 5) === 0]);
+      if (pts.length === 4) segs.push([pts[2], pts[3], (Math.round(e0 + n) % 5) === 0]);
+    }
+  }
+  contourCache = { ver: heightVer, units: S.units, segs };
+  return segs;
+}
+function drawContours(c) {
+  const segs = contourSegments(), k = dpr;
   c.lineCap = 'round';
-  if (sel) { c.strokeStyle = '#d9a441'; c.lineWidth = 9; c.globalAlpha = 0.6; c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx, by); c.stroke(); c.globalAlpha = 1; }
-  c.strokeStyle = '#c8102e'; c.lineWidth = lift.type === 'gondola' ? 3.5 : 2;
-  if (lift.type === 'surface') c.setLineDash([6, 4]);
-  c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx, by); c.stroke(); c.setLineDash([]);
-  // towers
-  const L = Math.hypot(bx - ax, by - ay), n = Math.max(1, Math.floor(L / (3 * view.scale)));
-  const nx = -(by - ay) / L * 4, ny = (bx - ax) / L * 4;
-  c.lineWidth = 1.5;
-  for (let i = 1; i < n; i++) { const t = i / n, x = lerp(ax, bx, t), y = lerp(ay, by, t); c.beginPath(); c.moveTo(x - nx, y - ny); c.lineTo(x + nx, y + ny); c.stroke(); }
-  c.fillStyle = '#c8102e'; c.beginPath(); c.arc(ax, ay, 4.5, 0, 7); c.fill();
-  c.fillRect(bx - 4.5, by - 4.5, 9, 9);
-  if (view.scale >= 3) {
-    c.font = `500 italic ${clamp(view.scale * 2, 10, 13)}px Inter, sans-serif`; c.textAlign = 'center'; c.textBaseline = 'bottom';
-    c.lineWidth = 3; c.strokeStyle = 'rgba(255,255,255,.9)'; c.strokeText(lift.name, bx, by - 8); c.fillStyle = '#c8102e'; c.fillText(lift.name, bx, by - 8);
-  }
-  if (sel) for (const p of [lift.a, lift.b]) { const [sx, sy] = toScreen(p[0], p[1]); c.fillStyle = '#fff'; c.strokeStyle = '#d9a441'; c.lineWidth = 2; c.beginPath(); c.arc(sx, sy, 6, 0, 7); c.fill(); c.stroke(); }
-}
-function drawLodgeEditor(c, lodge, sel) {
-  const [sx, sy] = toScreen(lodge.x, lodge.y), s = Math.max(10, view.scale * 2.2);
-  if (sel) { c.strokeStyle = '#d9a441'; c.lineWidth = 3; c.strokeRect(sx - s / 2 - 3, sy - s / 2 - 3, s + 6, s + 6); }
-  c.fillStyle = '#7a5230'; c.fillRect(sx - s / 2, sy - s / 2, s, s);
-  c.fillStyle = '#fff'; c.beginPath(); c.moveTo(sx - s / 2, sy - s / 6); c.lineTo(sx, sy - s / 2 - s * 0.25); c.lineTo(sx + s / 2, sy - s / 6); c.closePath(); c.fill();
-  if (view.scale >= 3) {
-    c.font = `500 ${clamp(view.scale * 2, 10, 13)}px Inter, sans-serif`; c.textAlign = 'center'; c.textBaseline = 'top';
-    c.lineWidth = 3; c.strokeStyle = 'rgba(255,255,255,.9)'; c.strokeText(lodge.name, sx, sy + s / 2 + 3); c.fillStyle = '#1c2a3a'; c.fillText(lodge.name, sx, sy + s / 2 + 3);
+  for (const pass of [false, true]) {
+    c.strokeStyle = pass ? 'rgba(28,42,58,0.55)' : 'rgba(28,42,58,0.3)'; c.lineWidth = (pass ? 1.4 : 0.8) * k; c.beginPath();
+    for (const [p, q, idx] of segs) {
+      if (idx !== pass) continue;
+      const a = projG(p[0], p[1]), b = projG(q[0], q[1]); if (!a[3] || !b[3]) continue;
+      c.moveTo(a[0], a[1]); c.lineTo(b[0], b[1]);
+    }
+    c.stroke();
   }
 }
 function updateHud() {
-  const hud = $('hud');
-  if (!cursor || cursor[0] < -0.5 || cursor[1] < -0.5 || cursor[0] > W - 0.5 || cursor[1] > H - 0.5) { hud.innerHTML = `<span>${S.runs.length} runs · ${S.lifts.length} lifts</span>`; return; }
+  const hud = $('hud'); if (!S) return;
+  if (!cursor) { hud.innerHTML = `<span>${S.runs.length} runs · ${S.lifts.length} lifts</span><span>${cam.zoom.toFixed(1)}×</span>`; return; }
   const e = elevM(cursor[0], cursor[1]);
   const t = S.trees[clamp(Math.round(cursor[1]), 0, H - 1) * W + clamp(Math.round(cursor[0]), 0, W - 1)];
-  hud.innerHTML = `<span>Elevation <b>${fmtElev(e)}</b></span><span>Forest <b>${Math.round(t / 255 * 100)}%</b></span><span>Zoom <b>${(view.scale / view.fit).toFixed(1)}×</b></span>`;
+  hud.innerHTML = `<span>Elevation <b>${fmtElev(e)}</b></span><span>Forest <b>${Math.round(t / 255 * 100)}%</b></span><span>Zoom <b>${cam.zoom.toFixed(1)}×</b></span>`;
 }
 
 // ---------- Brushes ----------
-const isBrushTool = t => ['raise', 'lower', 'smooth', 'flatten', 'plant', 'clear'].includes(t);
 function applyBrush(gx, gy) {
   const r = brush.size, k = brush.strength, hh = S.height, tt = S.trees;
   const x0 = Math.max(0, Math.floor(gx - r)), x1 = Math.min(W - 1, Math.ceil(gx + r));
   const y0 = Math.max(0, Math.floor(gy - r)), y1 = Math.min(H - 1, Math.ceil(gy + r));
-  let src = null;
-  if (tool === 'smooth') src = new Float32Array(hh);
+  const src = tool === 'smooth' ? new Float32Array(hh) : null;
   for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) {
     const d = dist(x, y, gx, gy) / r; if (d >= 1) continue;
     const w = (1 - d * d) * (1 - d * d), i = y * W + x;
@@ -1037,16 +1324,12 @@ function applyBrush(gx, gy) {
       case 'raise': hh[i] = Math.min(1, hh[i] + 0.012 * k * w); break;
       case 'lower': hh[i] = Math.max(0, hh[i] - 0.012 * k * w); break;
       case 'flatten': hh[i] = lerp(hh[i], flattenTarget, 0.25 * k * w); break;
-      case 'smooth': {
-        let s = 0, n = 0;
-        for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) { const xx = x + dx, yy = y + dy; if (xx < 0 || yy < 0 || xx >= W || yy >= H) continue; s += src[yy * W + xx]; n++; }
-        hh[i] = lerp(hh[i], s / n, 0.5 * k * w); break;
-      }
+      case 'smooth': { let s = 0, n = 0; for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) { const xx = x + dx, yy = y + dy; if (xx < 0 || yy < 0 || xx >= W || yy >= H) continue; s += src[yy * W + xx]; n++; } hh[i] = lerp(hh[i], s / n, 0.5 * k * w); break; }
       case 'plant': tt[i] = Math.min(255, tt[i] + 255 * 0.35 * k * w); break;
       case 'clear': tt[i] = Math.max(0, tt[i] - 255 * 0.5 * k * w); break;
     }
   }
-  terrainDirty = true;
+  if (!isTreeTool(tool)) heightVer++;
 }
 function paintTo(gx, gy) {
   if (!lastPaint) { applyBrush(gx, gy); lastPaint = [gx, gy]; return; }
@@ -1055,10 +1338,10 @@ function paintTo(gx, gy) {
   lastPaint = [gx, gy];
 }
 
-// ---------- Hit testing ----------
+// ---------- Hit testing (grid space) ----------
 function hitTest(gx, gy) {
-  const tol = 8 / view.scale;
-  if (selection) { // handles first
+  const tol = 10 * dpr / V.cellPx;
+  if (selection) {
     const sel = getSelected();
     if (sel && selection.type === 'run') for (let i = 0; i < sel.points.length; i++) if (dist(gx, gy, sel.points[i][0], sel.points[i][1]) < tol) return { type: 'runpt', run: sel, idx: i };
     if (sel && selection.type === 'lift') for (const key of ['a', 'b']) if (dist(gx, gy, sel[key][0], sel[key][1]) < tol) return { type: 'liftpt', lift: sel, key };
@@ -1067,19 +1350,18 @@ function hitTest(gx, gy) {
   for (const lift of S.lifts) if (pointSegDist(gx, gy, lift.a[0], lift.a[1], lift.b[0], lift.b[1]) < tol) return { type: 'lift', lift };
   let best = null, bestD = Infinity;
   for (const run of S.runs) { const d = pointPathDist(gx, gy, runPath(run)) - run.width / 2; if (d < tol && d < bestD) { bestD = d; best = run; } }
-  if (best) return { type: 'run', run: best };
-  return null;
+  return best ? { type: 'run', run: best } : null;
 }
 function getSelected() {
   if (!selection) return null;
   const list = selection.type === 'run' ? S.runs : selection.type === 'lift' ? S.lifts : S.lodges;
   return list.find(o => o.id === selection.id) || null;
 }
-function select(type, id) { selection = type ? { type, id } : null; renderInspector(); renderLists(); requestRender(); }
+function select(type, id) { selection = type ? { type, id } : null; renderInspector(); renderLists(); drawOverlay(); }
 
 // ---------- Creating things ----------
 function finishRun() {
-  if (!pendingRun || pendingRun.length < 2) { pendingRun = null; showHint(''); requestRender(); return; }
+  if (!pendingRun || pendingRun.length < 2) { pendingRun = null; showHint(''); drawOverlay(); return; }
   let pts = pendingRun.map(p => [+p[0].toFixed(2), +p[1].toFixed(2)]);
   if (elevM(pts[0][0], pts[0][1]) < elevM(pts[pts.length - 1][0], pts[pts.length - 1][1])) pts.reverse();
   pushUndo();
@@ -1088,7 +1370,7 @@ function finishRun() {
   run.name = pickName(RUN_NAMES[runStats(run).auto], new Set(S.runs.map(r => r.name)));
   pendingRun = null; showHint('');
   afterModelChange(true); select('run', run.id);
-  toast(`${run.name} cut — rated ${DIFF[runDifficulty(run)].label.toLowerCase()}`);
+  toast(`${run.name} cut through the trees — rated ${DIFF[runDifficulty(run)].label.toLowerCase()}`);
 }
 function addLift(a, b) {
   if (elevM(a[0], a[1]) > elevM(b[0], b[1])) [a, b] = [b, a];
@@ -1112,31 +1394,28 @@ function deleteSelected() {
 }
 
 // ---------- Pointer input ----------
-function pointerGrid(ev) { const r = editor.getBoundingClientRect(); return toGrid(ev.clientX - r.left, ev.clientY - r.top); }
-editor.addEventListener('contextmenu', e => e.preventDefault());
-editor.addEventListener('pointerdown', ev => {
-  editor.setPointerCapture(ev.pointerId);
-  const [gx, gy] = pointerGrid(ev); cursor = [gx, gy];
-  if (ev.button === 1 || ev.button === 2 || spaceDown) { panning = { x: ev.clientX, y: ev.clientY, ox: view.ox, oy: view.oy }; return; }
+function evPos(ev) { const r = overlay.getBoundingClientRect(); return [(ev.clientX - r.left) * dpr, (ev.clientY - r.top) * dpr]; }
+overlay.addEventListener('contextmenu', e => e.preventDefault());
+overlay.addEventListener('pointerdown', ev => {
+  overlay.setPointerCapture(ev.pointerId);
+  const [sx, sy] = evPos(ev);
+  if (ev.button === 1 || ev.button === 2 || spaceDown) { panning = { x: sx, y: sy, px: cam.panX, py: cam.panY }; return; }
   if (ev.button !== 0) return;
-  const inside = gx >= -0.5 && gy >= -0.5 && gx <= W - 0.5 && gy <= H - 0.5;
-  if (isBrushTool(tool)) {
-    if (!inside) return;
-    pushUndo(); painting = true; lastPaint = null; flattenTarget = hAt(gx, gy); paintTo(gx, gy); requestRender(); return;
-  }
+  const g = pick(sx, sy);
+  if (!g) { if (tool === 'select') select(null); return; }
+  cursor = g; const [gx, gy] = g;
+  if (isBrushTool(tool)) { pushUndo(); painting = true; lastPaint = null; flattenTarget = hAt(gx, gy); paintTo(gx, gy); requestFast(!isTreeTool(tool)); return; }
   if (tool === 'lift') {
-    if (!inside) return;
     if (!pendingLift) { pendingLift = [gx, gy]; showHint('Now click the top terminal'); }
     else { addLift(pendingLift, [gx, gy]); pendingLift = null; showHint(''); }
-    requestRender(); return;
+    drawOverlay(); return;
   }
   if (tool === 'run') {
-    if (!inside) return;
-    if (!pendingRun) { pendingRun = [[gx, gy]]; showHint('Click to add points · double-click or Enter to finish · Esc to cancel'); }
+    if (!pendingRun) { pendingRun = [[gx, gy]]; showHint('Click down the trail · double-click or Enter to finish · Esc to cancel'); }
     else if (dist(gx, gy, pendingRun[pendingRun.length - 1][0], pendingRun[pendingRun.length - 1][1]) > 0.6) pendingRun.push([gx, gy]);
-    requestRender(); return;
+    drawOverlay(); return;
   }
-  if (tool === 'lodge') { if (inside) addLodge(gx, gy); return; }
+  if (tool === 'lodge') { addLodge(gx, gy); return; }
   if (tool === 'groom') {
     const hit = hitTest(gx, gy);
     if (hit && hit.type === 'run') { pushUndo(); hit.run.groomed = !hit.run.groomed; afterModelChange(false); select('run', hit.run.id); toast(hit.run.groomed ? `${hit.run.name}: groomed overnight` : `${hit.run.name}: left to bump up`); }
@@ -1145,110 +1424,83 @@ editor.addEventListener('pointerdown', ev => {
   if (tool === 'select') {
     const hit = hitTest(gx, gy);
     if (!hit) { select(null); return; }
-    if (hit.type === 'runpt') { pushUndo(); drag = hit; return; }
-    if (hit.type === 'liftpt') { pushUndo(); drag = hit; return; }
+    if (hit.type === 'runpt' || hit.type === 'liftpt') { pushUndo(); drag = hit; return; }
     if (hit.type === 'lodge') { select('lodge', hit.lodge.id); pushUndo(); drag = { type: 'lodge', lodge: hit.lodge }; return; }
     if (hit.type === 'lift') { select('lift', hit.lift.id); return; }
     if (hit.type === 'run') { select('run', hit.run.id); return; }
   }
 });
-editor.addEventListener('pointermove', ev => {
-  const [gx, gy] = pointerGrid(ev); cursor = [gx, gy];
-  if (panning) { view.ox = panning.ox + (ev.clientX - panning.x); view.oy = panning.oy + (ev.clientY - panning.y); requestRender(); return; }
-  if (painting) { paintTo(clamp(gx, 0, W - 1), clamp(gy, 0, H - 1)); }
-  if (drag) {
-    const cx = clamp(gx, 0, W - 1), cy = clamp(gy, 0, H - 1);
-    if (drag.type === 'runpt') { drag.run.points[drag.idx] = [+cx.toFixed(2), +cy.toFixed(2)]; }
-    else if (drag.type === 'liftpt') { drag.lift[drag.key] = [+cx.toFixed(2), +cy.toFixed(2)]; }
-    else if (drag.type === 'lodge') { drag.lodge.x = +cx.toFixed(2); drag.lodge.y = +cy.toFixed(2); }
-    if (drag.type === 'runpt') { runPathCache.delete(drag.run.id); rebuildRunField(); terrainDirty = true; }
+overlay.addEventListener('pointermove', ev => {
+  const [sx, sy] = evPos(ev);
+  if (panning) { cam.panX = panning.px + (sx - panning.x); cam.panY = panning.py + (sy - panning.y); requestFast(false); requestFull(220); return; }
+  const g = pick(sx, sy); cursor = g;
+  if (painting && g) { paintTo(g[0], g[1]); requestFast(!isTreeTool(tool)); return; }
+  if (drag && g) {
+    const cx = +g[0].toFixed(2), cy = +g[1].toFixed(2);
+    if (drag.type === 'runpt') { drag.run.points[drag.idx] = [cx, cy]; runPathCache.delete(drag.run.id); rebuildRunField(); }
+    else if (drag.type === 'liftpt') drag.lift[drag.key] = [cx, cy];
+    else drag.lodge.x = cx, drag.lodge.y = cy;
+    requestFast(false); return;
   }
-  requestRender();
+  drawOverlay(); updateHud();
 });
 function endPointer() {
   if (painting) { painting = false; lastPaint = null; afterModelChange(false); }
   if (drag) { drag = null; afterModelChange(true); }
-  panning = null;
+  if (panning) { panning = null; requestFull(0); }
 }
-editor.addEventListener('pointerup', endPointer);
-editor.addEventListener('pointercancel', endPointer);
-editor.addEventListener('pointerleave', () => { cursor = null; requestRender(); });
-editor.addEventListener('dblclick', ev => {
+overlay.addEventListener('pointerup', endPointer);
+overlay.addEventListener('pointercancel', endPointer);
+overlay.addEventListener('pointerleave', () => { if (!painting && !drag) { cursor = null; drawOverlay(); updateHud(); } });
+overlay.addEventListener('dblclick', () => {
   if (tool === 'run' && pendingRun) {
-    // the double-click's second click may have appended a duplicate point
     if (pendingRun.length > 2) { const a = pendingRun[pendingRun.length - 1], b = pendingRun[pendingRun.length - 2]; if (dist(a[0], a[1], b[0], b[1]) < 1.2) pendingRun.pop(); }
     finishRun();
   }
 });
-editor.addEventListener('wheel', ev => {
+overlay.addEventListener('wheel', ev => {
   ev.preventDefault();
-  const r = editor.getBoundingClientRect();
-  if (ev.ctrlKey || ev.metaKey || Math.abs(ev.deltaY) > Math.abs(ev.deltaX) * 2 && !ev.shiftKey) {
-    zoomAt(ev.clientX - r.left, ev.clientY - r.top, Math.exp(-ev.deltaY * 0.0015));
-  } else { view.ox -= ev.deltaX; view.oy -= ev.deltaY; requestRender(); }
+  const [sx, sy] = evPos(ev);
+  if (ev.ctrlKey || ev.metaKey || (!ev.shiftKey && Math.abs(ev.deltaY) >= Math.abs(ev.deltaX))) zoomAt(sx, sy, Math.exp(-ev.deltaY * 0.0015));
+  else { cam.panX -= ev.deltaX * dpr; cam.panY -= ev.deltaY * dpr; requestFast(false); requestFull(220); }
 }, { passive: false });
+function zoomAt(sx, sy, f) {
+  const z0 = cam.zoom, z1 = clamp(z0 * f, 1, 6), k = z1 / z0; if (k === 1) return;
+  const cx = buildCanvas.width / 2, cy = buildCanvas.height / 2;
+  cam.panX = sx - cx - (sx - cx - cam.panX) * k; cam.panY = sy - cy - (sy - cy - cam.panY) * k; cam.zoom = z1;
+  if (z1 === 1) { cam.panX = 0; cam.panY = 0; }
+  requestFast(false); requestFull(220);
+}
+function fitCamera() { cam.zoom = 1; cam.panX = 0; cam.panY = 0; renderBuild('full'); }
 
 function setTool(t) {
   tool = t; pendingLift = null; pendingRun = null; showHint('');
   document.querySelectorAll('.tool').forEach(b => b.classList.toggle('active', b.dataset.tool === t));
-  editor.style.cursor = isBrushTool(t) ? 'none' : t === 'select' ? 'default' : 'crosshair';
-  renderToolCard(); requestRender();
+  overlay.style.cursor = isBrushTool(t) ? 'none' : t === 'select' ? 'default' : 'crosshair';
+  renderToolCard(); drawOverlay();
 }
-let hintTimer = null;
 function showHint(msg) { const h = $('hint'); h.textContent = msg; h.classList.toggle('show', !!msg); }
 
 /* =====================================================================
-   TRAIL MAP — oblique painted view
-   The heightmap is projected as a 2.5-D mesh drawn back to front. A
-   front-to-back pass first records, for every screen column, the highest
-   terrain silhouette nearer than each row; anything on the surface (trees,
-   runs, lift cables) is only drawn where it rises above that silhouette.
+   UI WIRING
    ===================================================================== */
+let saveTimer = null;
+function afterModelChange(structural) {
+  if (structural) { rebuildRunField(); renderLists(); renderInspector(); }
+  heightVer++;
+  clearTimeout(saveTimer); saveTimer = setTimeout(saveLocal, 400);
+  updateUndoButtons(); renderMountainSummary();
+  mapDirty = true; scheduleMapRender();
+  if ($('buildView').classList.contains('active')) requestFull(20);
+}
+function saveLocalSoon() { clearTimeout(saveTimer); saveTimer = setTimeout(saveLocal, 400); }
+let toastTimer = null;
+function toast(msg) { const t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2600); }
+
+// ---------- Trail map (poster) ----------
 const MW = 1800, MH = 1200;
 const mapCanvas = $('mapCanvas'), mctx = mapCanvas.getContext('2d');
 let mapDirty = true, mapBusy = false, mapTimer = null;
-const PAPER = '#f4f0e8';
-
-function makeRotation(dir) {
-  // Rotated coords: rx runs left→right on screen, ry runs far (0) → near.
-  let RW = W, RH = H, toR, fromR;
-  if (dir === 'N') { toR = (x, y) => [W - 1 - x, H - 1 - y]; fromR = (rx, ry) => [W - 1 - rx, H - 1 - ry]; }
-  else if (dir === 'E') { RW = H; RH = W; toR = (x, y) => [H - 1 - y, x]; fromR = (rx, ry) => [ry, H - 1 - rx]; }
-  else if (dir === 'W') { RW = H; RH = W; toR = (x, y) => [y, W - 1 - x]; fromR = (rx, ry) => [W - 1 - ry, rx]; }
-  else { toR = (x, y) => [x, y]; fromR = (rx, ry) => [rx, ry]; }
-  return { RW, RH, toR, fromR, hR: (rx, ry) => { const [x, y] = fromR(rx, ry); return hAt(x, y); } };
-}
-
-function buildProjection(R) {
-  const marginX = 60, topMargin = 120, bottomMargin = 120;
-  const P = { RW: R.RW, RH: R.RH, farScale: 0.8, cx: MW / 2, cellPx: (MW - 2 * marginX) / (R.RW - 1), groundTop: 0, groundDepth: 540, vert: 0 };
-  P.vert = S.rise / CELL_M * P.cellPx * S.map.exag;
-  const fs = P.farScale, norm = fs + (1 - fs) / 2;
-  P.rowY = t => P.groundTop + P.groundDepth * (fs * t + (1 - fs) * t * t / 2) / norm;
-  P.project = (rx, ry, h) => { const t = ry / (P.RH - 1), s = lerp(fs, 1, t); return [P.cx + (rx - (P.RW - 1) / 2) * P.cellPx * s, P.rowY(t) - h * P.vert * s, s]; };
-  // Fit: find the highest projected point, pin it to the top margin, then shrink if the base overflows.
-  for (let pass = 0; pass < 2; pass++) {
-    let minY = Infinity;
-    for (let ry = 0; ry < R.RH; ry += 2) for (let rx = 0; rx < R.RW; rx += 2) { const y = P.project(rx, ry, R.hR(rx, ry))[1]; if (y < minY) minY = y; }
-    P.groundTop += topMargin - minY;
-    const overflow = (P.groundTop + P.groundDepth) - (MH - bottomMargin);
-    if (overflow > 0) { const f = (MH - bottomMargin - topMargin) / (P.groundTop + P.groundDepth - topMargin); P.vert *= f; P.groundDepth *= f; P.groundTop = topMargin + (P.groundTop - topMargin) * f; }
-  }
-  return P;
-}
-
-function rgb(r, g, b) { return `rgb(${r | 0},${g | 0},${b | 0})`; }
-function mix3(a, b, t) { return [lerp(a[0], b[0], t), lerp(a[1], b[1], t), lerp(a[2], b[2], t)]; }
-
-let paperTex = null;
-function getPaper() {
-  if (paperTex) return paperTex;
-  const c = document.createElement('canvas'); c.width = c.height = 256; const x = c.getContext('2d');
-  const img = x.createImageData(256, 256);
-  for (let i = 0; i < 256 * 256; i++) { const v = 200 + hash2(i % 256, (i / 256) | 0, 99) * 55; img.data[i * 4] = img.data[i * 4 + 1] = img.data[i * 4 + 2] = v; img.data[i * 4 + 3] = 255; }
-  x.putImageData(img, 0, 0); paperTex = c; return c;
-}
-
 function scheduleMapRender(delay = 60) {
   mapDirty = true;
   if (!$('mapView').classList.contains('active')) return;
@@ -1257,285 +1509,17 @@ function scheduleMapRender(delay = 60) {
 async function renderMapNow() {
   if (mapBusy) { mapDirty = true; return; }
   mapBusy = true; $('mapStatus').classList.add('show');
-  try { await document.fonts.load('700 60px Fraunces'); await document.fonts.load('600 14px Inter'); } catch (e) { /* fall back to system fonts */ }
+  try { await Promise.all([document.fonts.load('700 60px Fraunces'), document.fonts.load('700 16px "Barlow Condensed"'), document.fonts.load('600 16px "Barlow Condensed"')]); } catch (e) { /* system fonts */ }
   await new Promise(r => setTimeout(r, 10));
   const t0 = performance.now();
-  try { renderMap(); } catch (e) { console.error(e); toast('Map render failed: ' + e.message); }
+  try {
+    const Vm = makeView({ W: MW, H: MH, dir: S.map.view, pitch: S.map.pitch, exag: S.map.exag, detail: S.map.detail, zoom: 1, panX: 0, panY: 0, marginX: 50, topMargin: 150, bottomMargin: 100, sun: S.map.sun });
+    paintScene(mctx, Vm, { labels: S.map.labels, legend: S.map.legend, title: true, haze: S.map.haze, range: S.map.range, clouds: S.map.clouds, forest: S.map.forest, forestDensity: 1 });
+  } catch (e) { console.error(e); toast('Map render failed: ' + e.message); }
   mapDirty = false; mapBusy = false; $('mapStatus').classList.remove('show');
   renderMapStats();
   console.debug('trail map painted in', Math.round(performance.now() - t0), 'ms');
 }
-
-function renderMap() {
-  const c = mctx, R = makeRotation(S.map.view), P = buildProjection(R);
-  const UP = S.map.detail | 0 || 2, RWU = (R.RW - 1) * UP + 1, RHU = (R.RH - 1) * UP + 1;
-  const sunLeft = S.map.sun !== 'right';
-  const L = (() => { const v = [sunLeft ? -0.6 : 0.6, 0.5, 0.62], n = Math.hypot(...v); return v.map(a => a / n); })();
-  const zs = S.rise / (CELL_M / UP);      // meters of rise per mesh step at h=1
-  const seed = S.seed;
-
-  // ---- 1. Mesh vertices ----
-  const vx = new Float32Array(RWU * RHU), vy = new Float32Array(RWU * RHU), vh = new Float32Array(RWU * RHU), vs = new Float32Array(RHU);
-  for (let j = 0; j < RHU; j++) {
-    const ry = j / UP;
-    for (let i = 0; i < RWU; i++) {
-      const rx = i / UP, h = R.hR(rx, ry), [sx, sy, s] = P.project(rx, ry, h), k = j * RWU + i;
-      vx[k] = sx; vy[k] = sy; vh[k] = h; vs[j] = s;
-    }
-  }
-
-  // ---- 2. Visibility buffer (front to back) ----
-  const yBuf = new Float32Array(MW).fill(1e9), yNear = new Float32Array(RHU * MW);
-  for (let j = RHU - 1; j >= 0; j--) {
-    yNear.set(yBuf, j * MW);
-    for (let i = 0; i < RWU - 1; i++) {
-      const k = j * RWU + i, ax = vx[k], ay = vy[k], bx = vx[k + 1], by = vy[k + 1];
-      const x0 = Math.max(0, Math.ceil(Math.min(ax, bx))), x1 = Math.min(MW - 1, Math.floor(Math.max(ax, bx)));
-      for (let x = x0; x <= x1; x++) { const t = bx === ax ? 0 : (x - ax) / (bx - ax); const y = ay + (by - ay) * t; if (y < yBuf[x]) yBuf[x] = y; }
-    }
-  }
-  const visible = (ry, sx, sy, tol = 1.5) => { const j = clamp(Math.round(ry * UP), 0, RHU - 1), x = clamp(Math.round(sx), 0, MW - 1); return sy < yNear[j * MW + x] + tol; };
-
-  // ---- 3. Sky, haze, distant ranges ----
-  c.setTransform(1, 0, 0, 1, 0, 0); c.globalAlpha = 1; c.globalCompositeOperation = 'source-over';
-  c.fillStyle = PAPER; c.fillRect(0, 0, MW, MH);
-  const horizonY = P.rowY(0) + 8;
-  const sky = c.createLinearGradient(0, 0, 0, horizonY);
-  sky.addColorStop(0, '#a9c6e6'); sky.addColorStop(0.55, '#d3e3f2'); sky.addColorStop(1, '#eef4f9');
-  c.fillStyle = sky; c.fillRect(0, 0, MW, horizonY);
-  const ground = c.createLinearGradient(0, horizonY, 0, horizonY + 160);
-  ground.addColorStop(0, '#e9eff5'); ground.addColorStop(1, PAPER);
-  c.fillStyle = ground; c.fillRect(0, horizonY, MW, MH - horizonY);
-  if (S.map.range) {
-    const cols = ['#c9d8e7', '#b9cbdd', '#aabfd3'];
-    for (let l = 0; l < 3; l++) {
-      const amp = 110 - l * 25, base = horizonY + 6 + l * 14, freq = 260 - l * 50;
-      c.beginPath(); c.moveTo(0, MH);
-      for (let x = 0; x <= MW; x += 6) { const n = ridged(x / freq + l * 13.7 + seed * 0.01, l * 3.1, seed + 900 + l, 3); c.lineTo(x, base - amp * Math.pow(n, 1.6) - 10 * fbm(x / 60, l, seed + 40, 2)); }
-      c.lineTo(MW, MH); c.closePath(); c.fillStyle = cols[l]; c.globalAlpha = 0.9; c.fill();
-    }
-    c.globalAlpha = 1;
-  }
-
-  // ---- 4. Terrain quads, back to front ----
-  const SNOW_LIT = [253, 253, 251], SNOW_SHADE = [166, 185, 212], ROCK_LIT = [156, 146, 133], ROCK_SHADE = [74, 68, 63], HAZE = [216, 227, 238];
-  const treelineH = S.treeline, SKYB = [238, 244, 249], PAPER3 = [244, 240, 232];
-  c.lineWidth = 0.8; c.lineJoin = 'round';
-  for (let j = 0; j < RHU - 1; j++) {
-    const t = j / (RHU - 1), hazeK = S.map.haze ? 0.34 * Math.pow(1 - t, 1.7) : 0;
-    const farK = 1 - smoothstep(0, 0.06, t), EDGE = mix3(SKYB, PAPER3, smoothstep(0, 0.5, t));
-    for (let i = 0; i < RWU - 1; i++) {
-      const edgeK = 1 - smoothstep(0, 0.16, Math.min(i, RWU - 2 - i) / (RWU - 2));
-      const k00 = j * RWU + i, k01 = k00 + 1, k10 = k00 + RWU, k11 = k10 + 1;
-      const h00 = vh[k00], h01 = vh[k01], h10 = vh[k10], h11 = vh[k11];
-      const dhx = ((h01 + h11) - (h00 + h10)) * 0.5 * zs / CELL_M, dhy = ((h10 + h11) - (h00 + h01)) * 0.5 * zs / CELL_M;
-      const nl = 1 / Math.sqrt(dhx * dhx + dhy * dhy + 1);
-      const lam = clamp((-dhx * L[0] - dhy * L[1] + L[2]) * nl, 0, 1);
-      const hm = (h00 + h01 + h10 + h11) * 0.25, slope = Math.hypot(dhx, dhy);
-      let col = mix3(SNOW_SHADE, SNOW_LIT, Math.pow(lam, 1.1) * 0.92 + 0.08);
-      const rockK = smoothstep(0.95, 1.6, slope) * smoothstep(treelineH - 0.25, treelineH + 0.05, hm) * 0.9;
-      if (rockK > 0.01) col = mix3(col, mix3(ROCK_SHADE, ROCK_LIT, lam), rockK);
-      const paint = 1 + (fbm(i / 6.5, j / 6.5, seed + 31, 2) - 0.5) * 0.11 + (hash2(i, j, seed + 3) - 0.5) * 0.03;
-      col = [col[0] * paint, col[1] * paint, col[2] * paint];
-      if (hazeK) col = mix3(col, HAZE, hazeK);
-      const fade = Math.max(edgeK, farK); if (fade) col = mix3(col, EDGE, Math.pow(fade, 1.6));
-      const cs = rgb(col[0], col[1], col[2]);
-      c.fillStyle = cs; c.strokeStyle = cs;
-      c.beginPath(); c.moveTo(vx[k00], vy[k00]); c.lineTo(vx[k01], vy[k01]); c.lineTo(vx[k11], vy[k11]); c.lineTo(vx[k10], vy[k10]); c.closePath(); c.fill(); c.stroke();
-    }
-  }
-
-  // ---- 5. Forest ----
-  const treeColors = [];
-  for (let hz = 0; hz < 6; hz++) {
-    const hk = S.map.haze ? 0.32 * Math.pow(1 - hz / 5, 1.7) : 0; const row = [];
-    for (let v = 0; v < 4; v++) {
-      const f = v / 3;
-      row.push({ dark: rgb(...mix3([26 + f * 14, 62 + f * 22, 42 + f * 12], HAZE, hk)), lit: rgb(...mix3([58 + f * 22, 108 + f * 28, 66 + f * 18], HAZE, hk)) });
-    }
-    treeColors.push(row);
-  }
-  const shadowCol = 'rgba(40,60,95,0.22)';
-  for (let ry = 0; ry < R.RH; ry++) {
-    const hzIdx = clamp(Math.round(ry / (R.RH - 1) * 5), 0, 5);
-    for (let rx = 0; rx < R.RW; rx++) {
-      const [gx, gy] = R.fromR(rx, ry); const d = S.trees[gy * W + gx]; if (d < 60) continue;
-      const edgeKeep = smoothstep(0, 0.16, Math.min(rx, R.RW - 1 - rx) / (R.RW - 1)) * smoothstep(0, 0.06, ry / (R.RH - 1));
-      const n = Math.min(2, Math.ceil(d / 255 * 2));
-      for (let k = 0; k < n; k++) {
-        const ox = hash3(gx, gy, k, 1) - 0.5, oy = hash3(gx, gy, k, 2) - 0.5;
-        if (!treeKeep(gx + ox, gy + oy, hash3(gx, gy, k, 3))) continue;
-        if (hash3(gx, gy, k, 5) > edgeKeep * edgeKeep) continue;
-        const [trx, try_] = R.toR(gx + ox, gy + oy);
-        const h = hAt(gx + ox, gy + oy), [sx, sy, s] = P.project(trx, try_, h);
-        if (!visible(try_, sx, sy, 1)) continue;
-        const v = hash3(gx, gy, k, 4), size = P.cellPx * s * (0.95 + v * 0.6), w = size * 0.48;
-        const colr = treeColors[hzIdx][Math.floor(v * 3.99)];
-        c.fillStyle = shadowCol; c.beginPath(); c.ellipse(sx + (sunLeft ? 1 : -1) * w * 0.7, sy + 1, w * 0.9, w * 0.3, 0, 0, 7); c.fill();
-        c.fillStyle = colr.dark; c.beginPath(); c.moveTo(sx - w, sy); c.lineTo(sx + w, sy); c.lineTo(sx, sy - size); c.closePath(); c.fill();
-        c.fillStyle = colr.lit; c.beginPath(); c.moveTo(sx, sy); c.lineTo(sx + (sunLeft ? -w : w), sy); c.lineTo(sx, sy - size); c.closePath(); c.fill();
-      }
-    }
-  }
-
-  // ---- 6. Runs ----
-  const labelBoxes = [], labelJobs = [];
-  for (const run of S.runs) {
-    const dense = resample(runPath(run), 0.35);
-    const pts = dense.map(p => { const [rx, ry] = R.toR(p[0], p[1]); const h = hAt(p[0], p[1]); const [sx, sy, s] = P.project(rx, ry, h); return { sx, sy, s, vis: visible(ry, sx, sy, 2) }; });
-    const subs = []; let cur = [];
-    for (let i = 0; i < pts.length; i++) {
-      if (pts[i].vis || (i > 0 && i < pts.length - 1 && pts[i - 1].vis && pts[i + 1].vis)) cur.push(pts[i]);
-      else { if (cur.length >= 3) subs.push(cur); cur = []; }
-    }
-    if (cur.length >= 3) subs.push(cur);
-    const diff = runDifficulty(run);
-    for (const sub of subs) {
-      const sAvg = sub.reduce((a, p) => a + p.s, 0) / sub.length, w = Math.max(3, run.width * P.cellPx * sAvg);
-      const sp = sub.map(p => [p.sx, p.sy]);
-      c.lineCap = 'round'; c.lineJoin = 'round';
-      c.strokeStyle = 'rgba(120,145,178,0.35)'; c.lineWidth = w + 3; strokePath(c, offsetPath(sp, (sunLeft ? 1 : -1) * 1.5));
-      c.strokeStyle = 'rgba(152,172,198,0.85)'; c.lineWidth = w + 1.5; strokePath(c, sp);
-      c.strokeStyle = run.glade ? 'rgba(255,255,255,0.72)' : '#ffffff'; c.lineWidth = w; strokePath(c, sp);
-      if (w >= 6) {
-        if (run.groomed) { c.strokeStyle = 'rgba(168,186,210,0.5)'; c.lineWidth = 0.9; for (const off of [-w * 0.3, 0, w * 0.3]) strokePath(c, offsetPath(sp, off)); }
-        else { c.strokeStyle = 'rgba(162,180,205,0.42)'; c.lineWidth = w * 0.2; c.setLineDash([0.1, w * 0.5]); strokePath(c, offsetPath(sp, -w * 0.18)); c.lineDashOffset = w * 0.31; strokePath(c, offsetPath(sp, w * 0.18)); c.setLineDash([]); c.lineDashOffset = 0; }
-      }
-    }
-    if (S.map.labels && subs.length) {
-      const longest = subs.reduce((a, b) => b.length > a.length ? b : a);
-      labelJobs.push({ text: run.name, diff, path: longest, size: clamp(12.5 * (P.cellPx / 10.4) * longest[Math.floor(longest.length / 2)].s, 11, 16) });
-    }
-  }
-
-  // ---- 7. Lifts ----
-  for (const lift of S.lifts) {
-    const n = Math.max(2, Math.ceil(dist(lift.a[0], lift.a[1], lift.b[0], lift.b[1]) / 0.5));
-    const pts = [];
-    for (let i = 0; i <= n; i++) {
-      const t = i / n, x = lerp(lift.a[0], lift.b[0], t), y = lerp(lift.a[1], lift.b[1], t), hg = hAt(x, y), hc = hg + 11 / S.rise;
-      const [rx, ry] = R.toR(x, y); const [gsx, gsy] = P.project(rx, ry, hg); const [sx, sy, s] = P.project(rx, ry, hc);
-      pts.push({ sx, sy, gsx, gsy, s, vis: visible(ry, sx, sy, 2) });
-    }
-    const red = '#c8102e';
-    // towers & carriers
-    for (let i = 1; i < n; i++) {
-      const p = pts[i]; if (!p.vis) continue;
-      if (i % 12 === 0) { c.strokeStyle = '#3a2f2a'; c.lineWidth = 1.6 * p.s; c.beginPath(); c.moveTo(p.gsx, p.gsy); c.lineTo(p.sx, p.sy); c.stroke(); }
-      if (lift.type === 'chair' && i % 5 === 2) { c.strokeStyle = '#4a1a22'; c.lineWidth = 1.3; c.beginPath(); c.moveTo(p.sx, p.sy); c.lineTo(p.sx, p.sy + 5 * p.s); c.stroke(); c.fillStyle = '#4a1a22'; c.fillRect(p.sx - 2 * p.s, p.sy + 5 * p.s, 4 * p.s, 2.2 * p.s); }
-      if (lift.type === 'gondola' && i % 9 === 4) { c.fillStyle = '#7a1020'; c.beginPath(); c.roundRect(p.sx - 3 * p.s, p.sy + 2 * p.s, 6 * p.s, 7 * p.s, 1.5); c.fill(); }
-    }
-    let cur = [];
-    const flush = () => { if (cur.length >= 2) { c.strokeStyle = red; c.lineWidth = (lift.type === 'gondola' ? 3.4 : 2.2) * cur[0].s; if (lift.type === 'surface') c.setLineDash([7, 5]); strokePath(c, cur.map(p => [p.sx, p.sy])); c.setLineDash([]); } cur = []; };
-    for (const p of pts) { if (p.vis) cur.push(p); else flush(); } flush();
-    const A = pts[0], B = pts[n];
-    c.fillStyle = '#8a0f22';
-    if (A.vis) { c.beginPath(); c.arc(A.gsx, A.gsy - 2, 4.5 * A.s, 0, 7); c.fill(); }
-    if (B.vis) { c.fillRect(B.gsx - 4.5 * B.s, B.gsy - 7 * B.s, 9 * B.s, 7 * B.s); }
-    if (S.map.labels && B.vis) {
-      c.font = `italic 600 ${clamp(13.5 * B.s, 11, 15)}px Inter, sans-serif`; c.textAlign = 'center'; c.textBaseline = 'bottom';
-      c.lineWidth = 3.5; c.strokeStyle = 'rgba(255,255,255,0.92)'; c.strokeText(lift.name, B.gsx, B.gsy - 10 * B.s); c.fillStyle = red; c.fillText(lift.name, B.gsx, B.gsy - 10 * B.s);
-      const m = c.measureText(lift.name); labelBoxes.push([B.gsx - m.width / 2 - 2, B.gsy - 10 * B.s - 14, m.width + 4, 16]);
-    }
-  }
-
-  // ---- 8. Lodges ----
-  for (const lodge of S.lodges) {
-    const [rx, ry] = R.toR(lodge.x, lodge.y), h = hAt(lodge.x, lodge.y), [sx, sy, s] = P.project(rx, ry, h);
-    if (!visible(ry, sx, sy, 2)) continue;
-    const w = 24 * s * (P.cellPx / 10.4), hh = 12 * s * (P.cellPx / 10.4);
-    c.fillStyle = 'rgba(40,60,95,0.25)'; c.beginPath(); c.ellipse(sx, sy + 1, w * 0.7, hh * 0.25, 0, 0, 7); c.fill();
-    c.fillStyle = '#6e4a2e'; c.fillRect(sx - w / 2, sy - hh, w, hh);
-    c.fillStyle = '#8b6240'; c.fillRect(sx - w / 2, sy - hh, w * (sunLeft ? 0.5 : 1), hh); if (!sunLeft) { c.fillStyle = '#6e4a2e'; c.fillRect(sx - w / 2, sy - hh, w * 0.5, hh); }
-    c.fillStyle = '#fbfbf8'; c.beginPath(); c.moveTo(sx - w / 2 - 2, sy - hh); c.lineTo(sx, sy - hh - hh * 0.75); c.lineTo(sx + w / 2 + 2, sy - hh); c.closePath(); c.fill();
-    c.fillStyle = '#f2c766'; for (let i = 0; i < 3; i++) c.fillRect(sx - w / 2 + w * (0.18 + i * 0.28), sy - hh * 0.65, w * 0.1, hh * 0.3);
-    if (S.map.labels) {
-      c.font = `600 ${clamp(12 * s, 10, 14)}px Inter, sans-serif`; c.textAlign = 'center'; c.textBaseline = 'top';
-      c.lineWidth = 3.5; c.strokeStyle = 'rgba(255,255,255,0.92)'; c.strokeText(lodge.name, sx, sy + 4); c.fillStyle = '#3b2a1e'; c.fillText(lodge.name, sx, sy + 4);
-    }
-  }
-
-  // ---- 9. Run labels (greedy collision avoidance) ----
-  const overlaps = (b) => labelBoxes.some(o => b[0] < o[0] + o[2] && b[0] + b[2] > o[0] && b[1] < o[1] + o[3] && b[1] + b[3] > o[1]);
-  for (const job of labelJobs) {
-    c.font = `600 ${job.size}px Inter, sans-serif`; const tw = c.measureText(job.text).width + job.size * 1.4;
-    let placed = null;
-    for (const frac of [0.5, 0.32, 0.68, 0.2, 0.8]) {
-      const idx = Math.floor(job.path.length * frac), p = job.path[idx], q = job.path[Math.min(job.path.length - 1, idx + 4)], o = job.path[Math.max(0, idx - 4)];
-      let ang = Math.atan2(q.sy - o.sy, q.sx - o.sx); if (Math.cos(ang) < -0.05) ang += Math.PI;
-      const box = [p.sx - tw / 2 - 4, p.sy - job.size - 4, tw + 8, job.size * 2 + 8];
-      if (!overlaps(box)) { placed = { p, ang, box }; break; }
-      if (!placed) placed = { p, ang, box, forced: true };
-    }
-    labelBoxes.push(placed.box);
-    c.save(); c.translate(placed.p.sx, placed.p.sy); c.rotate(placed.ang);
-    c.textAlign = 'left'; c.textBaseline = 'middle';
-    const x0 = -tw / 2 + job.size * 0.7;
-    drawSymbol(c, job.diff, -tw / 2, 0, job.size * 0.85);
-    c.lineWidth = 3.5; c.strokeStyle = 'rgba(255,255,255,0.9)'; c.strokeText(job.text, x0 + job.size * 0.15, 0.5);
-    c.fillStyle = '#1c2a3a'; c.fillText(job.text, x0 + job.size * 0.15, 0.5);
-    c.restore();
-  }
-
-  // ---- 10. Edge feathering, paper, title, legend ----
-  for (const side of [0, 1]) {
-    const g = c.createLinearGradient(side ? MW : 0, 0, side ? MW - 190 : 190, 0);
-    g.addColorStop(0, PAPER); g.addColorStop(0.45, 'rgba(244,240,232,0.55)'); g.addColorStop(1, 'rgba(244,240,232,0)');
-    c.fillStyle = g; c.fillRect(side ? MW - 190 : 0, 0, 190, MH);
-  }
-  let nearEdgeY = Infinity; for (let i = 0; i < RWU; i++) nearEdgeY = Math.min(nearEdgeY, vy[(RHU - 1) * RWU + i]);
-  const bottomG = c.createLinearGradient(0, Math.min(MH, nearEdgeY + 24), 0, nearEdgeY - 80); bottomG.addColorStop(0, PAPER); bottomG.addColorStop(0.5, 'rgba(244,240,232,0.6)'); bottomG.addColorStop(1, 'rgba(244,240,232,0)');
-  c.fillStyle = bottomG; c.fillRect(0, nearEdgeY - 80, MW, MH - nearEdgeY + 80);
-  if (S.map.paper) {
-    c.globalCompositeOperation = 'multiply'; c.globalAlpha = 0.16;
-    const pat = c.createPattern(getPaper(), 'repeat'); c.fillStyle = pat; c.fillRect(0, 0, MW, MH);
-    c.globalAlpha = 1; c.globalCompositeOperation = 'source-over';
-    const vg = c.createRadialGradient(MW / 2, MH / 2, MH * 0.45, MW / 2, MH / 2, MH * 0.95);
-    vg.addColorStop(0, 'rgba(60,50,40,0)'); vg.addColorStop(1, 'rgba(60,50,40,0.16)'); c.fillStyle = vg; c.fillRect(0, 0, MW, MH);
-  }
-  drawTitle(c, R);
-  if (S.map.legend) drawLegend(c);
-}
-
-function summitStats() {
-  let mx = 0; for (let i = 0; i < S.height.length; i++) if (S.height[i] > mx) mx = S.height[i];
-  const summit = S.baseElev + mx * S.rise;
-  let lodgeBase = S.baseElev; if (S.lodges.length) lodgeBase = Math.min(...S.lodges.map(l => elevM(l.x, l.y)));
-  return { summit, base: S.baseElev, vertical: summit - S.baseElev, lodgeBase };
-}
-function drawTitle(c, R) {
-  const st = summitStats();
-  c.textAlign = 'left'; c.textBaseline = 'alphabetic';
-  c.fillStyle = '#1c2a3a'; c.font = '700 58px Fraunces, Georgia, serif';
-  c.fillText(S.name || 'Untitled Mountain', 60, 84);
-  c.font = '600 13px Inter, sans-serif'; c.fillStyle = '#4b5a6b';
-  const ls = 3; let x = 60;
-  for (const ch of 'TRAIL MAP') { c.fillText(ch, x, 112); x += c.measureText(ch).width + ls; }
-  c.font = '500 14px Inter, sans-serif'; c.fillStyle = '#4b5a6b';
-  c.fillText(`Summit ${fmtElev(st.summit)}  ·  Base ${fmtElev(st.base)}  ·  Vertical ${fmtElev(st.vertical)}  ·  ${S.runs.length} run${S.runs.length === 1 ? '' : 's'}  ·  ${S.lifts.length} lift${S.lifts.length === 1 ? '' : 's'}`, x + 18, 112);
-  // Orientation
-  const dirs = { S: 'north', N: 'south', E: 'west', W: 'east' };
-  c.textAlign = 'right'; c.font = 'italic 500 14px Inter, sans-serif'; c.fillStyle = '#4b5a6b';
-  c.fillText(`Looking ${dirs[S.map.view] || 'north'}`, MW - 60, 60);
-  c.font = '500 11px Inter, sans-serif'; c.fillText('Not to scale · Painted in Mountain Studio', MW - 60, 80);
-}
-function drawLegend(c) {
-  const x = MW - 60 - 320, y = MH - 60 - 176, w = 320, h = 176;
-  c.fillStyle = 'rgba(250,247,240,0.88)'; c.strokeStyle = 'rgba(28,42,58,0.35)'; c.lineWidth = 1;
-  c.beginPath(); c.roundRect(x, y, w, h, 8); c.fill(); c.stroke();
-  c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillStyle = '#1c2a3a';
-  c.font = '700 15px Fraunces, Georgia, serif'; c.fillText('Legend', x + 18, y + 22);
-  c.font = '500 13px Inter, sans-serif';
-  let yy = y + 50;
-  for (const d of DIFF_ORDER) { drawSymbol(c, d, x + 26, yy, 13); c.fillStyle = '#1c2a3a'; c.fillText(DIFF[d].label, x + 44, yy); yy += 24; }
-  const lx = x + 178; yy = y + 50;
-  const line = (label, width, dash) => { c.strokeStyle = '#c8102e'; c.lineWidth = width; c.setLineDash(dash || []); c.beginPath(); c.moveTo(lx, yy); c.lineTo(lx + 34, yy); c.stroke(); c.setLineDash([]); c.fillStyle = '#1c2a3a'; c.fillText(label, lx + 44, yy); yy += 24; };
-  line('Chairlift', 2.2); line('Gondola', 3.6); line('Surface lift', 2, [6, 4]);
-  const groomed = S.runs.filter(r => r.groomed).length;
-  c.fillStyle = '#4b5a6b'; c.font = '500 12px Inter, sans-serif';
-  c.fillText(S.runs.length ? `${groomed} of ${S.runs.length} runs groomed nightly` : 'No runs cut yet', lx, yy + 2);
-}
-
 function renderMapStats() {
   const el = $('mapStats'); if (!S) return;
   const st = summitStats(), byDiff = { green: 0, blue: 0, black: 0, double: 0 };
@@ -1550,33 +1534,29 @@ function renderMapStats() {
     <div style="grid-column:1/-1;margin-top:4px">Mix<b>${DIFF_ORDER.map(d => `${byDiff[d]} ${DIFF[d].label.toLowerCase()}`).join(' · ')}</b></div>`;
 }
 
-/* =====================================================================
-   UI WIRING
-   ===================================================================== */
-let saveTimer = null;
-function afterModelChange(structural) {
-  if (structural) { rebuildRunField(); terrainDirty = true; renderLists(); renderInspector(); }
-  clearTimeout(saveTimer); saveTimer = setTimeout(saveLocal, 400);
-  updateUndoButtons(); renderMountainSummary();
-  scheduleMapRender(); requestRender();
-}
-
-let toastTimer = null;
-function toast(msg) { const t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2600); }
-
 // ---------- Tabs ----------
 function showTab(name) {
   document.querySelectorAll('.tabs button').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
   $('buildView').classList.toggle('active', name === 'build');
   $('mapView').classList.toggle('active', name === 'map');
-  if (name === 'build') fitViewKeep();
+  if (name === 'build') { resizeBuild(); renderBuild('full'); }
   else if (mapDirty) scheduleMapRender(20);
 }
-function fitViewKeep() { const first = !cw; resizeEditor(); if (first) fitView(); else requestRender(); }
 document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => showTab(b.dataset.tab)));
 
-// ---------- Tool card (changes with the active tool) ----------
-const BRUSH_HELP = { raise: 'Push the terrain up. Build ridges, shoulders, and summit knobs.', lower: 'Carve gullies, bowls, and the valley floor.', smooth: 'Soften noise and blend your edits into the surrounding slope.', flatten: 'Level toward the elevation where you first click. Good for base areas and lift terminals.', plant: 'Grow forest. The trail map draws every tree you plant, even above the treeline.', clear: 'Thin or remove forest to open glades and bowls.' };
+// ---------- Camera chips ----------
+function syncCamUI() {
+  $('camSeg').querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.v === cam.dir));
+  $('camPitch').value = cam.pitch; $('camPitchVal').textContent = cam.pitch >= 88 ? 'overhead' : cam.pitch + '°';
+  $('camContours').checked = cam.contours; $('camLabels').checked = cam.labels;
+}
+$('camSeg').querySelectorAll('button').forEach(b => b.onclick = () => { cam.dir = b.dataset.v; cam.panX = 0; cam.panY = 0; syncCamUI(); renderBuild('full'); });
+$('camPitch').oninput = e => { cam.pitch = +e.target.value; syncCamUI(); requestFast(false); requestFull(160); };
+$('camContours').onchange = e => { cam.contours = e.target.checked; drawOverlay(); };
+$('camLabels').onchange = e => { cam.labels = e.target.checked; renderBuild('full'); };
+
+// ---------- Tool card ----------
+const BRUSH_HELP = { raise: 'Push the terrain up. Build ridges, shoulders, and summit knobs.', lower: 'Carve gullies, bowls, and the valley floor.', smooth: 'Soften noise and blend your edits into the surrounding slope.', flatten: 'Level toward the elevation where you first click. Good for base areas and lift terminals.', plant: 'Grow forest. Below the treeline the mountain wants to be trees; trails are the gaps.', clear: 'Thin or remove forest to open glades, bowls, and meadows.' };
 function renderToolCard() {
   const card = $('brushCard');
   if (isBrushTool(tool)) {
@@ -1584,28 +1564,27 @@ function renderToolCard() {
       <div class="row"><label>Size</label><input type="range" id="brushSize" min="2" max="30" step="1" value="${brush.size}"><span class="val" id="brushSizeVal">${brush.size}</span></div>
       <div class="row"><label>Strength</label><input type="range" id="brushStrength" min="0.1" max="1" step="0.05" value="${brush.strength}"><span class="val" id="brushStrengthVal">${Math.round(brush.strength * 100)}%</span></div>
       <div class="help" style="margin-top:6px">${BRUSH_HELP[tool]}</div>`;
-    $('brushSize').oninput = e => { brush.size = +e.target.value; $('brushSizeVal').textContent = brush.size; requestRender(); };
+    $('brushSize').oninput = e => { brush.size = +e.target.value; $('brushSizeVal').textContent = brush.size; drawOverlay(); };
     $('brushStrength').oninput = e => { brush.strength = +e.target.value; $('brushStrengthVal').textContent = Math.round(brush.strength * 100) + '%'; };
   } else if (tool === 'run') {
     card.innerHTML = `<h3>New run</h3>
-      <div class="row"><label>Width</label><input type="range" id="runWidth" min="1" max="5" step="0.5" value="${runOpts.width}"><span class="val" id="runWidthVal">${fmt(runOpts.width * CELL_M * (S.units === 'ft' ? 3.28084 : 1))} ${unitLabel()}</span></div>
+      <div class="row"><label>Width</label><input type="range" id="runWidth" min="1" max="5" step="0.5" value="${runOpts.width}"><span class="val" id="runWidthVal">${fmt(toUnit(runOpts.width * CELL_M))} ${unitLabel()}</span></div>
       <div class="row"><label>Groomed</label><input type="checkbox" id="runGroomed" ${runOpts.groomed ? 'checked' : ''}><span class="help">corduroy instead of moguls</span></div>
       <div class="row"><label>Glade</label><input type="checkbox" id="runGlade" ${runOpts.glade ? 'checked' : ''}><span class="help">thin the trees instead of clearing them</span></div>
       <div class="help" style="margin-top:6px">Click along the fall line from top to bottom. Double-click or press <kbd>Enter</kbd> to finish. The run is rated from its steepest sustained pitch and named automatically; rename it in the inspector.</div>`;
-    $('runWidth').oninput = e => { runOpts.width = +e.target.value; $('runWidthVal').textContent = fmt(runOpts.width * CELL_M * (S.units === 'ft' ? 3.28084 : 1)) + ' ' + unitLabel(); requestRender(); };
+    $('runWidth').oninput = e => { runOpts.width = +e.target.value; $('runWidthVal').textContent = fmt(toUnit(runOpts.width * CELL_M)) + ' ' + unitLabel(); drawOverlay(); };
     $('runGroomed').onchange = e => runOpts.groomed = e.target.checked;
     $('runGlade').onchange = e => runOpts.glade = e.target.checked;
   } else if (tool === 'lift') {
     card.innerHTML = `<h3>New lift</h3>
       <div class="row"><label>Type</label><div class="seg" id="liftTypeSeg"><button data-t="chair">Chair</button><button data-t="gondola">Gondola</button><button data-t="surface">Surface</button></div></div>
       <div class="help" style="margin-top:6px">Click the bottom terminal, then the top terminal. Lifts are straight lines; the lower click becomes the base automatically.</div>`;
-    const seg = $('liftTypeSeg');
-    const paint = () => seg.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.t === liftType));
+    const seg = $('liftTypeSeg'), paint = () => seg.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.t === liftType));
     seg.querySelectorAll('button').forEach(b => b.onclick = () => { liftType = b.dataset.t; paint(); }); paint();
   } else if (tool === 'groom') {
-    card.innerHTML = `<h3>Grooming</h3><div class="help">Click a run to send the cats out overnight, or click again to let it bump up. Groomed runs show corduroy on the trail map; ungroomed runs show moguls. Press <kbd>G</kbd> with a run selected to do the same.</div>`;
+    card.innerHTML = `<h3>Grooming</h3><div class="help">Click a run to send the cats out overnight, or click again to let it bump up. Groomed runs show corduroy; ungroomed runs show moguls. Press <kbd>G</kbd> with a run selected to do the same.</div>`;
   } else if (tool === 'lodge') {
-    card.innerHTML = `<h3>Lodges</h3><div class="help">Click to place a lodge, restaurant, or warming hut. The lowest lodge is treated as the village base.</div>`;
+    card.innerHTML = `<h3>Lodges</h3><div class="help">Click to place a lodge, restaurant, or warming hut. The lowest lodge becomes the base village, with a road and parking.</div>`;
   } else {
     card.innerHTML = `<h3>Select</h3><div class="help">Click a run, lift, or lodge to inspect it. Drag the yellow handles to reshape a run or move a lift terminal. <kbd>⌫</kbd> deletes the selection.</div>`;
   }
@@ -1635,8 +1614,8 @@ function renderInspector() {
       <div class="row" style="margin-top:10px"><button class="btn danger" id="insDelete">Delete run</button></div>`;
     $('insName').onchange = e => { pushUndo(); sel.name = e.target.value.trim() || sel.name; afterModelChange(true); };
     $('insDiff').onchange = e => { pushUndo(); sel.difficulty = e.target.value; afterModelChange(true); };
-    $('insWidth').oninput = e => { sel.width = +e.target.value; rebuildRunField(); terrainDirty = true; requestRender(); };
-    $('insWidth').onchange = () => { afterModelChange(true); };
+    $('insWidth').oninput = e => { sel.width = +e.target.value; rebuildRunField(); requestFast(false); };
+    $('insWidth').onchange = () => afterModelChange(true);
     $('insGroomed').onchange = e => { pushUndo(); sel.groomed = e.target.checked; afterModelChange(true); };
     $('insGlade').onchange = e => { pushUndo(); sel.glade = e.target.checked; afterModelChange(true); };
     $('insDelete').onclick = deleteSelected;
@@ -1670,7 +1649,7 @@ function renderLists() {
   $('liftCount').textContent = (S.lifts.length + S.lodges.length) ? `${S.lifts.length} · ${S.lodges.length}` : '';
   const sorted = [...S.runs].sort((a, b) => DIFF_ORDER.indexOf(runDifficulty(a)) - DIFF_ORDER.indexOf(runDifficulty(b)) || a.name.localeCompare(b.name));
   rl.innerHTML = sorted.map(r => { const st = runStats(r); return `<button data-type="run" data-id="${r.id}" class="${selection && selection.type === 'run' && selection.id === r.id ? 'sel' : ''}"><span class="sym ${runDifficulty(r)}"></span>${escapeHtml(r.name)}${r.groomed ? '' : ' <span title="moguls">〰</span>'}<span class="meta">${fmtElev(st.vertM)}</span></button>`; }).join('') || '<div class="empty">Pick the Run tool and click down the mountain.</div>';
-  ll.innerHTML = (S.lifts.map(l => `<button data-type="lift" data-id="${l.id}" class="${selection && selection.type === 'lift' && selection.id === l.id ? 'sel' : ''}"><span class="sym lift"></span>${escapeHtml(l.name)}<span class="meta">${fmtElev(liftStats(l).vertM)}</span></button>`).join('')
+  ll.innerHTML = (S.lifts.map((l, i) => `<button data-type="lift" data-id="${l.id}" class="${selection && selection.type === 'lift' && selection.id === l.id ? 'sel' : ''}"><span class="sym lift"></span>${String.fromCharCode(65 + i % 26)} · ${escapeHtml(l.name)}<span class="meta">${fmtElev(liftStats(l).vertM)}</span></button>`).join('')
     + S.lodges.map(l => `<button data-type="lodge" data-id="${l.id}" class="${selection && selection.type === 'lodge' && selection.id === l.id ? 'sel' : ''}"><span class="sym lodge"></span>${escapeHtml(l.name)}<span class="meta">${fmtElev(elevM(l.x, l.y))}</span></button>`).join(''))
     || '<div class="empty">No lifts yet. Skiers will complain.</div>';
   for (const b of [...rl.querySelectorAll('button'), ...ll.querySelectorAll('button')]) b.onclick = () => { setTool('select'); select(b.dataset.type, +b.dataset.id); };
@@ -1684,49 +1663,46 @@ function renderMountainSummary() {
   $('baseElev').value = Math.round(toUnit(S.baseElev)); $('rise').value = Math.round(toUnit(S.rise));
   $('treelineVal').textContent = fmtElev(S.baseElev + S.treeline * S.rise);
   $('unitsSeg').querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.u === S.units));
+  $('forestSeg').querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.f === (S.map.forest || 'mixed')));
 }
 function syncSettingsUI() {
   $('resortName').value = S.name; $('preset').value = S.preset; $('seed').value = S.seed; $('treeline').value = S.treeline;
   $('exag').value = S.map.exag; $('exagVal').textContent = S.map.exag.toFixed(1) + '×';
+  $('mapPitch').value = S.map.pitch; $('mapPitchVal').textContent = S.map.pitch + '°';
   $('detail').value = S.map.detail; $('detailVal').textContent = ['', 'Fast', 'Normal', 'Fine', 'Ultra'][S.map.detail];
-  $('optLabels').checked = S.map.labels; $('optLegend').checked = S.map.legend; $('optHaze').checked = S.map.haze; $('optPaper').checked = S.map.paper; $('optRange').checked = S.map.range;
+  $('optLabels').checked = S.map.labels; $('optLegend').checked = S.map.legend; $('optHaze').checked = S.map.haze; $('optRange').checked = S.map.range; $('optClouds').checked = S.map.clouds;
   $('viewSeg').querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.v === S.map.view));
   $('sunSeg').querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.s === S.map.sun));
-  renderMountainSummary();
+  renderMountainSummary(); syncCamUI();
 }
-$('resortName').addEventListener('input', e => { S.name = e.target.value; clearTimeout(saveTimer); saveTimer = setTimeout(saveLocal, 400); scheduleMapRender(400); });
+$('resortName').addEventListener('input', e => { S.name = e.target.value; saveLocalSoon(); scheduleMapRender(400); });
 $('preset').onchange = e => { S.preset = e.target.value; };
 $('seed').onchange = e => { S.seed = clamp(parseInt(e.target.value, 10) || 1, 1, 999999); e.target.value = S.seed; };
 $('randSeed').onclick = () => { S.seed = 1 + Math.floor(Math.random() * 999999); $('seed').value = S.seed; regenerateTerrain(); };
-$('regenBtn').onclick = regenerateTerrain;
+$('regenBtn').onclick = () => regenerateTerrain();
 $('treeline').oninput = e => { S.treeline = +e.target.value; renderMountainSummary(); };
-$('treeline').onchange = () => { regenerateTerrain(true); };
+$('treeline').onchange = () => regenerateTerrain(true);
 $('baseElev').onchange = e => { const v = +e.target.value; if (!isFinite(v)) return; S.baseElev = S.units === 'ft' ? v / 3.28084 : v; afterModelChange(true); };
 $('rise').onchange = e => { const v = +e.target.value; if (!isFinite(v) || v <= 0) return; S.rise = S.units === 'ft' ? v / 3.28084 : v; afterModelChange(true); };
 $('unitsSeg').querySelectorAll('button').forEach(b => b.onclick = () => { S.units = b.dataset.u; renderToolCard(); afterModelChange(true); });
-
-function regenerateTerrain(keepTrees) {
-  // Keep sculpted deltas? No: regeneration replaces the terrain. Vector work survives.
+$('forestSeg').querySelectorAll('button').forEach(b => b.onclick = () => { S.map.forest = b.dataset.f; renderMountainSummary(); saveLocalSoon(); mapDirty = true; scheduleMapRender(); renderBuild('full'); });
+function regenerateTerrain(keepTerrain) {
   pushUndo();
   const base = getBase(S.seed, S.preset, S.treeline);
-  if (keepTrees) {
-    // Only the treeline changed: rebuild the forest, keep the sculpted terrain.
-    S.trees = new Uint8Array(base.t);
-  } else {
-    S.height = new Float32Array(base.h); S.trees = new Uint8Array(base.t);
-  }
+  if (keepTerrain) S.trees = new Uint8Array(base.t);
+  else { S.height = new Float32Array(base.h); S.trees = new Uint8Array(base.t); }
   runPathCache.clear();
   afterModelChange(true);
-  toast(keepTrees ? 'Forest regrown to the new treeline' : 'Fresh terrain generated');
+  toast(keepTerrain ? 'Forest regrown to the new treeline' : 'Fresh terrain generated');
 }
 
 // ---------- Map options ----------
 $('exag').oninput = e => { S.map.exag = +e.target.value; $('exagVal').textContent = S.map.exag.toFixed(1) + '×'; scheduleMapRender(250); saveLocalSoon(); };
+$('mapPitch').oninput = e => { S.map.pitch = +e.target.value; $('mapPitchVal').textContent = S.map.pitch + '°'; scheduleMapRender(250); saveLocalSoon(); };
 $('detail').oninput = e => { S.map.detail = +e.target.value; $('detailVal').textContent = ['', 'Fast', 'Normal', 'Fine', 'Ultra'][S.map.detail]; scheduleMapRender(250); saveLocalSoon(); };
-for (const [id, key] of [['optLabels', 'labels'], ['optLegend', 'legend'], ['optHaze', 'haze'], ['optPaper', 'paper'], ['optRange', 'range']]) $(id).onchange = e => { S.map[key] = e.target.checked; scheduleMapRender(20); saveLocalSoon(); };
+for (const [id, key] of [['optLabels', 'labels'], ['optLegend', 'legend'], ['optHaze', 'haze'], ['optRange', 'range'], ['optClouds', 'clouds']]) $(id).onchange = e => { S.map[key] = e.target.checked; scheduleMapRender(20); saveLocalSoon(); };
 $('viewSeg').querySelectorAll('button').forEach(b => b.onclick = () => { S.map.view = b.dataset.v; syncSettingsUI(); scheduleMapRender(20); saveLocalSoon(); });
 $('sunSeg').querySelectorAll('button').forEach(b => b.onclick = () => { S.map.sun = b.dataset.s; syncSettingsUI(); scheduleMapRender(20); saveLocalSoon(); });
-function saveLocalSoon() { clearTimeout(saveTimer); saveTimer = setTimeout(saveLocal, 400); }
 
 $('downloadBtn').onclick = async () => {
   if (mapDirty || mapBusy) await renderMapNow();
@@ -1737,7 +1713,6 @@ $('downloadBtn').onclick = async () => {
     toast('Trail map saved as PNG');
   }, 'image/png');
 };
-
 async function shareLink() {
   try {
     const url = await encodeShare();
@@ -1761,34 +1736,36 @@ $('newGo').onclick = () => {
   undoStack.length = 0; redoStack.length = 0; selection = null; runPathCache.clear();
   history.replaceState(null, '', location.pathname);
   $('newModal').classList.remove('show');
-  syncSettingsUI(); afterModelChange(true); fitView();
+  syncSettingsUI(); afterModelChange(true); fitCamera();
   toast(`Welcome to ${S.name}`);
 };
 
 // ---------- Undo/redo, zoom buttons, toolbar ----------
 $('undoBtn').onclick = undo; $('redoBtn').onclick = redo;
-$('zoomIn').onclick = () => zoomAt(cw / 2, ch / 2, 1.3); $('zoomOut').onclick = () => zoomAt(cw / 2, ch / 2, 1 / 1.3); $('zoomFit').onclick = fitView;
+$('zoomIn').onclick = () => zoomAt(buildCanvas.width / 2, buildCanvas.height / 2, 1.3);
+$('zoomOut').onclick = () => zoomAt(buildCanvas.width / 2, buildCanvas.height / 2, 1 / 1.3);
+$('zoomFit').onclick = fitCamera;
 document.querySelectorAll('.tool').forEach(b => b.addEventListener('click', () => setTool(b.dataset.tool)));
 
 // ---------- Keyboard ----------
 const TOOL_KEYS = { '1': 'raise', '2': 'lower', '3': 'smooth', '4': 'flatten', '5': 'plant', '6': 'clear', '7': 'lift', '8': 'run', '9': 'groom', '0': 'lodge', 'v': 'select' };
 window.addEventListener('keydown', e => {
-  const inField = /^(INPUT|SELECT|TEXTAREA)$/.test(document.activeElement.tagName);
+  const inField = /^(INPUT|SELECT|TEXTAREA)$/.test(document.activeElement.tagName) && document.activeElement.type !== 'range' && document.activeElement.type !== 'checkbox';
   if (e.key === ' ' && !inField) { spaceDown = true; e.preventDefault(); return; }
   if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'z') { if (inField) return; e.preventDefault(); e.shiftKey ? redo() : undo(); return; }
   if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'y') { e.preventDefault(); redo(); return; }
   if (inField) { if (e.key === 'Enter') document.activeElement.blur(); return; }
-  if (e.key === 'Escape') { if (pendingRun || pendingLift) { pendingRun = null; pendingLift = null; showHint(''); } else select(null); requestRender(); return; }
+  if (e.key === 'Escape') { if (pendingRun || pendingLift) { pendingRun = null; pendingLift = null; showHint(''); drawOverlay(); } else select(null); return; }
   if (e.key === 'Enter' && pendingRun) { finishRun(); return; }
-  if ((e.key === 'Backspace' || e.key === 'Delete')) { if (pendingRun) { pendingRun.pop(); if (!pendingRun.length) pendingRun = null; requestRender(); } else if (selection) deleteSelected(); return; }
-  if (e.key === '[') { brush.size = Math.max(2, brush.size - 1); renderToolCard(); requestRender(); return; }
-  if (e.key === ']') { brush.size = Math.min(30, brush.size + 1); renderToolCard(); requestRender(); return; }
+  if (e.key === 'Backspace' || e.key === 'Delete') { if (pendingRun) { pendingRun.pop(); if (!pendingRun.length) pendingRun = null; drawOverlay(); } else if (selection) deleteSelected(); return; }
+  if (e.key === '[') { brush.size = Math.max(2, brush.size - 1); renderToolCard(); drawOverlay(); return; }
+  if (e.key === ']') { brush.size = Math.min(30, brush.size + 1); renderToolCard(); drawOverlay(); return; }
   if (e.key.toLowerCase() === 'g' && selection && selection.type === 'run') { const r = getSelected(); pushUndo(); r.groomed = !r.groomed; afterModelChange(true); return; }
   const t = TOOL_KEYS[e.key.toLowerCase()]; if (t && !e.metaKey && !e.ctrlKey) setTool(t);
 });
 window.addEventListener('keyup', e => { if (e.key === ' ') spaceDown = false; });
-window.addEventListener('resize', () => { if ($('buildView').classList.contains('active')) { resizeEditor(); requestRender(); } });
-new ResizeObserver(() => { if ($('buildView').classList.contains('active')) { resizeEditor(); requestRender(); } }).observe(wrap);
+new ResizeObserver(() => { if ($('buildView').classList.contains('active') && S) { resizeBuild(); requestFull(30); } }).observe(wrap);
+window.addEventListener('load', () => { if (S && $('buildView').classList.contains('active')) { resizeBuild(); requestFull(50); } });
 
 // ---------- Startup ----------
 async function boot() {
@@ -1797,29 +1774,28 @@ async function boot() {
     try { st = await decodeShare(location.hash); fromLink = !!st; } catch (e) { console.warn('bad share link', e); toast('That share link could not be read; loading your saved resort instead.'); }
   }
   if (!st) st = loadLocal();
-  if (!st) {
-    st = newState(1 + Math.floor(Math.random() * 999999), 'peak');
-    seedStarterResort(st);
-  }
+  if (!st) { st = newState(1 + Math.floor(Math.random() * 999999), 'peak'); seedStarterResort(st); }
   S = st;
+  if (!S.map.forest) S.map.forest = 'mixed'; if (S.map.pitch == null) S.map.pitch = 32; if (S.map.clouds == null) S.map.clouds = true;
   rebuildRunField();
   syncSettingsUI(); setTool('raise'); renderLists(); renderInspector(); updateUndoButtons();
-  fitView(); scheduleMapRender(); renderMapStats();
+  try { await Promise.all([document.fonts.load('700 16px "Barlow Condensed"'), document.fonts.load('700 60px Fraunces')]); } catch (e) { /* system fonts */ }
+  resizeBuild(); renderBuild('full'); scheduleMapRender(); renderMapStats();
   if (fromLink) toast(`Opened ${S.name} from a share link`);
 }
-// A small starter resort so the first screen already looks like a ski area.
 function seedStarterResort(st) {
   const saved = S; S = st;
   const summitIdx = st.height.indexOf(Math.max(...st.height));
   const sx = summitIdx % W, sy = Math.floor(summitIdx / W);
-  const baseX = clamp(sx + 6, 10, W - 10), baseY = H - 18;
+  const baseX = clamp(sx + 6, 12, W - 12), baseY = H - 18;
   st.lodges.push({ id: st.nextId++, name: 'Base Lodge', x: baseX, y: baseY });
-  const topX = clamp(sx + 2, 5, W - 5), topY = clamp(sy + 4, 2, H - 20);
+  const topX = clamp(sx + 2, 5, W - 5), topY = clamp(sy + 4, 2, H - 24);
   st.lifts.push({ id: st.nextId++, name: 'Summit Express', type: 'chair', a: [baseX - 4, baseY - 2], b: [topX, topY] });
   const mk = (pts, width, groomed, glade) => { const r = { id: st.nextId++, name: '', points: pts, width, groomed, glade, difficulty: 'auto' }; st.runs.push(r); r.name = pickName(RUN_NAMES[runStats(r).auto], new Set(st.runs.map(q => q.name))); };
-  mk([[topX - 1, topY + 1], [topX - 12, topY + 22], [topX - 10, topY + 48], [baseX - 12, baseY - 4]], 2.5, true, false);
-  mk([[topX + 2, topY + 1], [topX + 14, topY + 20], [topX + 9, topY + 46], [baseX + 4, baseY - 3]], 2, false, false);
-  mk([[topX - 3, topY + 12], [topX - 26, topY + 30], [topX - 22, topY + 55], [baseX - 20, baseY - 6]], 3, true, false);
+  mk([[topX - 1, topY + 1], [topX - 12, topY + 22], [topX - 10, topY + 48], [baseX - 12, baseY - 4]], 2, true, false);
+  mk([[topX + 2, topY + 1], [topX + 14, topY + 20], [topX + 9, topY + 46], [baseX + 4, baseY - 3]], 1.5, false, false);
+  mk([[topX - 3, topY + 12], [topX - 26, topY + 30], [topX - 22, topY + 55], [baseX - 20, baseY - 6]], 2.5, true, false);
+  mk([[topX + 6, topY + 14], [topX + 24, topY + 32], [topX + 18, topY + 56], [baseX + 14, baseY - 5]], 1.5, true, true);
   S = saved;
 }
 boot();
